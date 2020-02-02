@@ -1,0 +1,11 @@
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\bin\Debug\Bike.exe.config
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\bin\Debug\Bike.exe
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\bin\Debug\Bike.pdb
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\bin\Debug\Bike.xml
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\obj\Debug\Bike.vbprojAssemblyReference.cache
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\obj\Debug\Bike.frmBike.resources
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\obj\Debug\Bike.Resources.resources
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\obj\Debug\Bike.vbproj.GenerateResource.cache
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\obj\Debug\Bike.exe
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\obj\Debug\Bike.xml
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\Bike\Bike\Bike\obj\Debug\Bike.pdb

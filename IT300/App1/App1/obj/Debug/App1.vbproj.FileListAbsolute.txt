@@ -1,0 +1,23 @@
+M:\CS Projects\Visual Basic\App1\App1\bin\Debug\App1.exe.config
+M:\CS Projects\Visual Basic\App1\App1\bin\Debug\App1.exe
+M:\CS Projects\Visual Basic\App1\App1\bin\Debug\App1.pdb
+M:\CS Projects\Visual Basic\App1\App1\bin\Debug\App1.xml
+M:\CS Projects\Visual Basic\App1\App1\obj\Debug\App1.vbprojAssemblyReference.cache
+M:\CS Projects\Visual Basic\App1\App1\obj\Debug\App1.Form1.resources
+M:\CS Projects\Visual Basic\App1\App1\obj\Debug\App1.Resources.resources
+M:\CS Projects\Visual Basic\App1\App1\obj\Debug\App1.vbproj.GenerateResource.cache
+M:\CS Projects\Visual Basic\App1\App1\obj\Debug\App1.vbproj.CoreCompileInputs.cache
+M:\CS Projects\Visual Basic\App1\App1\obj\Debug\App1.exe
+M:\CS Projects\Visual Basic\App1\App1\obj\Debug\App1.xml
+M:\CS Projects\Visual Basic\App1\App1\obj\Debug\App1.pdb
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\bin\Debug\App1.exe.config
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\bin\Debug\App1.exe
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\bin\Debug\App1.pdb
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\bin\Debug\App1.xml
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\obj\Debug\App1.vbprojAssemblyReference.cache
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\obj\Debug\App1.Form1.resources
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\obj\Debug\App1.Resources.resources
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\obj\Debug\App1.vbproj.GenerateResource.cache
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\obj\Debug\App1.exe
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\obj\Debug\App1.xml
+C:\Users\Bradley\Desktop\CS\Monmouth\IT300\App1\App1\obj\Debug\App1.pdb
