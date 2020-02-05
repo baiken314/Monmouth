@@ -39,7 +39,7 @@ Partial Class frmBike
         'picBike
         '
         Me.picBike.Image = CType(resources.GetObject("picBike.Image"), System.Drawing.Image)
-        Me.picBike.Location = New System.Drawing.Point(120, 324)
+        Me.picBike.Location = New System.Drawing.Point(103, 324)
         Me.picBike.Name = "picBike"
         Me.picBike.Size = New System.Drawing.Size(296, 214)
         Me.picBike.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -50,7 +50,7 @@ Partial Class frmBike
         '
         Me.lblHeading.AutoSize = True
         Me.lblHeading.Font = New System.Drawing.Font("Sitka Subheading", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblHeading.Location = New System.Drawing.Point(127, 38)
+        Me.lblHeading.Location = New System.Drawing.Point(110, 38)
         Me.lblHeading.Name = "lblHeading"
         Me.lblHeading.Size = New System.Drawing.Size(283, 47)
         Me.lblHeading.TabIndex = 1
@@ -61,7 +61,7 @@ Partial Class frmBike
         '
         Me.lblCostPerDayHeading.AutoSize = True
         Me.lblCostPerDayHeading.Font = New System.Drawing.Font("Microsoft YaHei", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCostPerDayHeading.Location = New System.Drawing.Point(199, 97)
+        Me.lblCostPerDayHeading.Location = New System.Drawing.Point(182, 97)
         Me.lblCostPerDayHeading.Name = "lblCostPerDayHeading"
         Me.lblCostPerDayHeading.Size = New System.Drawing.Size(139, 25)
         Me.lblCostPerDayHeading.TabIndex = 2
@@ -101,16 +101,15 @@ Partial Class frmBike
         Me.lblTotalCost.AutoSize = True
         Me.lblTotalCost.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTotalCost.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblTotalCost.Location = New System.Drawing.Point(388, 204)
+        Me.lblTotalCost.Location = New System.Drawing.Point(368, 204)
         Me.lblTotalCost.Name = "lblTotalCost"
-        Me.lblTotalCost.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.lblTotalCost.Size = New System.Drawing.Size(0, 24)
         Me.lblTotalCost.TabIndex = 6
-        Me.lblTotalCost.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblTotalCost.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'btnFindCost
         '
-        Me.btnFindCost.Location = New System.Drawing.Point(102, 265)
+        Me.btnFindCost.Location = New System.Drawing.Point(85, 265)
         Me.btnFindCost.Name = "btnFindCost"
         Me.btnFindCost.Size = New System.Drawing.Size(75, 23)
         Me.btnFindCost.TabIndex = 7
@@ -120,7 +119,7 @@ Partial Class frmBike
         'btnClear
         '
         Me.btnClear.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnClear.Location = New System.Drawing.Point(234, 265)
+        Me.btnClear.Location = New System.Drawing.Point(217, 265)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(75, 23)
         Me.btnClear.TabIndex = 8
@@ -129,7 +128,7 @@ Partial Class frmBike
         '
         'btnExit
         '
-        Me.btnExit.Location = New System.Drawing.Point(359, 265)
+        Me.btnExit.Location = New System.Drawing.Point(342, 265)
         Me.btnExit.Name = "btnExit"
         Me.btnExit.Size = New System.Drawing.Size(75, 23)
         Me.btnExit.TabIndex = 9
@@ -141,7 +140,7 @@ Partial Class frmBike
         Me.AcceptButton = Me.btnFindCost
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.CancelButton = Me.btnClear
         Me.ClientSize = New System.Drawing.Size(503, 576)
         Me.Controls.Add(Me.btnExit)

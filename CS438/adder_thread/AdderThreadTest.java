@@ -4,8 +4,11 @@ public class AdderThreadTest {
 	
 	public static void main(String[] args) {
 		
-		AdderThread a1 = new AdderThread(0, 10);
-		AdderThread a2 = new AdderThread(11, 20);
+		int from = 1;
+		int to = 100;
+		int middle = (from + to) / 2;
+		AdderThread a1 = new AdderThread(from, middle);
+		AdderThread a2 = new AdderThread(middle + 1, to);
 		
 		try {
 			a1.start();

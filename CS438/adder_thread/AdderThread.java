@@ -15,9 +15,11 @@ public class AdderThread extends Thread {
 	public int getSum() { return sum; }
 	
 	public void run() {
+		System.out.println("Adding from " + from + " to " + to + " started!");
 		for (int i = from; i <= to; i++) {
 			sum += i;
 		}
+		System.out.println("Adding from " + from + " to " + to + " finished!");
 	}
 	
 }
