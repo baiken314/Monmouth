@@ -1,25 +1,23 @@
 1)
-Possible outputs:
+Some possible outputs:
 
-C     C     C
-C     C     C
-MAIN  B     B
-B     B     MAIN
-B     MAIN  B
+C     C     C    B    B    C    B
+C     C     C    B    C    B    C
+MAIN  B     B    C    B    B    C
+B     B     MAIN C    C    C    MAIN
+B     MAIN  B    MAIN MAIN MAIN B
 
-This is because t1 and t2 are started at the same time, but t1 is joined to the main thread, so before anything else in the main thread is executed, t1 must finish. However, the MAIN statement can appear interweaved with the B class name print outs because t2 is not joined to the main thread. So after t1 finishes, which allows for the continuation of the other threads, t2 will continue printing out its class name, and during this the next line in the main thread can print "MAIN".
-Only t1 is joined, so it will print out first, then t2 and the main thread will continue at the same time.
-main -> t1 -> main, t2
+This happens because t1 and t2 are both started but only t1 is joined. This means that the main is stopped when t1 is joined to it, but t1 and t2 are both started. t1 must finish before MAIN is printed, however, it will run concurrently with t2, and after t1 finishes, main and t2 run concurrently, meaning that MAIN can be printed while t2 is printing.
 
 main: start
 t1: start
 t2: start
 t1: join
-t1: finsh
+t1: finish before main
 main, t2: finish
 
 2)
-Deterministic Output:
+Deterministic output:
 
 X=1 Name=main State=RUNNABLE
 X=0 Name=t1 State=RUNNABLE
@@ -28,7 +26,6 @@ x=0 Name=t2 State=RUNNABLE
 x=3 Name=main State=RUNNABLE
 
 This is the only possible output because t1, t2, and main all finish in sequence following each other. Because t1 is joined before t2 is started, t1 runs, then t2 is joined and runs, and then the main finished. The threads do not run concurrently during the execution of the program so there is only one output, which is the above. 
-main -> t1 -> main -> t2 -> main
 
 main: start
 t1: start
