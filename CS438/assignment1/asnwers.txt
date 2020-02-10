@@ -14,7 +14,7 @@ main -> t1 -> main, t2
 main: start
 t1: start
 t2: start
-t1: joined
+t1: join
 t1: finsh
 main, t2: finish
 
@@ -29,3 +29,12 @@ x=3 Name=main State=RUNNABLE
 
 This is the only possible output because t1, t2, and main all finish in sequence following each other. Because t1 is joined before t2 is started, t1 runs, then t2 is joined and runs, and then the main finished. The threads do not run concurrently during the execution of the program so there is only one output, which is the above. 
 main -> t1 -> main -> t2 -> main
+
+main: start
+t1: start
+t1: join
+t1: finish
+t2: start
+t2: join
+t2: finish
+main: finish
