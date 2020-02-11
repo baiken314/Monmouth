@@ -1,2 +1,66 @@
 1.
 Use strict requires the author of a program to explicitly state that something is a variable with 'my'. This can prevent confusion in the event of a typo or a similar error. Additionally, the author cannot reuse the same variable name for different value types, such as numbers and hashes. and the author cannot use bareword identifiers improperly, like doing '$string = hello'. Overall, it makes the author be more explicit in how they use variables.
+
+2.
+# prob2.pl, do perlex1.pl with a hash
+# take input from file
+while ($word = <STDIN>) {
+	
+	chomp($word);
+	
+	my $word_length = length($word);
+	
+	# make hash with $word as the key and length($word) as the value
+	if (not exists $word_lengths{$word_length}) {
+		$word_lengths{$word_length} = 1;
+	}
+	else {
+		$word_lengths{$word_length} += 1;
+	}
+	
+}
+
+print "Length\t\tOrrurances\n";
+$word_length = 0;
+foreach $hash_word_length (sort keys %word_lengths) {
+	$word_length += 1;
+	# make all not existent key values equal 0
+	if (not exists $word_lengths{$word_length}) {
+		$word_lengths{$word_length} = 0;
+	}
+	print $word_length, "\t\t", $word_lengths{$word_length}, "\n";
+}
+
+3.
+# prob3.pl, print all words with uppercase letter in the middle of the word
+while ($word = <STDIN>) {
+	
+	# regex for uppercase letters surrounded by other characters
+	chomp($word);
+	if ($word =~ /.+[A-Z].+/) {
+		print $word, "\n";
+	}
+	
+}
+
+
+4.
+while ($studentLine = <STDIN>) {
+	
+	# split delimiter
+	($last, $first, $email) = split /, /, $studentLine;
+	
+	# swap first and last name
+	$student = "$first $last $email";
+	
+	# insert student into %roster hash with $id as key
+	# get $id from $email first
+	($id, $domain) = split /@/, $email;
+	$roster{$id} = "$last, $first";
+	
+}
+
+# print roster hash
+foreach $id (sort keys %roster) {
+	print "$id, $roster{$id}\n";
+}
