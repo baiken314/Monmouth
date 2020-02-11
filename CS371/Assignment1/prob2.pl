@@ -16,13 +16,16 @@ while ($word = <STDIN>) {
 	
 }
 
-print "Length\t\tOrrurances\n";
+print "Length\t\tOccurrences\n";
 $word_length = 0;
-foreach $hash_word_length (sort keys %word_lengths) {
+
+foreach $key (sort keys %word_lengths) {
+	
 	$word_length += 1;
 	# make all not existent key values equal 0
 	if (not exists $word_lengths{$word_length}) {
 		$word_lengths{$word_length} = 0;
 	}
 	print $word_length, "\t\t", $word_lengths{$word_length}, "\n";
+	
 }
