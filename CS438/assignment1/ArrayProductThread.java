@@ -29,7 +29,7 @@ public class ArrayProductThread extends Thread {
 	
 	public void run() {
 		
-		System.out.println("Thread " + getName() + " " +intsString + " started at " + (System.nanoTime() - Problem3.startTime) + "ns");
+		System.out.println("Thread " + getName() + " " + intsString + " started at " + (System.nanoTime() - Problem3.startTime) + "ns");
 		
 		// multiply all contents
 		product = ints[0];

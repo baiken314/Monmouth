@@ -1,4 +1,4 @@
-package edu.monmouth.s1175816.names
+package edu.monmouth.cs250.instructor.names
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,25 +7,31 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import android.widget.AdapterView.OnItemClickListener
 
 class MainActivity : AppCompatActivity() {
 
-    var names = arrayOf("Bradley", "Brandon", "Jason", "Kevin", "Tyler", "Noah", "Tom", "Rob")
+    var students = arrayOf("Adam", "Amy", "Bill", "Bob", "Cyril", "David",
+        "Erik", "Frank", "Gail", "Jill", "Kathy", "Kirk", "Mack", "Mary",
+        "Zack")
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = ArrayAdapter(this, R.layout.listview_item, names)
+        val adapter = ArrayAdapter (this, R.layout.listview_item, students)
 
-        val nameListView: ListView = findViewById(R.id.lstNames)
-        nameListView.adapter = adapter
+        val studentListView: ListView = findViewById(R.id.namesList)
+        studentListView.adapter = adapter
 
-        nameListView.onItemClickListener = object: AdapterView.OnItemClickListener {
+        studentListView.onItemClickListener = object : OnItemClickListener {
             override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val itemValue = nameListView.getItemAtPosition(position) as String
-                Toast.makeText(applicationContext, "Position: $position\nItem value: $itemValue", Toast.LENGTH_SHORT).show()
+                // value of item that is clicked
+                val itemValue = studentListView.getItemAtPosition(position) as String
+
+                // Toast the values
+                Toast.makeText(applicationContext, "Position :$position\nItem Value : $itemValue", Toast.LENGTH_SHORT).show()
             }
         }
 

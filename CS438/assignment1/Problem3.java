@@ -19,11 +19,9 @@ public class Problem3 {
 		ArrayProductThread[] apts = new ArrayProductThread[froms.length];
 		
 		for (int i = 0; i < froms.length; i++) {
-			apts[i] = new ArrayProductThread(
-				"T" + i,
+			apts[i] = new ArrayProductThread("T" + i,
 				Arrays.copyOfRange(a, froms[i], tos[i]),
-				Arrays.copyOfRange(b, froms[i], tos[i])
-				);
+				Arrays.copyOfRange(b, froms[i], tos[i]));
 			apts[i].start(); // start threads
 		}
 		

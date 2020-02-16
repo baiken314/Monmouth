@@ -1,5 +1,8 @@
 1.
 Use strict requires the author of a program to explicitly state that something is a variable with 'my'. This can prevent confusion in the event of a typo or a similar error. Additionally, the author cannot reuse the same variable name for different value types, such as numbers and hashes. and the author cannot use bareword identifiers improperly, like doing '$string = hello'. Overall, it makes the author be more explicit in how they use variables.
+https://perldoc.perl.org/strict.html
+https://perlmaven.com/strict
+https://perlmaven.com/variable-declaration-in-perl
 
 2.
 # prob2.pl, do perlex1.pl with a hash
