@@ -13,23 +13,14 @@ use strict;
 use warnings;
 use WWW::Mechanize;
 
-##### SUBROUTINES #####
-
-sub help {
-	my $message = "
+# show help if args incorrect or if requested, exit
+my $number_of_args = $#ARGV + 1;
+if (not $number_of_args == 2 or $ARGV[0] =~ /-h/) {
+	print "
 Usage: perl -w <term> <room number>
 	where <term> is a quoted string
 	where <room number> is a quoted string
 	";
-	print $message;
-}
-
-##### MAIN #####
-
-# show help if args incorrect or if requested, exit
-my $number_of_args = $#ARGV + 1;
-if (not $number_of_args == 2 or $ARGV[0] =~ /-h/) {
-	help;
 	exit 1;
 }
 
@@ -60,66 +51,59 @@ $page =~ s/\R//g; # remove all newline characters
 # gets all table column elements in the page
 my @tds = split /<td>/, $page;
 
-# stores information on all courses
-my %course_schedule_hash;
-my %course_room_hash;
+my %course_hash; # stores all information on courses
 
-# 0 is default value, until changed to add to course_hash
+# 0 is default value until changed to add to course_hash
 my $current_course = 0;
 my $current_schedule = 0;
 my $current_room = 0;
 
-# regex check each <td> line
+# regex check each <td> line and collect information on every course
 foreach my $td (@tds) {
 	
 	# get schedule
 	if ($td =~ /[0-9]+:[0-9]+[A-Z]+/) {
-		my @schedule = $td =~ 
+		my @schedule_array = $td =~ 
 			/[A-Z ]+ +[0-9]+:[0-9]+[A-Z]+ +[0-9]+:[0-9]+[A-Z]+/g;
-		$current_schedule = join "\n\t\t", @schedule;
+		$current_schedule = join "\n\t\t", @schedule_array;
 	}
 	
 	# print course name
 	if ($td =~ /[A-Z]+-[A-Z0-9]+-[A-Z0-9]+/) {
-		my @course_name = $td =~ /[A-Z]+-[A-Z0-9]+-[A-Z0-9]+/g;
-		$current_course = join "", @course_name;
+		my @course_array = $td =~ /[A-Z]+-[A-Z0-9]+-[A-Z0-9]+/g;
+		$current_course = join "", @course_array;
 	}
 	
 	# get room number
 	if ($td =~ /[A-Z]+ +[0-9]+[A-Z]*/) {
-		my @room = $td =~ /[A-Z]+ +[0-9]+[A-Z]*/g;
-		$current_room = $room[0];
+		my @room_array = $td =~ /[A-Z]+ +[0-9]+[A-Z]*/g;
+		$current_room = $room_array[0];
 		$current_room =~ s/\s+/ /g;
 	}
 	
-	# wait until all information is available
-	# add course information to hashes
+	# add course info to hashes when not 0
 	if ($current_course and $current_schedule and $current_room) {
-		$course_schedule_hash{$current_course} = $current_schedule;
-		$course_room_hash{$current_course} = $current_room;
+		$course_hash{$current_course}{room} = $current_room;
+		$course_hash{$current_course}{schedule} = $current_schedule;
 		# reset values so they are false
-		($current_course, $current_schedule, $current_room) = 
-			(0, 0, 0);
+		($current_course, $current_schedule, $current_room) = (0, 0, 0);
 	}
 	
 }
 
+# get courses only in specified room
 my @courses; # array for all classes in same room
 
 # search for all classes in a room, push to courses
-foreach my $key (sort keys %course_room_hash) {
-	if ($course_room_hash{$key} =~ $room) {
-		push @courses, $key;
-	}
+foreach my $key (sort keys %course_hash) {
+	if ($course_hash{$key}{room} =~ $room) { push @courses, $key; }
 }
 
 # print output of the schedule
 print "Schedule for $room:\n";
 if ($#courses + 1 > 0) { # if course found
 	foreach my $course (@courses) {
-		print "$course\t$course_schedule_hash{$course}\n";
+		print "$course\t$course_hash{$course}{schedule}\n";
 	}
 }
-else {
-	print "No results were found for this room.\n";
-}
+else { print "No results were found for this room.\n"; }
