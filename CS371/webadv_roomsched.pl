@@ -18,7 +18,6 @@ use WWW::Mechanize;
 sub help {
 	my $message = "
 Usage: perl -w <term> <room number>
-
 	where <term> is a quoted string
 	where <room number> is a quoted string
 	";
@@ -62,8 +61,8 @@ $page =~ s/\R//g; # remove all newline characters
 my @tds = split /<td>/, $page;
 
 # stores information on all courses
-# key->course name, value->course information
-my %course_hash;
+my %course_schedule_hash;
+my %course_room_hash;
 
 # 0 is default value, until changed to add to course_hash
 my $current_course = 0;
@@ -71,14 +70,13 @@ my $current_schedule = 0;
 my $current_room = 0;
 
 # regex check each <td> line
-# only performs action if course information is present
 foreach my $td (@tds) {
 	
 	# get schedule
 	if ($td =~ /[0-9]+:[0-9]+[A-Z]+/) {
 		my @schedule = $td =~ 
 			/[A-Z ]+ +[0-9]+:[0-9]+[A-Z]+ +[0-9]+:[0-9]+[A-Z]+/g;
-		$current_schedule = join "\n\t\t\t\t\t", @schedule;
+		$current_schedule = join "\n\t\t", @schedule;
 	}
 	
 	# print course name
@@ -94,15 +92,12 @@ foreach my $td (@tds) {
 		$current_room =~ s/\s+/ /g;
 	}
 	
-	# combine room number and schedule into one information variable
-	# add this to course_hash
-	# courses that do not have a course number are not added
+	# wait until all information is available
+	# add course information to hashes
 	if ($current_course and $current_schedule and $current_room) {
-		# add to hash	
-		my $course_information = join ":\t\t\t", ($current_room,
-			$current_schedule);
-		$course_hash{$current_course} = $course_information;
-		# reset values
+		$course_schedule_hash{$current_course} = $current_schedule;
+		$course_room_hash{$current_course} = $current_room;
+		# reset values so they are false
 		($current_course, $current_schedule, $current_room) = 
 			(0, 0, 0);
 	}
@@ -112,28 +107,17 @@ foreach my $td (@tds) {
 my @courses; # array for all classes in same room
 
 # search for all classes in a room, push to courses
-foreach my $key (sort keys %course_hash) {
-	if ($course_hash{$key} =~ $room) {
+foreach my $key (sort keys %course_room_hash) {
+	if ($course_room_hash{$key} =~ $room) {
 		push @courses, $key;
 	}
 }
 
-# format and print output of the schedule
+# print output of the schedule
 print "Schedule for $room:\n";
 if ($#courses + 1 > 0) { # if course found
 	foreach my $course (@courses) {
-		# get array of course hash information
-		# [0] room number
-		# [1] schedule
-		my @course_hash_information = split /:\t\t\t/, 
-			$course_hash{$course};
-		# make new schedule string
-		my @course_hash_schedule = split /\n\t\t\t\t\t/, 
-			$course_hash_information[1];
-		my $course_hash_schedule_string = join "\n\t\t",
-			@course_hash_schedule;
-		# display schedule information
-		print "$course\t$course_hash_schedule_string\n";
+		print "$course\t$course_schedule_hash{$course}\n";
 	}
 }
 else {
