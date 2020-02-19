@@ -64,7 +64,7 @@ foreach my $td (@tds) {
 	# get schedule
 	if ($td =~ /[0-9]+:[0-9]+[A-Z]+/) {
 		my @schedule_array = $td =~ 
-			/[A-Z ]+ +[0-9]+:[0-9]+[A-Z]+ +[0-9]+:[0-9]+[A-Z]+/g;
+			/[A-Z]* +[A-Z]+ +[0-9]+:[0-9]+[A-Z]+ +[0-9]+:[0-9]+[A-Z]+/g;
 		$current_schedule = join "\n\t\t", @schedule_array;
 	}
 	
@@ -75,9 +75,10 @@ foreach my $td (@tds) {
 	}
 	
 	# get room number
-	if ($td =~ /[A-Z]+ +[0-9]+[A-Z]*/) {
-		my @room_array = $td =~ /[A-Z]+ +[0-9]+[A-Z]*/g;
+	if ($td =~ /[A-Z]+ +[0-9A-Z]*[A-Z]*/) {
+		my @room_array = $td =~ /[A-Z]+ +[0-9A-Z]*[A-Z]* *[^MTWHF ]+/g;
 		$current_room = $room_array[0];
+		print "@room_array\n";
 		$current_room =~ s/\s+/ /g;
 	}
 	

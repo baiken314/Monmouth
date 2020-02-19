@@ -1,0 +1,11 @@
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\bin\Debug\Desking Cost Calculator.exe.config
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\bin\Debug\Desking Cost Calculator.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\bin\Debug\Desking Cost Calculator.pdb
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\bin\Debug\Desking Cost Calculator.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\obj\Debug\Desking Cost Calculator.vbprojAssemblyReference.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\obj\Debug\Desking_Cost_Calculator.frmDecking.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\obj\Debug\Desking_Cost_Calculator.Resources.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\obj\Debug\Desking Cost Calculator.vbproj.GenerateResource.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\obj\Debug\Desking Cost Calculator.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\obj\Debug\Desking Cost Calculator.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Decking Cost Calculator\Desking Cost Calculator\Desking Cost Calculator\obj\Debug\Desking Cost Calculator.pdb
