@@ -78,7 +78,6 @@ foreach my $td (@tds) {
 	if ($td =~ /[A-Z]+ +[0-9A-Z]*[A-Z]*/) {
 		my @room_array = $td =~ /[A-Z]+ +[0-9A-Z]*[A-Z]* *[^MTWHF ]+/g;
 		$current_room = $room_array[0];
-		print "@room_array\n";
 		$current_room =~ s/\s+/ /g;
 	}
 	
