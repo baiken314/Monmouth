@@ -17,7 +17,7 @@ use WWW::Mechanize;
 my $number_of_args = $#ARGV + 1;
 if (not $number_of_args == 2 or $ARGV[0] =~ /-h/) {
 	print "
-Usage: perl -w <term> <room number>
+Usage: perl -w webadv_roomsched.pl <term> <room number>
 	where <term> is a quoted string
 	where <room number> is a quoted string
 	";
@@ -52,26 +52,42 @@ $page =~ s/\R//g; # remove all newline characters
 # gets all table column elements in the page
 my @tds = split /<td>/, $page;
 
-my %course_hash; # stores all information on courses
+my $current_course; # keeps index on current course in the foreach
+my $found_course = 0;
 
-my $current_course;
+print "Schedule for $room:\n";
 
 # regex check each <td> line and collect information on every course
 foreach my $td (@tds) {
 	
 	# course name
-	if ($td =~ /[A-Z]+-[A-Z0-9]+-[A-Z0-9]+/) {
-		my @course_array = $td =~ /[A-Z]+-[A-Z0-9]+-[A-Z0-9]+/g;
-		$current_course = $course_array[0];
+	if ($td =~ /[A-Z]+-[0-9]+[A-Z]?-[A-Z0-9]+/) {
+		my @course_array = $td =~ /[A-Z]+-[0-9]+[A-Z]?-[A-Z0-9]+/g;
+		$current_course =  $course_array[0];
 	}
 	
-	# get schedule and room
-	if ($current_course) {
-		# split 
-		foreach $br (split /<br>/ $td) {
-			
+	# get schedule and room, print course output
+	if ($td =~ /[MTWHF]+\s+[0-9]+:[0-9]+[AMP]+/ and $current_course) {
+		# split classes with extra sections
+		foreach my $br (split /<br>/, $td) {
+			# get room number, type, and days of week
+			(my $current_room, my $current_days) = 
+				$br =~ /[A-Z]+\s+[A-Z0-9]+\s+/g;
+			# get course time
+			(my $current_schedule) = 
+				$br =~ /[0-9]+:[0-9]+[APM]+\s+[0-9]+:[0-9]+[APM]+/g;
+			$current_room =~ s/\s+/ /g; # remove extra spaces
+			# print course information if in $room
+			if ($current_room =~ $room) {
+				print "$current_course\t$current_days$current_schedule\n";
+				$found_course = 1; # set that a course has been found
+			}
 		}
-		$current_couse = 0;
+		# reset $current_course, do not check more $td s
+		$current_course = 0;
 	}
 	
 }
+
+# print if no course found
+if (not $found_course) { print "No courses were found for $room.\n"; }
