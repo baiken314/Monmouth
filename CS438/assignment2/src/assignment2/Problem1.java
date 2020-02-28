@@ -4,37 +4,45 @@ public class Problem1 {
 
     public static void main(String[] args) throws InterruptedException {
 
-        int from = 27;
-        int to = 100;
+        int from = 1;
+        int to = 200000;
 
-        int numberOfThreads = 4;
+        int numberOfThreads = 128;
         int subLength = (to - from + 1) / numberOfThreads;
 
         PrimeNumberThread[] pnthreads = new PrimeNumberThread[numberOfThreads];
 
+        // setup and create threads
         for (int i = 0; i < numberOfThreads; i++) {
-            int start = subLength * i + from;
-            int end = (i < numberOfThreads - 1) ? subLength * (i + 1) + from - 1 : to;
-            pnthreads[i] = new PrimeNumberThread(start, end);
+            int subFrom = subLength * i + from;
+            int subTo = (i < numberOfThreads - 1) ? subFrom + subLength - 1 : to;
+            pnthreads[i] = new PrimeNumberThread("Thread-" + i, subFrom, subTo);
         }
 
+        long startTime = System.currentTimeMillis();
+
+        // start threads
         for (int i = 0; i < numberOfThreads; i++) {
             pnthreads[i].start();
         }
 
+        // wait for all threads to finish
         for (int i = 0; i < numberOfThreads; i++) {
             pnthreads[i].join();
         }
 
-        int totalNumberOfPrimes = 0;
+        int totalNumberOfPrimeNumbers = 0;
 
+        // add all amounts of primes
         for (int i = 0; i < numberOfThreads; i++) {
-            totalNumberOfPrimes += pnthreads[i].getNumberOfPrimeNumbers();
+            totalNumberOfPrimeNumbers += pnthreads[i].getNumberOfPrimeNumbers();
             //System.out.println(pnthreads[i].primeNumbers.toString());
         }
 
-        System.out.println("Total number of prime numbers: " + totalNumberOfPrimes);
-        System.out.println("END");
+        long endTime = System.currentTimeMillis() - startTime;
+
+        System.out.println("Total number of prime numbers: " + totalNumberOfPrimeNumbers);
+        System.out.println("END after " + endTime / 1000f + "s");
 
     }
 
