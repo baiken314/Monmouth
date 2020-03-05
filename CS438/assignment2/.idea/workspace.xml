@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="46d04a0e-54ae-4a3d-9dda-f38a5cf95117" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../BankAccount/BankAccount.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assignment2/io_burst_thread/IOThreadTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assignment2/problem1/PrimeNumberThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assignment2/problem2/MatrixThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assignment2/problem2/Problem2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assignment2/problem3/ColumnThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assignment2/problem3/Problem3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assignment2/problem3/RowThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CS250/StudentList/app/src/main/java/edu/monmouth/s1175816/studentlist/OnItemClickListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../CS250/StudentList/app/src/main/java/edu/monmouth/s1175816/studentlist/OnItemClickListener.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CS371/Python/pyex1.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../CS371/Python/pyex1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assignment1.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Speedup.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Speedup.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/assignment2/MatrixThread.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/assignment2/PrimeNumberThread.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/assignment2/Problem1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment2/MatrixThread.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment2/PrimeNumberThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment2/io_burst_thread/IOPrimeNumberThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment2/Problem1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment2/problem1/Problem1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../hello_runnable/HelloRunnableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hello_runnable/HelloRunnableTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../hello_thread/HelloThreadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../hello_thread/HelloThreadTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="46d04a0e-54ae-4a3d-9dda-f38a5cf95117" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
