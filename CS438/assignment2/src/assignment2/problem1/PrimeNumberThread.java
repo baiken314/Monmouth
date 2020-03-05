@@ -1,4 +1,4 @@
-package assignment2;
+package assignment2.problem1;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,8 +10,6 @@ public class PrimeNumberThread extends Thread {
     public ArrayList<Integer> primeNumbers;
 
     public static Random random = new Random(); // used to simulate random waiting time
-    public static final int MIN_WAIT = 1;
-    public static final int MAX_WAIT = 5;
 
     public PrimeNumberThread(String name, int begin, int end) {
         setName(name);
@@ -38,18 +36,9 @@ public class PrimeNumberThread extends Thread {
             if (isPrime) {
                 numberOfPrimeNumbers += 1;
                 primeNumbers.add(i);
-                randomWait();
             }
         }
         System.out.println(getName() + " [" + begin + "," + end + "] finished with " + numberOfPrimeNumbers + " prime number(s).");
-    }
-
-    public void randomWait() {
-        try {
-            int waitTime = random.nextInt(MAX_WAIT - MIN_WAIT + 1) + MIN_WAIT;
-            Thread.sleep(waitTime);
-        }
-        catch (Exception e) { e.printStackTrace(); }
     }
 
 }

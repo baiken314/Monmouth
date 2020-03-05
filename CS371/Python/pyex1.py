@@ -12,4 +12,4 @@ if x == 1:
 	# block 1
 	print('in block 1')
 # block 0
-print('in block 0')
+print('in block 0', end='!!')

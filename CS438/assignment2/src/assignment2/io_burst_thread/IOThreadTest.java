@@ -1,22 +1,22 @@
-package assignment2;
+package assignment2.io_burst_thread;
 
-public class Problem1 {
+public class IOThreadTest {
 
     public static void main(String[] args) throws InterruptedException {
 
         int from = 1;
-        int to = 200000;
+        int to = 50000;
 
         int numberOfThreads = 128;
         int subLength = (to - from + 1) / numberOfThreads;
 
-        PrimeNumberThread[] pnthreads = new PrimeNumberThread[numberOfThreads];
+        IOPrimeNumberThread[] pnthreads = new IOPrimeNumberThread[numberOfThreads];
 
         // setup and create threads
         for (int i = 0; i < numberOfThreads; i++) {
             int subFrom = subLength * i + from;
             int subTo = (i < numberOfThreads - 1) ? subFrom + subLength - 1 : to;
-            pnthreads[i] = new PrimeNumberThread("Thread-" + i, subFrom, subTo);
+            pnthreads[i] = new IOPrimeNumberThread("Thread-" + i, subFrom, subTo);
         }
 
         long startTime = System.currentTimeMillis();

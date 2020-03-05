@@ -1,0 +1,11 @@
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\obj\Debug\WeightApp.vbprojAssemblyReference.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\obj\Debug\WeightApp.Form1.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\obj\Debug\WeightApp.Resources.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\obj\Debug\WeightApp.vbproj.GenerateResource.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\bin\Debug\WeightApp.exe.config
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\bin\Debug\WeightApp.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\bin\Debug\WeightApp.pdb
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\bin\Debug\WeightApp.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\obj\Debug\WeightApp.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\obj\Debug\WeightApp.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\WeightApp\WeightApp\WeightApp\obj\Debug\WeightApp.pdb
