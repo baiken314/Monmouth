@@ -35,6 +35,7 @@ public class AccountHolder implements Runnable {
                     bankAccount.withdraw(balance);
                 }
             }
+            System.out.println("Account holder " + id + " has completed their transactions");
         }
         catch (Exception e) { e.printStackTrace(); }
     }

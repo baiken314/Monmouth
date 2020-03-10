@@ -21,7 +21,7 @@ public class PrimeNumberThread extends Thread {
     public int getNumberOfPrimeNumbers() { return numberOfPrimeNumbers; }
 
     public void run() {
-        System.out.println(getName() + " [" + begin + "," + end + "] started.");
+        System.out.println(getName() + " [" + begin + "," + end + "] started!");
         boolean isPrime;
         // check all numbers in range
         for (int i = Math.max(begin, 2); i <= end; i++) {
@@ -38,7 +38,11 @@ public class PrimeNumberThread extends Thread {
                 primeNumbers.add(i);
             }
         }
-        System.out.println(getName() + " [" + begin + "," + end + "] finished with " + numberOfPrimeNumbers + " prime number(s).");
+        System.out.println(getName() + " [" + begin + "," + end + "] completed!");
+    }
+
+    public void print() {
+        System.out.println(getName() + " [" + begin + "," + end + "] : prime numbers found = " + primeNumbers.toString());
     }
 
 }

@@ -6,9 +6,9 @@ public class Problem3 {
 
         int[][] matrix = {
                 {3, 7, 2, 3, 2},
-                {3, 2, 9, 2, 2},
-                {6, 5, 6, 4, 8},
-                {5, 2, 2, 3, 2} };
+                {8, 6, 4, 8, 8},
+                {6, 6, 3, 2, 8},
+                {5, 6, 2, 3, 2} };
 
         RowThread[] rowThreads = new RowThread[matrix.length];
         ColumnThread[] columnThreads = new ColumnThread[matrix[0].length];
@@ -55,7 +55,7 @@ public class Problem3 {
         // loop through mins of each row and maxs of each col
         boolean saddleExists = false;
         for (int row = 0; row < rowThreads.length; row++) {
-            if (saddleExists) { break; }
+            if (saddleExists) break;
             for (int col = 0; col < columnThreads.length; col++) {
                 if (rowThreads[row].getMin() == columnThreads[col].getMax()) {
                     System.out.println("The saddle point is in M[" + row + "," + col + "] = " + rowThreads[row].getMin());
@@ -72,3 +72,12 @@ public class Problem3 {
     }
 
 }
+/**
+ Matrix M
+ 3	7	2	3	2
+ 3	2	9	2	2
+ 6	5	6	4	8
+ 5	2	2	3	2
+
+ The saddle point is in M[2,3] = 4
+ */

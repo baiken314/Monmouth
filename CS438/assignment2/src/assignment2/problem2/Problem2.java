@@ -69,3 +69,20 @@ public class Problem2 {
     }
 
 }
+/**
+ Matrix A
+ 3	7
+ 3	2
+ 6	5
+ 4	8
+
+ Matrix B
+ 3	7	2
+ 3	2	9
+
+ Matrix C
+ 30	35	69
+ 15	25	24
+ 33	52	57
+ 36	44	80
+ */

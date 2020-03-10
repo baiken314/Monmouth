@@ -5,7 +5,7 @@ public class BankAccountTest {
     public static void main(String[] args) throws InterruptedException {
 
         int initialBalance = 100000;
-        BankAccount bankAccount = new BankAccountNTS(initialBalance);
+        BankAccount bankAccount = new BankAccountAtomic(initialBalance);
         int numberOfHolders = 20;
         int amount = 100;
         int numberOfTransactions = 6;

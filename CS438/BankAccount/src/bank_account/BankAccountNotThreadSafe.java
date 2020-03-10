@@ -1,8 +1,8 @@
 package bank_account;
 
-public class BankAccountNTS extends BankAccount {
+public class BankAccountNotThreadSafe extends BankAccount {
 
-    public BankAccountNTS(int balance) {
+    public BankAccountNotThreadSafe(int balance) {
         super(balance);
     }
 
