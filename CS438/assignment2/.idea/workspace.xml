@@ -2,26 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46d04a0e-54ae-4a3d-9dda-f38a5cf95117" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../BankAccount/src/bank_account/BankAccountAtomic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CS250/StudentList/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../CS250/StudentList/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CS250/StudentList/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../CS250/StudentList/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CS250/StudentList/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../CS250/StudentList/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BankAccount/out/production/BankAccount/bank_account/AccountHolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/../BankAccount/out/production/BankAccount/bank_account/AccountHolder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BankAccount/out/production/BankAccount/bank_account/BankAccountTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../BankAccount/out/production/BankAccount/bank_account/BankAccountTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BankAccount/src/bank_account/AccountHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BankAccount/src/bank_account/AccountHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BankAccount/src/bank_account/BankAccountNTS.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BankAccount/src/bank_account/BankAccountNotThreadSafe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BankAccount/src/bank_account/BankAccountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BankAccount/src/bank_account/BankAccountTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/assignment2/problem1/PrimeNumberThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/assignment2/problem1/PrimeNumberThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/assignment2/problem1/Problem1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/assignment2/problem1/Problem1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/assignment2/problem3/ColumnThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/assignment2/problem3/ColumnThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/assignment2/problem3/RowThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/assignment2/problem3/RowThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment2/problem1/PrimeNumberThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment2/problem1/PrimeNumberThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment2/problem1/Problem1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment2/problem1/Problem1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment2/problem2/Problem2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment2/problem2/Problem2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment2/problem3/ColumnThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment2/problem3/ColumnThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment2/problem3/Problem3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment2/problem3/Problem3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assignment2/problem3/RowThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/assignment2/problem3/RowThread.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +29,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="full.screen.before.presentation.mode" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager" selected="Application.Problem3">
     <configuration name="IOThreadTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -126,6 +109,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="709" y="361" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1583879206500">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="709" y="361" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1583879206500" />
     <state x="739" y="162" key="FileChooserDialogImpl" timestamp="1583450521338">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -162,6 +149,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1877" height="352" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1582848436374" />
+    <state x="461" y="167" key="SettingsEditor" timestamp="1583879185829">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="461" y="167" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1583879185829" />
     <state x="342" y="145" key="new project wizard" timestamp="1583501731696">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
