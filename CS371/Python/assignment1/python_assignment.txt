@@ -1,0 +1,24 @@
+1)
+a)
+Intended output:
+verylongvarname: 11
+
+Actual output:
+verylongvarname: 10
+
+b)
+Here, the weak typing system did not catch the error made by the programmer because it is syntactically correct, because the variable verylongvarnaem is initialized as a new variable. In strong typed languages like C or Java, this would be caught as a syntax error because by editing a variable that was never declared will return an exception.
+
+2)
+a)
+Python is a dynamically typed language, so by nature it does not have an equivalent 'use strict;' mode as Perl does. Misnaming a variable will initialize a new one. You can import typing and declare variables as certain types, but at runtime any misnamed variables will be initialized.
+
+b)
+python -W all progname.py is Python's version of Perl's -w argument to show warnings when running a program.
+
+c)
+A Python programmer would have to be more careful when editing variables, however, there are ways to prevent accidentally initializing a new variable. If the line was replaced to be verylongvarnaem += 1, it would return an error at runtime or in an IDE because that variable does not exist and the error would be caught.
+
+sources
+ - https://docs.python.org/3/library/typing.html
+ - https://medium.com/@ageitgey/learn-how-to-use-static-type-checking-in-python-3-6-in-10-minutes-12c86d72677b
