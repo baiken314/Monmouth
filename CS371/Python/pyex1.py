@@ -1,5 +1,6 @@
 # Bradley Aiken
 # pyex1.py
+# syntax example
 
 # block 0
 x = 1
