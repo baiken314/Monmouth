@@ -1,0 +1,102 @@
+CS-371: Scripting Languages
+
+Spring 2020
+Python Quiz
+
+Deadline: Monday, 3/30/2020, 11:59pm
+
+Dropbox 3 programs.
+
+*******************************************************************************
+
+Problem 1:
+(10 points)
+
+Get the input file for this problem at http://tinyurl.com/gvjcmy8. Save it as
+'sp08cs'. It contains html code extracted from webadvisor's CompSci Dept. time
+table from a past semester.
+
+Write and save the program 'prob1.py' to extract and print the 32 CS class sections
+from the input, i.e., CS-175-01, CS-175-02, ..., CS-699-ROS3.
+
+Use Python regular expression handling.
+
+Dropbox 'prob1.py'.
+
+References:
+
+   . Section of the Python notes on "Python & regular expressions"
+   . Python exercise 7 - html parsing
+
+*******************************************************************************
+
+
+Problem 2:
+(10 points)
+
+Write 'prob2.py' to output the total number of words in the 'english.sorted.python'
+file that contain consecutive Cs, case insensitive, e.g., peccadillo, McCoy.
+
+Do not display the words; display only the total number of words that
+contain consecutive Cs.
+
+Your program must use Python regular expression matching.
+
+Dropbox 'prob2.py'.
+
+References:
+
+   . Section of the Python notes on "Python & regular expressions"
+   . https://docs.python.org/3/library/re.html
+
+
+*******************************************************************************
+
+
+Problem 3:
+(10 points)
+
+Recall that in Python exercise 4 (word length occurrences), no key value pair for a
+word length of 26 was created since no 26-character words exist in
+english.sorted.python. Rewrite Python exercise 4 to ensure that no gaps exist in the
+word length occurrences table that is output, that is, if ANY particular word length
+is missing (NOT just 26), it should be inserted into the output with a 0 for the
+Occurrences value:
+
+   (Sample output)
+   Word Length             Occurrences
+   ...                     ...
+   ...                     ...
+   24                      3
+   25                      1
+   26                      0 (<------ Line of output inserted by revised program)
+   27                      1
+   ...                     ...
+   ...                     ...
+
+Dropbox 'prob3.py'.
+
+If needed, you can use my version of pyex4.py to start:
+
+   # pyex4.py - word length occurrences in english.sorted
+
+   # create input file object
+   input_file = open('english.sorted.python', 'r')
+
+   # declare empty dictionary
+   wordlengths = {}
+
+   # iterate through lines of input_file
+   for word in input_file.readlines():
+      length = len(word) - 1 # exclude \n at end of word
+      
+      if (length in wordlengths):  # if the length key is found in wordlengths
+         wordlengths[length] += 1 # increment value in wordlengths
+      else:
+         wordlengths[length] = 1  # initialize new value to 1 (new key: value pair)
+         
+   # print word lengths & occurrences
+   print("Word Length\t\tOccurrences")
+
+   for length in wordlengths.keys():
+      print('%i\t\t\t%i' % (length, wordlengths[length]) )
