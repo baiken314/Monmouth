@@ -1,0 +1,32 @@
+Point of Sale Register
+A101
+599.99
+1
+Outside Signage
+D208
+49.99
+5
+Used Food Truck
+D209
+54000.00
+1
+Storage Freezers
+D210
+799.99
+3
+Stove
+D211
+1959.99
+2
+Office Computers
+E101
+529.99
+1
+Picnic Tables
+F310
+345.00
+8
+Refrigerators
+F311
+829.99
+2

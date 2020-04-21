@@ -1,0 +1,12 @@
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\obj\Debug\Deprecation.vbprojAssemblyReference.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\obj\Debug\Deprecation.frmDepreciation.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\obj\Debug\Deprecation.frmDisplayInventory.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\obj\Debug\Deprecation.Resources.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\obj\Debug\Deprecation.vbproj.GenerateResource.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\bin\Debug\Deprecation.exe.config
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\bin\Debug\Deprecation.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\bin\Debug\Deprecation.pdb
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\bin\Debug\Deprecation.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\obj\Debug\Deprecation.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\obj\Debug\Deprecation.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\Deprecation\Deprecation\obj\Debug\Deprecation.pdb
