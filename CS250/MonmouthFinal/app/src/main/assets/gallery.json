@@ -1,0 +1,29 @@
+{
+    "photos": [
+        {
+            "name": "Monmouth University Library",
+            "url": "https://library.monmouth.edu/wp-content/uploads/sites/28/2019/08/Campus-Scenes-Aerials-Furman_20170427_MF_03.jpg",
+            "description": "The Guggenheim Mansion was originally the summer home of Murry and Leonie Guggenheim. The building, completed in 1905, is built in the dignified neoclassical idiom typical of the Ecole des Beaux Arts, but the general effect is lightened by a white stucco exterior, wide arcades curving out from the east and west sides of the buildings, and a predominantly white interior. The ceilings on the first floor are lofty and numerous floor-to-ceiling doors and windows allow summer breezes to cool the rooms. The billiard room and the living room are paneled in chestnut and walnut respectively. A marble floored central corridor provides access to all the rooms on the first floor. Photographs of the cottage interior in its days as a residence show that it was decorated with restrained good taste rather than extravagance."
+        },
+        {
+            "name": "Woodrow Wilson Hall",
+            "url": "https://www.usnews.com/dims4/USNEWS/5693959/17177859217/resize/800x540%3E/quality/85/?url=https%3A%2F%2Fmedia.beam.usnews.com%2Fee%2F13f5404eb69303bbf2b1a2b190bda3%2Fcollege-photo_26423.jpg",
+            "description": "Formerly known as Shadow Lawn mansion, Wilson Hall was built in 1929 at a cost of $10.5 million as the private residence of former F.W. Woolworth Co. president Hubert Templeton Parson and his wife Maysie. Philadelphia architect Horace Trumbauer and his assistant Julian Abele, the first African-American professional architect, designed the mansion in the neoclassical French tradition. The construction incorporates limestone quarried in Bedford, Indiana (also used in the Empire State Building), steel, concrete, and 50 varieties of Italian marble."
+        },
+        {
+            "name": "Leon Hess Business School",
+            "url": "https://www.monmouth.edu/business-school/wp-content/uploads/sites/425/2018/05/BeyHallAtNight.jpg",
+            "description": "The Leon Hess Business School of Monmouth University traces its origins to the formation of the college, when business courses were an integral part of the curriculum.In 1956, then Monmouth Junior College received authorization from the New Jersey Department of Education to initiate four-year baccalaureate curricula and confer the degrees of bachelor of arts and bachelor of science, including business administration. In 1967, authorization to confer graduate degrees at the master’s level was received. The Master of Business Administration degree was approved in 1971. In 1995, Monmouth College was granted university status and changed its name to Monmouth University."
+        },
+        {
+            "name": "Edison Science Building",
+            "url": "https://dz0zjhi21dz2t.cloudfront.net/media/80064/photos/20807/2048.jpg",
+            "description": "Howard Hall and the Thomas A. Edison Science Hall house many traditional and seminar classrooms, as well as computer labs which are excellent for provider trainings. Classrooms hold up to 40 people. Labs can seat up to 35 people."
+        },
+        {
+            "name": "Pollak Theatre",
+            "url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.monmouth.edu%2Fmca%2Fwp-content%2Fuploads%2Fsites%2F568%2F2018%2F06%2FPollak-Theatre-for-venues-page.jpg&f=1&nofb=1",
+            "description": "A recently renovated 700 seat theatre that presents live music, theatre and dance by national touring artists such as Rosanne Cash, Jason Isbell, L.A. Theatreworks, and Ailey II Dance Company. In addition, the Pollak Theatre also screens HD broadcasts of the MET Opera, National Theatre of London, and The Bolshoi Ballet, along with children’s theater and other programming presented by the Center for the Arts."
+        }
+    ]
+}

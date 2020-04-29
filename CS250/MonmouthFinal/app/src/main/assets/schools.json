@@ -1,0 +1,67 @@
+{
+    "schools": [
+        {
+            "name": "Leon Hess Business School",
+            "about": "With a degree from the Leon Hess Business School, students gain the competitive edge through small classes that promote innovative thinking and build leadership skills. It’s not just about learning the fundamentals of business —it’s about learning how to succeed in an increasingly globalized economy. All business administration programs are developed, taught, and regularly updated by dedicated faculty members who have the “real-world” expertise that will help you meet today’s – and tomorrow’s – challenges. The Leon Hess Business School is accredited by AACSB International — the Association to Advance Collegiate Schools of Business. AACSB accreditation is the hallmark of excellence in business education, and has been earned by less than 5 percent of the world’s business programs.",
+            "departments": [
+                "Accounting",
+                "Economics, Finance, and Real Estate",
+                "Management and Decision Sciences",
+                "Marketing and International Business",
+                "Master of Business Administraion"
+            ]
+        },
+        {
+            "name": "School of Education",
+            "about": "The School of Education is dedicated to the preparation of educational professionals, including teachers, administrators, speech pathologists, counselors and reading specialists. Our programs combine sustained, in-depth clinical experiences with a rigorous curriculum that includes the latest and most powerful ideas from the field. During those experiences, future professionals use 21st century skills to make an immediate difference in local schools and communities. Graduates from the School of Education are dedicated to the highest ideals of their profession; engaged in unceasing professional growth and development; and committed to meeting the needs of diverse populations in their schools and communities. They make a life long difference.",
+            "departments": [
+                "Curriculum and Instruction",
+                "Educational Counseling and Leadership",
+                "Special Education",
+                "Speech-Language Pathology"
+            ]
+        },
+        {
+            "name": "Wayne D. McMurray School of Humanities and Social Sciences",
+            "about": "The School of Humanities and Social Sciences is dedicated to providing a balance of a rich, comprehensive, liberal arts education with the practical concerns of finding gainful employment. Monmouth University remains committed to experiential education and personalized attention that affords students both a breadth and depth of experience. The humanities give critical insight into aspects of thought, values, and achievement in all times and places. The social sciences contribute an understanding of people living in various cultural and social contexts. Both areas provide a foundation for major courses of study that prepare students for productiveness and responsibility in both their careers and civic life.",
+            "departments": [
+                "Art and Design",
+                "Communication",
+                "Criminal Justice",
+                "English",
+                "History and Anthropology",
+                "Music and Theatre Arts",
+                "Political Science and Sociology",
+                "Psychology",
+                "Professional Counseling",
+                "World Languages and Cultures"
+            ]
+        },
+        {
+            "name": "Marjorie K. Unterberg School of Nursing and Health Studies",
+            "about": " The Marjorie K. Unterberg School of Nursing and Health Studies offers programs for individuals at all levels of education and career experience interested in healthcare. Students and professionals can take advantage of the University’s health studies, health and physical education, physician assistant, pre-licensure, RN to BSN, RN to MSN, MSN Bridge, RN to MSN Direct, Doctor of Nursing Practice, post-master’s and post-baccalaureate certificates, and continuing education programs. The university also offers a Physician Assistant (M.S.) graduate program. The baccalaureate degree program in nursing/master’s degree program in nursing/Doctor of Nursing Practice program and post-graduate APRN certificate programs at Monmouth University are accredited by the Commission on Collegiate Nursing Education ",
+            "departments": [
+                "Health and Physical Education",
+                "Nursing",
+                "Physician Assistant"
+            ]
+        },
+        {
+            "name": "School of Science",
+            "about": "The School of Science at Monmouth University provides students with distinctive learning and research opportunities – both inside and outside the classroom. This dynamic, personalized education includes hands-on learning in classroom labs, close interaction with faculty and staff, and internship opportunities in a range of settings. Students then carry their education right into the workplace. Through four academic departments, students can pursue a variety of degree programs that prepare them for careers and continued study in science and technology.",
+            "departments": [
+                "Biology",
+                "Chemistry and Physics",
+                "Computer Science and Software Engineering",
+                "Mathematics"
+            ]
+        },
+        {
+            "name": "School of Social Work",
+            "about": "The School of Social Work is built around the ideals of advancing human rights and social justice. Ranked as one of the top social work programs in the country by U.S. News & World Report, the school offers an undergraduate Bachelor of Social Work (BSW) and a graduate Master of Social Work (MSW), both of which are nationally accredited and nationally recognized. All students get hands-on experience in the field and engage in practice at all levels, including working with individuals, communities, and government. Specialty areas of study can include school social work, mental health, substance abuse, child welfare, gerontology, community organizing, and grant and policy writing.",
+            "departments": [
+                "Social Work"
+            ]
+        }
+    ]
+}
