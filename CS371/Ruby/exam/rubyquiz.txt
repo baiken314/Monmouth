@@ -1,0 +1,187 @@
+Name: Bradley Aiken
+
+CS-371: Scripting Languages
+Spring 2020
+Ruby Quiz
+
+Insert your name above. Insert your answers in this quiz file using a text
+editor. Do not turn in a file that contains only the answers; you will
+lose points.
+
+Dropbox this quiz file plus any additional files you are required to create by
+Friday, May 1, 2020, 11:59pm.
+
+Files needed for this quiz (studentclass.rb, sp08cs) are found on
+Piazza -> General Resources.
+
+*******************************************************************************
+
+Problem 1: (16 points total)
+
+Answer the following problems in the space provided.
+
+    See the following Person class definition.
+
+            # This class stores information about people.
+            class Person
+                attr_accessor :name, :age, :spirit_animal
+
+                def initialize( name )
+                   @name = name
+                end
+
+                def get_all_str
+                   # return all Person attributes as a string
+                end
+
+                def get_all_hash
+                   # return all Person attributes as a hash
+                end
+            end
+
+(4 pts)
+a. Using the Person class definition above, write a line of Ruby code to
+   create an instance of a Person called jules with name "Jules". Also, write
+   code to assign Jules's age to be 45 and Jules's spirit_animal to be
+   "Pangolin".
+
+person = Person.new "Jules"
+person.age = 45
+person.spirit_animal = "Pangolin"
+
+
+(4 pts)
+b. Complete the Person class's get_all_str method so that jules's attributes
+   can be printed like this:
+
+      puts jules.get_all_str
+      # expected output: "name: Jules, age: 45, spirit_animal: Pangolin"
+
+   Complete the get_all_str method definition below:
+
+      def get_all_str
+         # return all Person attributes as a string
+         "name: #{@name}, age: #{@age}, spirit_animal: #{@spirit_animal}"
+      end
+
+
+(4 pts)
+c. Complete the Person class's get_all_hash method so that jules's attributes
+   can be printed like this:
+
+      puts jules.get_all_hash
+      # expected output: {:name=>"Jules", :age=>45, :spirit_animal=>"Pangolin"}
+
+
+   Complete the get_all_hash method definition below:
+
+      def get_all_hash
+         # return all Person attributes as a hash
+         # JavaScript-like syntax for hashes introduced in Ruby 1.9
+         {
+            name: name,
+            age: age,
+            spirit_animal: spirit_animal
+         }
+      end
+
+
+(4 pts)
+d. List 5 methods that a Person class object like jules would have, EXCLUDING
+   the get_all_str and get_all_hash methods. (HINT: See Ruby notes on 
+   discovering methods.)
+
+Person#eql?
+Person#respond_to?
+Person#freeze
+Person#inspect
+Person#object_id
+
+*******************************************************************************
+
+Problem 2: (16 points total)
+
+    Answer parts a and b in the space provided.
+
+(5 pts)
+a. Assuming last and first are strings with the following values,
+
+       first = "James"
+       last  = "Brown"
+
+   what is the result of each of the following statements? 
+    
+       1) f = first.scan(/^./)
+
+            value of f: ["J"]
+
+
+       2) la = last.scan(/^../)
+
+            value of la: ["Br"]
+
+       3) userid = f[ 0 ].downcase! + la[ 0 ].downcase
+
+
+            value of userid: jbr
+
+
+            value of f: ["j"]
+
+
+            value of la: ["Br"]
+
+
+
+(3 pts)
+b. In part a. above, what types of Ruby objects are 'f' and 'la'?
+
+Array
+
+
+(8 pts)
+c. Get the studentclass.rb file from Piazza. In the studentclass.rb file,
+   add the following to the Student class:
+
+         1 - a method called userid that returns a student's
+             userid as the lowercase first letter of the first name
+             plus the entire lowercase last name. The method must not 
+             print or 'puts' anything.
+
+             Example:  If first="James" and last="Van Brown", userid would be
+                       defined as "jvanbrown". Spaces are not allowed in the 
+                       userid.
+
+
+    Also in the studentclass.rb file, add statements to test the Student class 
+    and its methods:
+
+         2 - construct a Student class object using your own first name,
+             last name and id,
+         3 - test the Student object's show and userid methods.
+
+   DROPBOX studentclass.rb. It is your answer for part c.
+
+
+*******************************************************************************
+
+Problem 3:
+(10 points)
+
+Get the input file for this problem (sp08cs) from Piazza. It contains html code 
+extracted from webadvisor's CompSci Dept. time table from a past semester.
+
+Write and save the program 'prob3.rb' to extract and print the 32 CS class 
+titles from the input file, i.e.,
+
+   CS-175 (Note: Your output must omit the section numbers like -01, -02, -50.
+   CS-175        Your output does not have to be one class per line.)
+   CS-176
+   CS-286
+   CS-303
+   ...
+   CS-699
+
+Your program must use Ruby regular expression handling.
+
+DROPBOX prob3.rb.
