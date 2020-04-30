@@ -23,5 +23,10 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="edu.monmouth.s1175816.monmouthfinal.ui.main.gallery.GalleryFragment"
-        android:label="gallery_fragment" />
+        android:label="gallery_fragment"
+        tools:layout="@layout/gallery_fragment" />
+    <activity
+        android:id="@+id/mapsActivity"
+        android:name="edu.monmouth.s1175816.monmouthfinal.ui.main.map.MapsActivity"
+        android:label="MapsActivity" />
 </navigation>

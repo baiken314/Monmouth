@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.school_item_view.view.*
 
 class SchoolItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    // access the views in activity adapter
+    // access the views in adapter
     var view: View
     var textViewName = view.textViewName
     var textViewDepartments = view.textViewDepartments

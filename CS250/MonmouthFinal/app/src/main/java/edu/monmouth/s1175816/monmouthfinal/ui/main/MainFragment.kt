@@ -36,13 +36,14 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         // change title
-        (activity as AppCompatActivity).actionBar?.title = "Home"
+        (activity as AppCompatActivity).supportActionBar?.title = "Home"
         
         // load logo with Glide
         Glide.with(requireContext()).load(muLogoUrl).into(imageViewLogo)
 
         // navigate to fragment
-        findNavController().navigate(R.id.athleticsFragment)
+        //findNavController().navigate(R.id.mapsActivity)
+
     }
 
 }

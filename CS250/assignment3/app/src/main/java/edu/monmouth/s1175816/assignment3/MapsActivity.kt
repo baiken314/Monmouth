@@ -63,7 +63,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         return true
     }
 
-
     private fun requestPermission(permissionType: String, requestCode: Int) {
         ActivityCompat.requestPermissions(this, arrayOf(permissionType), requestCode)
     }
