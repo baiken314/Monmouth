@@ -5,9 +5,9 @@
 # ruby docxview.rb <filename>
 # where <filename> is the .docx file
 #
-# ruby -outfile <output_filename> <filename>
+# ruby docxview.rb -outfile <output_filename> <filename>
 # where <output_filename> is the .txt file to output to
-# where <filename> is .docx file
+# where <filename> is the .docx file
 
 require "zip"
 
