@@ -1,2 +1,0 @@
-# Bradley Aiken
-# doĉview.rb

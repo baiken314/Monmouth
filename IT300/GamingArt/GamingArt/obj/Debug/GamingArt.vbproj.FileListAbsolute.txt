@@ -1,0 +1,11 @@
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\bin\Debug\GamingArt.exe.config
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\bin\Debug\GamingArt.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\bin\Debug\GamingArt.pdb
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\bin\Debug\GamingArt.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\obj\Debug\GamingArt.vbprojAssemblyReference.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\obj\Debug\GamingArt.frmArt.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\obj\Debug\GamingArt.Resources.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\obj\Debug\GamingArt.vbproj.GenerateResource.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\obj\Debug\GamingArt.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\obj\Debug\GamingArt.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\GamingArt\GamingArt\obj\Debug\GamingArt.pdb

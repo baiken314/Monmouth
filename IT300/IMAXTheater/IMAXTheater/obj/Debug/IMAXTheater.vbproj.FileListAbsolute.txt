@@ -1,0 +1,12 @@
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\bin\Debug\IMAXTheater.exe.config
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\bin\Debug\IMAXTheater.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\bin\Debug\IMAXTheater.pdb
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\bin\Debug\IMAXTheater.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\obj\Debug\IMAXTheater.vbprojAssemblyReference.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\obj\Debug\IMAXTheater.Form1.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\obj\Debug\IMAXTheater.Resources.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\obj\Debug\IMAXTheater.SplashScreen1.resources
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\obj\Debug\IMAXTheater.vbproj.GenerateResource.cache
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\obj\Debug\IMAXTheater.exe
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\obj\Debug\IMAXTheater.xml
+C:\Users\Bradley\Documents\GitHub\Monmouth\IT300\IMAXTheater\IMAXTheater\obj\Debug\IMAXTheater.pdb
