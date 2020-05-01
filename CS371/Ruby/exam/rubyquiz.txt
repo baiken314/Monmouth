@@ -67,7 +67,7 @@ b. Complete the Person class's get_all_str method so that jules's attributes
 
 (4 pts)
 c. Complete the Person class's get_all_hash method so that jules's attributes
-   can be printed like this:
+   can be printed like this: 
 
       puts jules.get_all_hash
       # expected output: {:name=>"Jules", :age=>45, :spirit_animal=>"Pangolin"}
@@ -79,9 +79,9 @@ c. Complete the Person class's get_all_hash method so that jules's attributes
          # return all Person attributes as a hash
          # JavaScript-like syntax for hashes introduced in Ruby 1.9
          {
-            name: name,
-            age: age,
-            spirit_animal: spirit_animal
+            name: @name,
+            age: @age,
+            spirit_animal: @spirit_animal
          }
       end
 
