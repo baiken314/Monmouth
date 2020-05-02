@@ -1,6 +1,7 @@
 package edu.monmouth.cs250.instructor.navdraw
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
