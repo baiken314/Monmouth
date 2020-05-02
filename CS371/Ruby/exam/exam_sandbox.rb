@@ -14,9 +14,9 @@ class Person
     def get_all_hash
         # return all Person attributes as a hash
         {
-            name: name,
-            age: age,
-            spirit_animal: spirit_animal
+            name: @name,
+            age: @age,
+            spirit_animal: @spirit_animal
         }
     end
 end
@@ -43,3 +43,7 @@ puts "f: #{f}"
 puts "la: #{la}"
 
 puts f.class
+
+person.age = 50
+
+puts person.get_all_hash
