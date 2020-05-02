@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="edu.monmouth.s1175816.monmouthfinal.ui.main.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" />
+    <fragment
+        android:id="@+id/academicsFragment"
+        android:name="edu.monmouth.s1175816.monmouthfinal.ui.main.academics.AcademicsFragment"
+        android:label="fragment_academics"
+        tools:layout="@layout/academics_fragment" />
+    <fragment
+        android:id="@+id/athleticsFragment"
+        android:name="edu.monmouth.s1175816.monmouthfinal.ui.main.athletics.AthleticsFragment"
+        android:label="athletics_fragment"
+        tools:layout="@layout/athletics_fragment" />
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="edu.monmouth.s1175816.monmouthfinal.ui.main.gallery.GalleryFragment"
+        android:label="gallery_fragment"
+        tools:layout="@layout/gallery_fragment" />
+    <activity
+        android:id="@+id/mapsActivity"
+        android:name="edu.monmouth.s1175816.monmouthfinal.ui.main.map.MapsActivity"
+        android:label="MapsActivity" />
+</navigation>

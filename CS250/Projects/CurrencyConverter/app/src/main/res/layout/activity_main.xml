@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imgCurrency1"
+        android:layout_width="64dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dollar_big" />
+
+    <ImageView
+        android:id="@+id/imgCurrency2"
+        android:layout_width="64dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCurrency1"
+        app:srcCompat="@drawable/euro_big" />
+
+    <EditText
+        android:id="@+id/numCurrency1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imgCurrency1"
+        app:layout_constraintTop_toTopOf="@+id/imgCurrency1" />
+
+    <EditText
+        android:id="@+id/numCurrency2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgCurrency2"
+        app:layout_constraintTop_toTopOf="@+id/imgCurrency2" />
+
+    <TextView
+        android:id="@+id/txtExchangeRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="38dp"
+        android:fontFamily="@font/bio0"
+        android:text="Rate:"
+        android:textColor="#020000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCurrency2" />
+
+    <ImageButton
+        android:id="@+id/imbPlus"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:onClick="imbPlusMinusClick"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@+id/numExchangeRate"
+        app:layout_constraintTop_toBottomOf="@+id/numExchangeRate"
+        app:srcCompat="@drawable/plus" />
+
+    <ImageButton
+        android:id="@+id/imbMinus"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:onClick="imbPlusMinusClick"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="@+id/numExchangeRate"
+        app:layout_constraintTop_toBottomOf="@+id/numExchangeRate"
+        app:srcCompat="@drawable/minus" />
+
+    <Button
+        android:id="@+id/btnConvert"
+        android:layout_width="112dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:onClick="btnConvertClick"
+        android:text="Convert"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCurrency2" />
+
+    <EditText
+        android:id="@+id/numExchangeRate"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:width="100dp"
+        android:ems="10"
+        android:gravity="center_horizontal|center_vertical"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toStartOf="@+id/btnConvert"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txtExchangeRate"
+        app:layout_constraintTop_toBottomOf="@+id/imgCurrency2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

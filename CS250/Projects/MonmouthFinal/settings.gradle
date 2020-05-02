@@ -1,0 +1,2 @@
+rootProject.name='MonmouthFinal'
+include ':app'
