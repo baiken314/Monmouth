@@ -17,7 +17,7 @@ end
 
 docx = Docx.new
 
-puts docx.content = Zip::File.open(ARGV.pop)  # open file
+puts docx.content = Zip::ZipFile.open(ARGV.pop)  # open file
     .read("word/document.xml")  # file name is last arg
     .scan(/<w:p.*?>.*?<\/w:p>/)  # break paragraphs
     .join("\n")  # add newlines

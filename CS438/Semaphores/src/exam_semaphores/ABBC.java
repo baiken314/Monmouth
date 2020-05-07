@@ -1,18 +1,18 @@
 /**
  * Bradley Aiken
- * Question 1-A, CBABA.java
+ * Question 1-A, ABBC.java
  */
-package exam;
+package exam_semaphores;
 
 import java.util.concurrent.Semaphore;
 
-public class CBABA {
+public class ABBC {
 
-    public static Semaphore semA = new Semaphore(0);
+    public static Semaphore semA = new Semaphore(1);
     public static Semaphore semB = new Semaphore(0);
-    public static Semaphore semC = new Semaphore(1);
+    public static Semaphore semC = new Semaphore(0);
 
-    public static int countA = 0;
+    public static int countB = 0;
 
     public static void main(String[] args) throws Exception {
 
@@ -34,9 +34,7 @@ public class CBABA {
                 semA.acquire();
             } catch (Exception e) { e.printStackTrace(); }
             System.out.print("A ");
-            countA += 1;
-            if (countA == 1) { semB.release(1); }
-            else { semC.release(1); }
+            semB.release(1);
         }
     }
 
@@ -46,7 +44,9 @@ public class CBABA {
                 semB.acquire();
             } catch (Exception e) { e.printStackTrace(); }
             System.out.print("B ");
-            semA.release(1);
+            countB += 1;
+            if (countB == 1) { semB.release(1); }
+            else { semC.release(1); }
         }
     }
 
@@ -56,8 +56,8 @@ public class CBABA {
                 semC.acquire();
             } catch (Exception e) { e.printStackTrace(); }
             System.out.print("C ");
-            countA = 0;
-            semB.release(1);
+            countB = 0;
+            semA.release(1);
         }
     }
 
