@@ -1,7 +1,5 @@
 const Game = require("../models/Game");
 const Map = require("../models/Map");
-const Player = require("../models/Player").Player;
-const Region = require("../models/Region").Region;
 const User = require("../models/User");
 
 const router = require("express").Router();
@@ -26,14 +24,16 @@ router.route("/").get(async (req, res) => {
 router.route("/create").post(async (req, res) => {
     console.log("POST game/create");
 
-    let game = new Game();
+    let game = new Game({
+        state: "initialization"
+    });
 
     // popualte game.players
     for (name of req.body.users) {
-        let player = await Player.create({
+        let player = {
             game: game._id,
             user: (await User.findOne({ name: name }))._id
-        });
+        };
         game.players.push(player);
     }
 
@@ -43,7 +43,7 @@ router.route("/create").post(async (req, res) => {
 
     // populate game.regions
     for (regionTemplate of map.regions) {
-        let region = await Region.create({
+        let region = {
             name: regionTemplate.name,
             type: regionTemplate.type,
             adjacentRegionNames: regionTemplate.adjacentRegionNames,
@@ -59,11 +59,11 @@ router.route("/create").post(async (req, res) => {
             industrialization: {
                 investment: 0,
                 active: false,
-                agriculture: Math.floor(Math.random() * 3),
-                mining: Math.floor(Math.random() * 3),
-                synthetics: Math.floor(Math.random() * 3)
+                agriculture: Math.min(Math.floor(Math.random() * 4), Math.floor(Math.random() * 4)),
+                mining: Math.min(Math.floor(Math.random() * 4), Math.floor(Math.random() * 4)),
+                synthetics: Math.min(Math.floor(Math.random() * 4), Math.floor(Math.random() * 4))
             }
-        });
+        };
 
         game.regions.push(region);
     }
@@ -82,9 +82,11 @@ router.route("/create").post(async (req, res) => {
     game.players.sort(() => Math.random() - 0.5);  // randomize player order
 
     for (let i = 0; i < game.players.length; i++) {
-        for (startingRegionName of req.body.map.startingRegions[i]) {
-            let region = game.regions.filter(region => { startingRegionName == region.name })[0];
-            region.player = game.players[i];
+        for (startingRegionName of map.startingRegions[i].regionNames) {
+            console.log(startingRegionName);
+            let region = game.regions.filter
+                (region => startingRegionName == region.name )[0];
+            region.player = game.players[i]._id;
             region.units.land = 1;
             region.industrialization = {
                 investment: 0,

@@ -18,7 +18,7 @@ const gameSchema = new mongoose.Schema({
     regions: [regionSchema],
 
     turn: Number,  // number of turns completed
-    stage: String,  // control what part of each turn Game is in
+    state: String,  // control what part of each turn Game is in
 
     marketPrices: {
         agriculture: Number,

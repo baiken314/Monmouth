@@ -5,10 +5,13 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const httpServer = require("http").Server(app);
+const io = require("socket.io")(httpServer);
+
 const MongoStore = require("connect-mongo")(session);
 
-const userRouter = require("./routes/userRouter");
 const gameRouter = require("./routes/gameRouter");
+const mapRouter = require("./routes/mapRouter");
+const userRouter = require("./routes/userRouter");
 
 const MONGO_URI = "mongodb+srv://highlandcentralinc:joenamath2021@cluster0.nz8tm.mongodb.net/senior_project?retryWrites=true&w=majority";
 const PORT = 8000;
@@ -33,8 +36,9 @@ app.use(session({
     })
 }));
 
-app.use("/user", userRouter);
 app.use("/game", gameRouter);
+app.use("/map", mapRouter);
+app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
     req.session.randomKey = req.session.randomKey || Math.random();
