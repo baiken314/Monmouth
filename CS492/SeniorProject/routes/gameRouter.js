@@ -32,7 +32,22 @@ router.route("/create").post(async (req, res) => {
     for (name of req.body.users) {
         let player = {
             game: game._id,
-            user: (await User.findOne({ name: name }))._id
+            user: (await User.findOne({ name: name }))._id,
+            balance: 100,
+            tokens: 6,
+            resources: {
+                agriculture: 3,
+                mining: 3,
+                synthetics: 3
+            },
+            units: {
+                land: 0,
+                marine: 0,
+                amphibious: 0,
+                atomBombs: 0,
+                bioweapons: 0,
+                radars: 0
+            }
         };
         game.players.push(player);
     }
@@ -81,6 +96,7 @@ router.route("/create").post(async (req, res) => {
     // assign players randomly to starting regions
     game.players.sort(() => Math.random() - 0.5);  // randomize player order
 
+    // assign land unit to each starting Region
     for (let i = 0; i < game.players.length; i++) {
         for (startingRegionName of map.startingRegions[i].regionNames) {
             console.log(startingRegionName);
@@ -88,6 +104,7 @@ router.route("/create").post(async (req, res) => {
                 (region => startingRegionName == region.name )[0];
             region.player = game.players[i]._id;
             region.units.land = 1;
+            game.players[i].units.land += 1;
             region.industrialization = {
                 investment: 0,
                 active: true,
