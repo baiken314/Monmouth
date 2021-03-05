@@ -11,6 +11,7 @@ const MongoStore = require("connect-mongo")(session);
 
 const gameRouter = require("./routes/gameRouter");
 const mapRouter = require("./routes/mapRouter");
+const playerRouter = require("./routes/playerRouter");
 const userRouter = require("./routes/userRouter");
 
 const MONGO_URI = "mongodb+srv://highlandcentralinc:joenamath2021@cluster0.nz8tm.mongodb.net/senior_project?retryWrites=true&w=majority";
@@ -38,6 +39,7 @@ app.use(session({
 
 app.use("/game", gameRouter);
 app.use("/map", mapRouter);
+app.use("/player", playerRouter);
 app.use("/user", userRouter);
 
 app.get("/", (req, res) => {

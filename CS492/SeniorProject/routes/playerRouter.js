@@ -6,4 +6,9 @@ const User = require("../models/User");
 
 const router = require("express").Router();
 
+router.route("/").get(async(req, res) => {
+    console.log("GET player");
+    res.json(await Player.find());
+});
+
 module.exports = router;
