@@ -27,6 +27,20 @@ router.route("/focus").post(async (req, res) => {
         gameController.checkFocus(game);
         game.save();
     }
+    else { console.log("game.state is not focus, " + game.state); }
+});
+
+/**
+ * req.body.game: game._id
+ * req.body.player: player._id
+ * req.body.resource: String, name of player.resources key
+ * req.body.amount: Number
+ */
+router.route("/sell").pose(async (req, res) => {
+    let game = await Game.findOne({ _id: req.body.game });
+    if (game.state == "sell") {
+        // check player turn
+    }
 });
 
 module.exports = router;

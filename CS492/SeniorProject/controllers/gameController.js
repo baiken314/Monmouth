@@ -20,8 +20,10 @@ module.exports = {
         if (ready) {
             game.state = "sell";
         }
-    }
+    },
 
-    
+    checkWinCondition: async function (game) {
+        
+    },
 
 }
