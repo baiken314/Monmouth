@@ -2,6 +2,9 @@ const Game = require("../models/Game");
 const Map = require("../models/Map");
 const User = require("../models/User");
 
+const gameController = require("../controllers/gameController");
+const playerController = require("../controllers/playerController");
+
 const router = require("express").Router();
 
 router.route("/").get(async (req, res) => {
@@ -25,7 +28,12 @@ router.route("/create").post(async (req, res) => {
     console.log("POST game/create");
 
     let game = new Game({
-        state: "initialization"
+        state: "initialization",
+        marketPrices: {
+            agriculture: 20,
+            mining: 20,
+            synthetics: 20
+        }
     });
 
     // popualte game.players
@@ -33,16 +41,20 @@ router.route("/create").post(async (req, res) => {
         let player = {
             game: game._id,
             user: (await User.findOne({ name: name }))._id,
-            balance: 100,
-            tokens: 6,
+            balance: 250,
+            focus: {
+                selling: 0,
+                acting: 0,
+                buying: 0
+            },
             resources: {
-                agriculture: 3,
-                mining: 3,
-                synthetics: 3
+                agriculture: 5,
+                mining: 5,
+                synthetics: 5
             },
             units: {
                 land: 0,
-                marine: 0,
+                naval: 0,
                 amphibious: 0,
                 atomBombs: 0,
                 bioweapons: 0,
@@ -65,7 +77,7 @@ router.route("/create").post(async (req, res) => {
             isNuked: false,
             units: {
                 land: 0,
-                marine: 0,
+                naval: 0,
                 amphibious: 0,
                 atomBombs: 0,
                 bioweapons: 0,
@@ -104,7 +116,6 @@ router.route("/create").post(async (req, res) => {
                 (region => startingRegionName == region.name )[0];
             region.player = game.players[i]._id;
             region.units.land = 1;
-            game.players[i].units.land += 1;
             region.industrialization = {
                 investment: 0,
                 active: true,
@@ -114,6 +125,9 @@ router.route("/create").post(async (req, res) => {
             }
         }
     }
+
+    playerController.updateUnits(game);
+    playerController.applyIndustrialization(game);
 
     game.save();
 

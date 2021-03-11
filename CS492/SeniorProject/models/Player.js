@@ -14,7 +14,12 @@ const playerSchema = new mongoose.Schema({
     },
 
     balance: Number,
-    tokens: Number,
+    
+    focus: {
+        selling: Number,
+        acting: Number,
+        acting: Number
+    },
 
     resources: {
         agriculture: Number,
