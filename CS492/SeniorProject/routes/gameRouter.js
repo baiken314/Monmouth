@@ -3,7 +3,6 @@ const Map = require("../models/Map");
 const User = require("../models/User");
 
 const gameController = require("../controllers/gameController");
-const playerController = require("../controllers/playerController");
 
 const router = require("express").Router();
 
@@ -43,9 +42,9 @@ router.route("/create").post(async (req, res) => {
             user: (await User.findOne({ name: name }))._id,
             balance: 250,
             focus: {
-                selling: 0,
-                acting: 0,
-                buying: 0
+                sell: 0,
+                act: 0,
+                buy: 0
             },
             resources: {
                 agriculture: 5,
@@ -126,8 +125,8 @@ router.route("/create").post(async (req, res) => {
         }
     }
 
-    playerController.updateUnits(game);
-    playerController.applyIndustrialization(game);
+    gameController.updateUnits(game);
+    gameController.applyIndustrialization(game);
 
     game.save();
 
