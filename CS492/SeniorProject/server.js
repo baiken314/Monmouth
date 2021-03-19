@@ -44,7 +44,8 @@ app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
     req.session.randomKey = req.session.randomKey || Math.random();
-    res.send(`Server running on ${PORT}, your session key is ${req.session.randomKey}`);
+    //res.send(`Server running on ${PORT}, your session key is ${req.session.randomKey}`);
+    res.sendFile(__dirname + "/views/index.html");
 });
 
 const listener = httpServer.listen(PORT, () => {

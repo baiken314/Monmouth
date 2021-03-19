@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Senior Project</title>
+</head>
+<body>
+    <h1>Senior Project - index.html</h1>
+    <p>/games JSON below:</p>
+    <p id="game-info"></p>
+    <script>
+const URL = "http://localhost:8000";
+console.log("Starting.....");
+async function getGames() {
+    console.log("Getting games");
+    const gamesRequest = await fetch(URL + "/game");
+    const games = await gamesRequest.json();
+    console.log("Games: " + games);
+    document.getElementById("game-info").innerHTML = JSON.stringify(games);
+}
+getGames();
+    </script>
+</body>
+</html>
