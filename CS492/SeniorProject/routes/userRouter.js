@@ -2,8 +2,14 @@ const User = require("../models/User");
 
 const router = require("express").Router();
 
-router.route("").get(async (req, res) => {
+router.route("/").get(async (req, res) => {
+    console.log("GET user");
     res.json(await User.find());
+});
+
+router.route("/:id").get(async (req, res) => {
+    console.log("GET user");
+    res.json(await User.findOne({ _id: req.params.id }));
 });
 
 /**
@@ -31,8 +37,8 @@ router.route("/add-friend").post(async (req, res) => {
     let friend = await User.findOne({ name: req.body.friendName });
     user.friends.push(friend._id);
     friend.friends.push(user._id);
-    user.save()
-    friend.save()
+    user.save();
+    friend.save();
     res.send("end POST user/add-friend");
 });
 

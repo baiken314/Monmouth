@@ -1,7 +1,3 @@
-const Game = require("../models/Game");
-const Map = require("../models/Map");
-const User = require("../models/User");
-
 module.exports = {
 
     // focus -> sell
@@ -56,7 +52,8 @@ module.exports = {
     },
 
     //  industrialization -> focus
-    applyIndustrialization: async function (game) {
+    applyIndustrializationFees: async function (game) {
+        console.log("gameController.applyIndustrializationFees");
         if (game.state == "industrialization" || game.state == "initialization") {
             for (player of game.players) {
                 for (resource in player._doc.resources) {
@@ -68,6 +65,7 @@ module.exports = {
                 }
             }
             game.state = "focus";
+            console.log("industrialization -> focus");
         }
         else { console.log("game.state is not industrialization or initialization, " + game.state); }
     },
@@ -85,4 +83,4 @@ module.exports = {
         
     },
 
-}
+};

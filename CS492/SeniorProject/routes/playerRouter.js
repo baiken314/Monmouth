@@ -19,6 +19,7 @@ router.route("/").get(async (req, res) => {
  */
 router.route("/focus").post(async (req, res) => {
     let game = await Game.findOne({ _id: req.body.game });
+
     if (game.state == "focus") {
         let player = game.players.filter(player => player._id == req.body.player)[0];
         player.focus = {
@@ -28,6 +29,7 @@ router.route("/focus").post(async (req, res) => {
         }
         gameController.checkFocus(game);
         game.save();
+        player.save();
     }
     else { console.log("game.state is not focus, " + game.state); }
 });
@@ -36,13 +38,80 @@ router.route("/focus").post(async (req, res) => {
  * req.body.game: game._id
  * req.body.player: player._id
  * req.body.resource: String, name of player.resources key
+ * req.body.action: String, "buy" or "sell"
  * req.body.amount: Number
  */
-router.route("/sell").post(async (req, res) => {
+router.route("/market-order").post(async (req, res) => {
     let game = await Game.findOne({ _id: req.body.game });
-    if (game.state == "sell") {
-        // check player turn
+    let player = game.players.filter(player => player._id == req.body.player)[0];
+
+    if (game.state == req.body.action) {
+        let price = req.body.amount * game._doc.market.prices[req.body.resource];
+        if (req.body.action == "sell") {
+            if (player._doc.resources[req.body.resource] - req.body.amount < 0) {
+                res.send("ERROR - not enough resources");
+            }
+            player.balance += price;
+            player.resources[req.body.resource] -= req.body.amount;
+            game._doc.market.prices[req.body.resource] -= req.body.amount;
+            if (game._doc.market.prices[req.body.resource] < 1) {
+                game._doc.market.prices[req.body.resource] = 1;
+            }
+        }
+        if (req.body.action == "buy") {
+            if (player.balance - price < 0) {
+                res.send("ERROR - balance too low");
+            }
+            player.balance -= price;
+            player.resources[req.body.resource] += req.body.amount;
+            game._doc.market.prices[req.body.resource] += req.body.amount;
+            if (game._doc.market.prices[req.body.resource] > game._doc.market.maxPrice)
+                game._doc.market.prices[req.body.resource] = game._doc.market.maxPrice; 
+        }
+        
+        game.save();
+        player.save();
+
+        res.json({
+            player: player
+        });
     }
+    else { console.log("incorrect action ", req.body.action); }
 });
+
+/**
+ * req.body.game = game._id
+ * req.body.attacker = player._id
+ * req.body.originRegion = region._id  // of the region attacking from
+ * req.body.targetRegion = region._id  // of the region being attacked
+ */
+router.route("/attack").post(async (req, res) => {
+
+});
+
+/**
+ * req.body.game = game._id
+ * req.body.defender = player._id
+ * req.body.attacker = player._id
+ * req.body.accept = Boolean  // does the player want to defend?
+ */
+router.route("/defend").post(async (req, res) => {
+
+});
+
+/**
+ * req.body.game = game._id
+ * req.body.player = player._id
+ * req.body.originRegion = region._id
+ * req.body.targetRegion = reqgion._id
+ * req.body.units = {
+ *      land: Number,
+ *      naval: Number,
+ *      amphibious: Number
+ * }
+ */
+router.route("/move").post(async (req, res) => {
+
+})
 
 module.exports = router;

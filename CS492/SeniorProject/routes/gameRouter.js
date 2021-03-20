@@ -7,8 +7,13 @@ const gameController = require("../controllers/gameController");
 const router = require("express").Router();
 
 router.route("/").get(async (req, res) => {
-    console.log("GET game")
+    console.log("GET game");
     res.json(await Game.find());
+});
+
+router.route("/:id").get(async (req, res) => {
+    console.log("GET game");
+    res.json(await Game.findOne({ _id: req.params.id }));
 });
 
 /**
@@ -26,39 +31,13 @@ router.route("/").get(async (req, res) => {
 router.route("/create").post(async (req, res) => {
     console.log("POST game/create");
 
-    let game = new Game({
-        state: "initialization",
-        marketPrices: {
-            agriculture: 20,
-            mining: 20,
-            synthetics: 20
-        }
-    });
+    let game = new Game();
 
     // popualte game.players
     for (name of req.body.users) {
         let player = {
             game: game._id,
             user: (await User.findOne({ name: name }))._id,
-            balance: 250,
-            focus: {
-                sell: 0,
-                act: 0,
-                buy: 0
-            },
-            resources: {
-                agriculture: 5,
-                mining: 5,
-                synthetics: 5
-            },
-            units: {
-                land: 0,
-                naval: 0,
-                amphibious: 0,
-                atomBombs: 0,
-                bioweapons: 0,
-                radars: 0
-            }
         };
         game.players.push(player);
     }
@@ -73,22 +52,6 @@ router.route("/create").post(async (req, res) => {
             name: regionTemplate.name,
             type: regionTemplate.type,
             adjacentRegionNames: regionTemplate.adjacentRegionNames,
-            isNuked: false,
-            units: {
-                land: 0,
-                naval: 0,
-                amphibious: 0,
-                atomBombs: 0,
-                bioweapons: 0,
-                radars: 0
-            },
-            industrialization: {
-                investment: 0,
-                active: false,
-                agriculture: Math.min(Math.floor(Math.random() * 4), Math.floor(Math.random() * 4)),
-                mining: Math.min(Math.floor(Math.random() * 4), Math.floor(Math.random() * 4)),
-                synthetics: Math.min(Math.floor(Math.random() * 4), Math.floor(Math.random() * 4))
-            }
         };
 
         game.regions.push(region);
@@ -110,7 +73,6 @@ router.route("/create").post(async (req, res) => {
     // assign land unit to each starting Region
     for (let i = 0; i < game.players.length; i++) {
         for (startingRegionName of map.startingRegions[i].regionNames) {
-            console.log(startingRegionName);
             let region = game.regions.filter
                 (region => startingRegionName == region.name )[0];
             region.player = game.players[i]._id;
@@ -118,15 +80,15 @@ router.route("/create").post(async (req, res) => {
             region.industrialization = {
                 investment: 0,
                 active: true,
-                agriculture: 1,
-                mining: 1,
-                synthetics: 1
+                agriculture: 2,
+                mining: 2,
+                synthetics: 2
             }
         }
     }
 
     gameController.updateUnits(game);
-    gameController.applyIndustrialization(game);
+    gameController.applyIndustrializationFees(game);
 
     game.save();
 

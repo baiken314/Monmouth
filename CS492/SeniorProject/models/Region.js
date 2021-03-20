@@ -9,7 +9,7 @@ const regionSchema = new mongoose.Schema({
     /**********************************
      * fields populated during gameplay
     ***********************************/
-    traversable: Boolean,
+    traversable: { type: Boolean, default: true },
 
     // Regions accessible by this Region
     adjacentRegions: [{
@@ -24,20 +24,20 @@ const regionSchema = new mongoose.Schema({
     },
 
     units: {
-        land: Number,
-        naval: Number,
-        amphibious: Number,
-        atomBombs: Number,
-        bioweapons: Number,
-        radars: Number
+        land: { type: Number, default: 0 },
+        naval: { type: Number, default: 0 },
+        amphibious: { type: Number, default: 0 },
+        atomBombs: { type: Number, default: 0 },
+        bioweapons: { type: Number, default: 0 },
+        radars: { type: Number, default: 0 }
     },
 
     industrialization: {
-        investment: Number,
-        active: Boolean,
-        agriculture: Number,
-        mining: Number,
-        synthetics: Number
+        investment: { type: Number, default: 0 },
+        active: { type: Boolean, default: true },
+        agriculture: { type: Number, default: 0 },
+        mining: { type: Number, default: 0 },
+        synthetics: { type: Number, default: 0 }
     }
 });
 

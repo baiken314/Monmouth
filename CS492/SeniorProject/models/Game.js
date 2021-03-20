@@ -18,14 +18,79 @@ const gameSchema = new mongoose.Schema({
     // these will hold the stats of each Region during gameplay
     regions: [regionSchema],
 
-    turn: Number,  // number of turns completed
-    state: String,  // control what part of each turn Game is in
+    turn: { type: Number, default: 1 },  // number of turns completed
+    state: { type: String, default: "initialization" },  // control what part of each turn Game is in
 
-    marketPrices: {
-        agriculture: Number,
-        mining: Number,
-        synthetics: Number
-    }
+    market: {
+        priceIncrement: { type: Number, default: 1 },
+        minPrice: { type: Number, default: 1 },
+        maxPrice: { type: Number, default: 50 },
+        maxResources: { type: Number, default: 100 },
+        prices: {
+            agriculture: { type: Number, default: 20 },
+            mining: { type: Number, default: 20 },
+            synthetics: { type: Number, default: 20 }
+        },
+        costs: {
+            research: { type: Number, default: 10 },
+            industrialization: { type: Number, default: 10 },
+            unitFee: { type: Number, default: 1 },
+            moving: {
+                resources: {
+                    agriculture: { type: Number, default: 1 },
+                    mining: { type: Number, default: 1 },
+                    synthetics: { type: Number, default: 0 }
+                }
+            },
+            attacking: {
+                resources: {
+                    agriculture: { type: Number, default: 3 },
+                    mining: { type: Number, default: 3 },
+                    synthetics: { type: Number, default: 3 }
+                }
+            },
+            defending: {
+                resources: {
+                    agriculture: { type: Number, default: 1 },
+                    mining: { type: Number, default: 1 },
+                    synthetics: { type: Number, default: 1 }
+                }
+            },
+            land: {
+                money: { type: Number, default: 5 },
+                resources:  {
+                    agriculture: { type: Number, default: 1 },
+                    mining: { type: Number, default: 1 },
+                    synthetics: { type: Number, default: 1 }
+                }
+            },
+            naval: {
+                money: { type: Number, default: 5 },
+                resources: {
+                    agriculture: { type: Number, default: 1 },
+                    mining: { type: Number, default: 1 },
+                    synthetics: { type: Number, default: 1 }
+                }
+            },
+            amphibious: {
+                currency: { type: Number, default: 5 },
+                resources: {
+                    agriculture: { type: Number, default: 2 },
+                    mining: { type: Number, default: 2 },
+                    synthetics: { type: Number, default: 2 }
+                }
+            },
+            special: {
+                currency: { type: Number, default: 25 },
+                resources: {
+                    agriculture: { type: Number, default: 0 },
+                    mining: { type: Number, default: 0 },
+                    synthetics: { type: Number, default: 5 }
+                }
+            }
+        }
+    },
+
 });
 
 let Game = mongoose.model("Game", gameSchema);

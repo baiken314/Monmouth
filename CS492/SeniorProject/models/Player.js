@@ -13,27 +13,27 @@ const playerSchema = new mongoose.Schema({
         ref: "User"
     },
 
-    balance: Number,
+    balance: { type: Number, default: 250 },
     
     focus: {
-        sell: Number,
-        act: Number,
-        buy: Number
+        sell: { type: Number, default: 0 },
+        act: { type: Number, default: 0 },
+        buy: { type: Number, default: 0 }
     },
 
     resources: {
-        agriculture: Number,
-        mining: Number,
-        synthetics: Number
+        agriculture: { type: Number, default: 5 },
+        mining: { type: Number, default: 5 },
+        synthetics: { type: Number, default: 5 }
     },
 
     units: {
-        land: Number,
-        naval: Number,
-        amphibious: Number,
-        atomBombs: Number,
-        bioweapons: Number,
-        radars: Number
+        land: { type: Number, default: 0 },
+        naval: { type: Number, default: 0 },
+        amphibious: { type: Number, default: 0 },
+        atomBombs: { type: Number, default: 0 },
+        bioweapons: { type: Number, default: 0 },
+        radars: { type: Number, default: 0 }
     }
 });
 
