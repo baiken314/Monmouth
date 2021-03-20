@@ -5,7 +5,7 @@ SVGname = input("Enter SVG file name to parse (no file extension): ")
 with open(SVGname + ".svg", 'r') as SVG:
     SVGtext = SVG.read().replace('\n', '')
 
-newFileName = SVGname + ".JSON"
+newFileName = SVGname + ".json"
 
 JSON = open(newFileName, 'w')
 

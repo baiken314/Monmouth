@@ -1,21 +1,29 @@
 {
-	"name": "",
-	"description": "",
+	"name": "Manifest Destiny",
+	"description": "Wrestle for control of the North-West hemisphere intersection, from Iceland to Panama.",
 	"startingRegions": [
 		{
-			"name": "",
-			"regionNames": []
+			"name": "Central American Block",
+			"regionNames": ["Central Isthmus","Yucatan","Hispaniola","Cuba"]
 		},
 		{
-			"name": "",
-			"regionNames": []
+			"name": "Boreal Confederation",
+			"regionNames": ["Western Cordillera","Yukon","Cascadia","Northern Territories"]
+		},
+		{
+			"name": "Acadian Alliance",
+			"regionNames": ["Northeastern Islands","Quebec","New England","Great Lakes"]
+		},
+		{
+			"name": "Sonoran Coalition",
+			"regionNames": ["Southwest","Baja California","Northern Sierra Madre","Rio Grande"]
 		}
 	],
 	"regions": [
 		{
 			"name": "Arctic Ocean",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Gulf of Alaska","Yukon","Baufort Sea","Arctic Islands","Baffin Bay","Greenland","Greenland Sea"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -142,8 +150,8 @@
 		},
 		{
 			"name": "Gulf of Alaska",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Actic Ocean","Alaska","Western Cordillera","North Pacific Ocean"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -314,12 +322,12 @@
 		},
 		{
 			"name": "Yukon",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Arctic Ocean","Gulf of Alaska","Western Cordillera","Northern Territories","Baufort Sea"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 5,
+				"mining": 10,
+				"synthetics": 2
 			},
 			"coordinates": [
 				{
@@ -498,12 +506,12 @@
 		},
 		{
 			"name": "Northern Territories",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Yukon","Western Cordillera","Praries","Hudson Bay","Baufort Sea"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 2,
+				"mining": 5,
+				"synthetics": 3
 			},
 			"coordinates": [
 				{
@@ -778,8 +786,8 @@
 		},
 		{
 			"name": "Baufort Sea",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Arctic Ocean","Yukon","Northern Territories","Arctic Islands","Hudson Bay"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -1026,8 +1034,8 @@
 		},
 		{
 			"name": "Arctic Islands",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Arctic Ocean","Baufort Sea","Hudson Bay","Baffin Bay"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -1318,8 +1326,8 @@
 		},
 		{
 			"name": "Hudson Bay",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Arctic Islands","Baufort Sea","Northern Territories","Praries","Great Lakes","Quebec","Baffin Bay"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -1634,8 +1642,8 @@
 		},
 		{
 			"name": "Baffin Bay",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Arctic Ocean","Greenland","Arctic Islands","Hudson Bay","Quebec","Labrador Sea","Greenland Sea"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -1766,8 +1774,8 @@
 		},
 		{
 			"name": "Greenland",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Arctic Ocean","Baffin Bay","Greenland Sea"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -1854,8 +1862,8 @@
 		},
 		{
 			"name": "Iceland",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Greenland Sea"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -1902,8 +1910,8 @@
 		},
 		{
 			"name": "Labrador Sea",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Northeastern Islands","New England","Quebec","Baffin Bay","North Atlantic Ocean"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -2006,12 +2014,12 @@
 		},
 		{
 			"name": "Northeastern Islands",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Labrador Sea"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 5,
+				"mining": 3,
+				"synthetics": 2
 			},
 			"coordinates": [
 				{
@@ -2090,12 +2098,12 @@
 		},
 		{
 			"name": "Quebec",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Baffin Bay","Hudson Bay","Great Lakes","New England","Labrador Sea"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 10,
+				"mining": 2,
+				"synthetics": 3
 			},
 			"coordinates": [
 				{
@@ -2202,12 +2210,12 @@
 		},
 		{
 			"name": "New England",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Quebec","Great Lakes","Appalachia","North Atlantic Ocean","Labrador Sea"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 2,
+				"mining": 5,
+				"synthetics": 10
 			},
 			"coordinates": [
 				{
@@ -2286,8 +2294,8 @@
 		},
 		{
 			"name": "Appalachia",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["New England","Great Lakes","Deep South","Midwest","North Atlantic Ocean","Central Atlantic Ocean"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -2378,12 +2386,12 @@
 		},
 		{
 			"name": "Hispaniola",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Central Atlantic Ocean","Caribbean Sea"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 5,
+				"mining": 2,
+				"synthetics": 10
 			},
 			"coordinates": [
 				{
@@ -2450,12 +2458,12 @@
 		},
 		{
 			"name": "Cuba",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Central Atlantic Ocean","Caribbean Sea","Gulf of Mexico"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 2,
+				"mining": 10,
+				"synthetics": 3
 			},
 			"coordinates": [
 				{
@@ -2538,8 +2546,8 @@
 		},
 		{
 			"name": "Gulf of Mexico",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Deep South","Rio Grande","Gulf Coast","Yucatan","Caribbean Sea","Cuba","Central Atlantic Ocean"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -2678,8 +2686,8 @@
 		},
 		{
 			"name": "North Pacific Ocean",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Gulf of Alaska","Cascadia","Southwest","Baja California","Central Pacific Ocean"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -2762,8 +2770,8 @@
 		},
 		{
 			"name": "Gulf of California",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Baja California","Northern Sierra Madre","Pacific Coast","Central Pacific Coast"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -2858,8 +2866,8 @@
 		},
 		{
 			"name": "Central Atlantic Ocean",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["North Atlantic Ocean","Appalachia","Deep South","Gulf of Mexico","Cuba","Hispaniola","Caribbean Sea","Central Isthmus"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -2998,8 +3006,8 @@
 		},
 		{
 			"name": "Caribbean Sea",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Gulf of Mexico","Cuba","Hispaniola","Central Atlantic Ocean","Central Isthmus","Yucatan"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -3214,8 +3222,8 @@
 		},
 		{
 			"name": "Central Pacific Ocean",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["North Pacific Ocean","Baja California","Gulf of California","Pacific Coast","Yucatan","Central Isthmus"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -3414,12 +3422,12 @@
 		},
 		{
 			"name": "Central Isthmus",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Yucatan","Caribbean Sea","Central Atlantic Ocean","Central Pacific Ocean"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 10,
+				"mining": 5,
+				"synthetics": 2
 			},
 			"coordinates": [
 				{
@@ -3634,12 +3642,12 @@
 		},
 		{
 			"name": "Yucatan",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Gulf of Mexico","Caribbean Sea","Central Isthmus","Central Pacific Ocean","Pacific Coast","Gulf Coast"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 3,
+				"mining": 3,
+				"synthetics": 5
 			},
 			"coordinates": [
 				{
@@ -3714,8 +3722,8 @@
 		},
 		{
 			"name": "Pacific Coast",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Gulf of California","Northern Sierra Madre","Gulf Coast","Yucatan","Central Pacific Ocean"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -3786,8 +3794,8 @@
 		},
 		{
 			"name": "Gulf Coast",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Northern Sierra Madre","Rio Grande","Caribbean Sea","Yucatan","Pacific Coast"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -3830,12 +3838,12 @@
 		},
 		{
 			"name": "Northern Sierra Madre",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Gulf of California","Baja California","Southwest","Rio Grande","Gulf Coast","Pacific Coast"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 2,
+				"mining": 10,
+				"synthetics": 3
 			},
 			"coordinates": [
 				{
@@ -3914,12 +3922,12 @@
 		},
 		{
 			"name": "Baja California",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Gulf of California","Central Pacific Ocean","Southwest","Northern Sierra Madre"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 3,
+				"mining": 3,
+				"synthetics": 5
 			},
 			"coordinates": [
 				{
@@ -4018,12 +4026,12 @@
 		},
 		{
 			"name": "Southwest",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Central Pacific Ocean","Cascadia","Rockies","Rio Grande","Northern Sierra Madre","Baja California"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 5,
+				"mining": 2,
+				"synthetics": 10
 			},
 			"coordinates": [
 				{
@@ -4086,12 +4094,12 @@
 		},
 		{
 			"name": "Cascadia",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["North Pacific Ocean","Western Cordillera","Rockies","Southwest"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 10,
+				"mining": 2,
+				"synthetics": 10
 			},
 			"coordinates": [
 				{
@@ -4158,12 +4166,12 @@
 		},
 		{
 			"name": "Western Cordillera",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Yukon","Northern Territories","Praries","Rockies","Cascadia","Gulf of Alaska"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 3,
+				"mining": 3,
+				"synthetics": 5
 			},
 			"coordinates": [
 				{
@@ -4234,12 +4242,12 @@
 		},
 		{
 			"name": "Rio Grande",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Southwest","Rockies","Great Plains","Midwest","Deep South","Gulf of Mexico","Gulf Coast","Northern Sierra Madre"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 10,
+				"mining": 5,
+				"synthetics": 2
 			},
 			"coordinates": [
 				{
@@ -4306,8 +4314,8 @@
 		},
 		{
 			"name": "Deep South",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Appalachia","Central Atlantic Ocean","Gulf of Mexico","Rio Grande","Midwest"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -4418,8 +4426,8 @@
 		},
 		{
 			"name": "Praries",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Northern Territories","Hudson Bay","Great Lakes","Midwest","Great Plains","Rockies","Western Cordillera"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -4482,12 +4490,12 @@
 		},
 		{
 			"name": "Great Lakes",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Hudson Bay","Quebec","New England","Appalachia","Midwest","Praries"],
 			"industrialization": {
-				"agriculture": 0,
-				"mining": 0,
-				"synthetics": 0
+				"agriculture": 3,
+				"mining": 10,
+				"synthetics": 5
 			},
 			"coordinates": [
 				{
@@ -4554,8 +4562,8 @@
 		},
 		{
 			"name": "Great Plains",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Praries","Midwest","Rio Grande","Rockies"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -4622,8 +4630,8 @@
 		},
 		{
 			"name": "Rockies",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "land",
+			"adjacentRegionNames": ["Western Cordillera","Praries","Great Plains","Rio Grande","Southwest","Cascadia"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -4682,8 +4690,8 @@
 		},
 		{
 			"name": "Greenland Sea",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Arctic Ocean","Iceland","North Atlantic Ocean","Baffin Bay","Greenland"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
@@ -4730,8 +4738,8 @@
 		},
 		{
 			"name": "North Atlantic Ocean",
-			"type": "",
-			"adjacentRegionNames": [],
+			"type": "water",
+			"adjacentRegionNames": ["Baffin Bay","Greenland Sea","Central Atlantic Ocean","Appalachia","New England","Labrador Sea"],
 			"industrialization": {
 				"agriculture": 0,
 				"mining": 0,
