@@ -6,14 +6,11 @@ const gameController = require("../controllers/gameController");
 
 const router = require("express").Router();
 
-router.route("/").get(async (req, res) => {
-    console.log("GET game");
-    res.json(await Game.find());
-});
-
 router.route("/:id").get(async (req, res) => {
     console.log("GET game");
-    res.json(await Game.findOne({ _id: req.params.id }));
+    if (req.params.id)
+        res.json(await Game.findOne({ _id: req.params.id }));
+    else res.json(await Game.find());
 });
 
 /**
