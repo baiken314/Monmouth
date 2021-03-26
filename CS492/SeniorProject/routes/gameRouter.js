@@ -11,7 +11,7 @@ router.route("/").get(async (req, res) => {
     res.json(await Game.find());
 });
 
-router.route("/:id").get(async (req, res) => {
+router.route("/find/:id").get(async (req, res) => {
     console.log("GET game");
     if (req.params.id)
         res.json(await Game.findOne({ _id: req.params.id }));
