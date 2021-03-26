@@ -6,7 +6,7 @@ const playerSchema = require("./Player").playerSchema;
 const gameSchema = new mongoose.Schema({
     // who is playing the game
     players: [playerSchema],
-    playerOrder: [playerSchema],
+    playerOrder: [String],  // player._ids
 
     // only to be used for as a reference
     map: {

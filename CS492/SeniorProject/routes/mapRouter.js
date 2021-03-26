@@ -7,4 +7,9 @@ router.route("/").get(async (req, res) => {
     res.json(await Map.find());
 });
 
+router.route("/:id").get(async (req, res) => {
+    console.log("GET map/:id");
+    res.json(await Map.findOne({ _id: req.params.id }));
+});
+
 module.exports = router;

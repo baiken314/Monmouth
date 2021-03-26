@@ -16,7 +16,11 @@ const mapSchema = new mongoose.Schema({
     regions: [{
         name: String,
         type: { type: String },
-        adjacentRegionNames: [String]
+        adjacentRegionNames: [String],
+        coordinates: [{
+            x: Number,
+            y: Number
+        }]
     }],
 
     // Region names where a Player can choose to start

@@ -34,6 +34,12 @@ const playerSchema = new mongoose.Schema({
         atomBombs: { type: Number, default: 0 },
         bioweapons: { type: Number, default: 0 },
         radars: { type: Number, default: 0 }
+    },
+
+    research: {
+        atomBombs: { type: Boolean, default: false },
+        bioweapons: { type: Boolean, default: false },
+        radars: { type: Boolean, default: false }
     }
 });
 

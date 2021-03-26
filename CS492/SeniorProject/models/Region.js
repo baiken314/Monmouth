@@ -9,7 +9,7 @@ const regionSchema = new mongoose.Schema({
     /**********************************
      * fields populated during gameplay
     ***********************************/
-    traversable: { type: Boolean, default: true },
+    traverseCountdown: { type: Number, default: 0 },  // 0: traversable, -1: atom bombed
 
     // Regions accessible by this Region
     adjacentRegions: [{

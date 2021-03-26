@@ -6,6 +6,11 @@ const gameController = require("../controllers/gameController");
 
 const router = require("express").Router();
 
+router.route("/").get(async (req, res) => {
+    console.log("GET game");
+    res.json(await Game.find());
+});
+
 router.route("/:id").get(async (req, res) => {
     console.log("GET game");
     if (req.params.id)
@@ -71,7 +76,7 @@ router.route("/create").post(async (req, res) => {
     for (let i = 0; i < game.players.length; i++) {
         for (startingRegionName of map.startingRegions[i].regionNames) {
             let region = game.regions.filter
-                (region => startingRegionName == region.name )[0];
+                (region => startingRegionName == region.name)[0];
             region.player = game.players[i]._id;
             region.units.land = 1;
             region.industrialization = {

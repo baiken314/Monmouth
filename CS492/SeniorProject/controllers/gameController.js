@@ -5,14 +5,24 @@ module.exports = {
         game.playerOrder.shift();
         if (!game.playerOrder.length) {
             if (game.state == "sell") {
-                console.log("sell -> act");
-                game.state = "act";
-                this.updatePlayerOrder(game);
+                console.log("sell -> act.attack");
+                game.state = "act.attack";
+                this.updatePlayerOrder(game);  // for act
             }
-            else if (game.state == "act") {
-                console.log("act -> buy");
-                game.state = "buy";
-                this.updatePlayerOrder(game);
+            else if (game.state.includes("act")) {
+                if (game.state == "act.attack") {
+                    console.log("act.attack -> act.move");
+                    game.state = "act.move";
+                }
+                else if (game.state == "act.move") {
+                    console.log("act.move -> act.build");
+                    game.state = "act.build";
+                }
+                else if (game.state == "act.build") {
+                    console.log("act.build -> buy");
+                    game.state = "buy";
+                    this.updatePlayerOrder(game);  // for buy
+                }
             }
             else if (game.state == "buy") {
                 console.log("buy -> industrialzation");
@@ -52,16 +62,20 @@ module.exports = {
     updatePlayerOrder: function (game) {
         console.log("gameController.updatePlayerOrder " + game.state);
         let state = game.state;
-        if (state == "sell" || state == "act" || state == "buy") {
-            let playerOrder = game.players.sort((a, b) => {
+        if (state == "sell" || state.contains("act") || state == "buy") {
+            let playerOrder = game._doc.players.sort((a, b) => {
                 if (a.focus[state] > b.focus[state]) return -1;
                 if (a.focus[state] < b.focus[state]) return 1;
                 if (a.focus[state] == b.focus[state])
                     return Math.random() - 0.5;
             });
-            game.playerOrder = [];  // empty queue
+            let playerOrderIds = [];  // empty queue
             // add player._ids to game.playerOrder
-            for (player in playerOrder) { game.playerOrder.push(player._id); }
+            for (player of playerOrder) {
+                console.log(`player._id: ${player._id}`);
+                playerOrderIds.push(player._id);
+            }
+            game.playerOrder = playerOrderIds;
         }
     },
 

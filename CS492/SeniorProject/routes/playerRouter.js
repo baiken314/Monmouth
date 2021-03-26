@@ -45,6 +45,7 @@ router.route("/focus").post(async (req, res) => {
  * req.body.player: player._id
  */
  router.route("/end-turn").post(async (req, res) => {
+    console.log("POST player/end-turn");
     let game = await Game.findOne({ _id: req.body.game });
     let player = game.players.filter(player => player._id == req.body.player)[0];
 
@@ -52,6 +53,9 @@ router.route("/focus").post(async (req, res) => {
         gameController.endPlayerTurn(game);
         game.save();
         player.save();
+    }
+    else {
+        res.json("ERROR - incorrect action or player");
     }
 });
 
@@ -63,6 +67,8 @@ router.route("/focus").post(async (req, res) => {
  * req.body.amount: Number
  */
 router.route("/market-order").post(async (req, res) => {
+    console.log("POST player/market-order");
+
     let game = await Game.findOne({ _id: req.body.game });
     let player = game.players.filter(player => player._id == req.body.player)[0];
 
@@ -74,10 +80,11 @@ router.route("/market-order").post(async (req, res) => {
             }
             player.balance += price;
             player.resources[req.body.resource] -= req.body.amount;
-            game._doc.market.prices[req.body.resource] -= req.body.amount;
-            if (game._doc.market.prices[req.body.resource] < 1)
-                game._doc.market.prices[req.body.resource] = 1;
-            gameController.shiftPlayerOrder(game);
+            game.market.prices[req.body.resource] -= req.body.amount;
+            console.log(game.market.prices[req.body.resource]);
+            if (game.market.prices[req.body.resource] < 1)
+                game.market.prices[req.body.resource] = 1;
+            gameController.rotatePlayerOrder(game);
         }
         if (req.body.action == "buy") {
             if (player.balance - price < 0) {
@@ -85,10 +92,11 @@ router.route("/market-order").post(async (req, res) => {
             }
             player.balance -= price;
             player.resources[req.body.resource] += req.body.amount;
-            game._doc.market.prices[req.body.resource] += req.body.amount;
-            if (game._doc.market.prices[req.body.resource] > game._doc.market.maxPrice)
-                game._doc.market.prices[req.body.resource] = game._doc.market.maxPrice;
-            gameController.shiftPlayerOrder(game);
+            game.market.prices[req.body.resource] += req.body.amount;
+            console.log(game.market.prices[req.body.resource]);
+            if (game.market.prices[req.body.resource] > game._doc.market.maxPrice)
+                game.market.prices[req.body.resource] = game._doc.market.maxPrice;
+            gameController.rotatePlayerOrder(game);
         }
 
         game.save();
@@ -98,7 +106,10 @@ router.route("/market-order").post(async (req, res) => {
             player: player
         });
     }
-    else { console.log("incorrect action " + req.body.action + " " + game.playerOrder); }
+    else { 
+        console.log("incorrect action " + req.body.action + " " + game.playerOrder); 
+        res.json("ERROR - incottect action or player");
+    }
 });
 
 /**
@@ -106,9 +117,13 @@ router.route("/market-order").post(async (req, res) => {
  * req.body.attacker: player._id
  * req.body.originRegion: region._id  // of the region attacking from
  * req.body.targetRegion: region._id  // of the region being attacked
+ * req.body.units: Object  // units attacking with
  */
 router.route("/attack").post(async (req, res) => {
-
+    console.log("POST player/attack");
+    
+    let game = await Game.findOne({ _id: req.body.game });
+    let player = game.players.filter(player => player._id == req.body.player)[0];
 });
 
 /**
