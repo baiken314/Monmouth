@@ -7,11 +7,6 @@ router.route("/").get(async (req, res) => {
     res.json(await User.find());
 });
 
-router.route("/:id").get(async (req, res) => {
-    console.log("GET user");
-    res.json(await User.findOne({ _id: req.params.id }));
-});
-
 /**
  * req.body.name: String
  * req.body.email: String
