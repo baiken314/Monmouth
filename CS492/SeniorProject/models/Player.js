@@ -28,6 +28,13 @@ const playerSchema = new mongoose.Schema({
         synthetics: { type: Number, default: 5 }
     },
 
+    income: { type: Number, default: 0 },
+    incomingResources: {
+        agriculture: { type: Number, default: 0 },
+        mining: { type: Number, default: 0 },
+        synthetics: { type: Number, default: 0 }
+    },
+
     units: {
         land: { type: Number, default: 0 },
         naval: { type: Number, default: 0 },

@@ -46,14 +46,14 @@ app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
     console.log("GET /");
-    req.session.GameId = null;
+    req.session.gameId = null;
     res.redirect("/userpage");
 });
 
 app.get("/index", async (req, res) => {
     console.log("GET /index");
-    console.log("index GameId: " + req.session.GameId);
-    if (req.session.GameId == null) {
+    console.log("index gameId: " + req.session.gameId);
+    if (req.session.gameId == null) {
         res.redirect("/userpage");
         return;
     }
@@ -63,8 +63,8 @@ app.get("/index", async (req, res) => {
 app.get("/index/:id", async (req, res) => {
     console.log("GET /index/:id");
     req.session.game = await Game.findOne({ _id: req.params.id });
-    req.session.GameId = req.session.game._id;
-    console.log("index/id GameId: " + req.session.GameId);
+    req.session.gameId = req.session.game._id;
+    console.log("index/id gameId: " + req.session.gameId);
     req.session.save(() => {
         res.redirect("/index");
     });
@@ -72,7 +72,7 @@ app.get("/index/:id", async (req, res) => {
 
 app.get("/login", async (req, res) => {
     console.log("GET /login");
-    req.session.GameId = null;
+    req.session.gameId = null;
     req.session.save(() => {
         if (req.session.user == null) {
             res.sendFile(__dirname + "/views/login.html");
@@ -163,7 +163,7 @@ app.get("/user-session", async (req, res) => {
     req.session.user = user;
 
     // clear current game
-    req.session.GameId = null;
+    req.session.gameId = null;
     req.session.game = null;
 
     req.session.save(() => {
@@ -174,13 +174,13 @@ app.get("/user-session", async (req, res) => {
 app.get("/player-session", async (req, res) => {
     console.log("GET /player-session");
 
-    if (req.session.GameId == null) {
-        res.json({ message: "ERROR - user does not have a GameId" });
+    if (req.session.gameId == null) {
+        res.json({ message: "ERROR - user does not have a gameId" });
         return;
     }
 
-    req.session.game = await Game.findOne({ _id: req.session.GameId });
-    req.session.player = req.session.game.players.filter(player => player.user.equals(req.session.user._id));
+    req.session.game = await Game.findOne({ _id: req.session.gameId });
+    req.session.player = req.session.game.players.filter(player => player.user.equals(req.session.user._id))[0];
 
     req.session.save(() => {
         res.json(req.session);

@@ -1,258 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>Brad and Noah's Game</title>
-	</head>
-	<link rel="stylesheet" href="styles/w3.css">
-	<link rel="stylesheet" href="styles/custom.css">
-	<body>
-		<div class="w3-row w3-margin">
-			<div class="w3-col w3-black w3-left w3-margin-right" style="width:305px">
-				<div class="w3-container" id="balance-app">
-					<br>
-					<table style="width:100%">
-						<tr>
-							<td class="align-left"><h3>{{username}}: </h3></td>
-							<td class="align-right"><h3 id="playerCurrency">{{balance}}</h3></td>
-						</tr>
-					</table>
-				</div>
-				<hr>
-				<hr>
-				<hr>
-				<div class="w3-container w3-center">
-					<h3>Industrial Control</h3>
+<head>
+    <meta charset="UTF-8">
+    <title>Brad and Noah's Game</title>
+    <link rel="stylesheet" href="styles/w3.css">
+    <link rel="stylesheet" href="styles/custom.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="game-app">
+        <div class="w3-row w3-margin">
+            <div class="w3-col w3-black w3-left w3-margin-right" style="width:305px">
+                <div class="w3-container">
+                    <br>
+                    <table style="width:100%">
+                        <tr>
+                            <td class="align-left"><h3>{{ user.name }}: </h3></td>
+                            <td class="align-right"><h3 id="playerCurrency">{{ player.balance }}</h3></td>
+                        </tr>
+                    </table>
+                </div>
+                <hr>
+                <hr>
+                <hr>
+                <div class="w3-container w3-center">
+                    <h3>Industrial Control</h3>
 
-					<div class="w3-panel w3-green">
-						<table style="width:100%">
-							<tr>
-								<td class="align-left"><h4><b>Agriculture: </b></h4></td>
-								<td class="align-right"><h4 id="playerAgricultureValue">10</h4></td>
-							</tr>
-							<tr>
-								<td class="align-left"><h5 class="w3-opacity">Incoming: </h5></td>
-								<td class="align-right"><h5>+</h5><h5 id="playerAgricultureIncome">0</h5></td>
-							</tr>
-						</table>
-					</div>
-					<div class="w3-panel w3-brown">
-						<table style="width:100%">
-							<tr>
-								<td class="align-left"><h4><b>Mining: </b></h4></td>
-								<td class="align-right"><h4 id="playerMiningValue">10</h4></td>
-							</tr>
-							<tr>
-								<td class="align-left"><h5 class="w3-opacity">Incoming: </h5></td>
-								<td class="align-right"><h5>+</h5><h5 id="playerMiningIncome">0</h5></td>
-							</tr>
-						</table>
-					</div>
-					<div class="w3-panel w3-pink">
-						<table style="width:100%">
-							<tr>
-								<td class="align-left"><h4><b>Synthetics: </b></h4></td>
-								<td class="align-right"><h4 id="playerSyntheticsValue">10</h4></td>
-							</tr>
-							<tr>
-								<td class="align-left"><h5 class="w3-opacity">Incoming: </h5></td>
-								<td class="align-right"><h5>+</h5><h5 id="playerSyntheticsIncome">0</h5></td>
-							</tr>
-						</table>
-					</div>
-				</div>
-				<hr>
-				<hr>
-				<hr>
-				<div class="w3-container w3-center">
-					<h3 class="w3-center">Global Exchange</h3>
-					<div class="custom-accordian w3-round w3-show" id="agricultureAccordian">
-						<div class="w3-round custom-light-green layer-grid">
-				  			<div id="globalExchangeAgricultureProgress" class="w3-container w3-round w3-green w3-center custom-spacing custom-progress-bar layer1" style="width:40%"></div>
-				  			<h3 id="globalExchangeAgricultureValue" class="w3-opacity layer2 vertical-center">20</h3>
-				  			<div id="a" class="w3-hide w3-animate-zoom">
-								<div class="w3-row">
-			  						<input id="agricultureInput" class="w3-third custom-input" type="text" placeholder="Amount">
-			  						<div onclick="interactWithGlobalExchange('sell','agriculture',document.getElementById('agricultureInput').value,document.getElementById('globalExchangeAgricultureValue').textContent);" class="w3-third w3-button">Sell</div>
-			  						<div onclick="interactWithGlobalExchange('buy','agriculture',document.getElementById('agricultureInput').value,document.getElementById('globalExchangeAgricultureValue').textContent);" class="w3-third w3-button">Buy</div>
-			  					</div>
-							</div>
-						</div>
-					</div>
-					<div class="custom-accordian w3-round" id="miningAccordian">
-						<div class="w3-round custom-light-brown layer-grid">
-			  				<div id="globalExchangeMiningProgress" class="w3-container w3-round w3-brown w3-center custom-spacing custom-progress-bar layer1" style="width:40%"></div>
-			  				<h3 id="globalExchangeMiningValue" class="w3-opacity layer2 vertical-center">20</h3>
-			  				<div id="m" class="w3-hide w3-animate-zoom">
-								<div class="w3-row">
-			  						<input id="miningInput" class="w3-third custom-input" type="text" placeholder="Amount">
-			  						<div onclick="interactWithGlobalExchange('sell','mining',document.getElementById('miningInput').value,document.getElementById('globalExchangeMiningValue').textContent);" class="w3-third w3-button">Sell</div>
-			  						<div onclick="interactWithGlobalExchange('buy','mining',document.getElementById('miningInput').value,document.getElementById('globalExchangeMiningValue').textContent);" class="w3-third w3-button">Buy</div>
-			  					</div>
-							</div>
-						</div>
-					</div>
-					<div class="custom-accordian w3-round" id="syntheticsAccordian">
-						<div class="w3-round custom-light-pink layer-grid">
-			  				<div id="globalExchangeSyntheticsProgress" class="w3-container w3-round w3-pink w3-center custom-spacing custom-progress-bar layer1" style="width:40%"></div>
-			  				<h3 id="globalExchangeSyntheticsValue" class="w3-opacity layer2 vertical-center">20</h3>
-			  				<div id="s" class="w3-hide w3-animate-zoom">
-			  					<div class="w3-row">
-			  						<input id="syntheticsInput" class="w3-third custom-input" type="text" placeholder="Amount">
-			  						<div onclick="interactWithGlobalExchange('sell','synthetics',document.getElementById('syntheticsInput').value,document.getElementById('globalExchangeSyntheticsValue').textContent);" class="w3-third w3-button">Sell</div>
-			  						<div onclick="interactWithGlobalExchange('buy','synthetics',document.getElementById('syntheticsInput').value,document.getElementById('globalExchangeSyntheticsValue').textContent);" class="w3-third w3-button">Buy</div>
-			  					</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="w3-col w3-black w3-right w3-margin-left" style="width:200px">
-				<div class="w3-container w3-center">
-					<br>
-					<h3>Round </h3>
-					<h3 id="roundCount">1</h3>
-				</div>
-				<hr>
-				<hr>
-				<hr>
-				<div class="w3-container w3-center">
-					<h3>Subrounds</h3>
-					<div id="subroundPanel1" class="w3-show">
-						<h5>Determine your<br>focuses and submit.</h5>
-						<div class="w3-panel w3-gray">
-							<h4 class="subround-text">Sell</h4>
-							<br>
-							<input type="range" id="sellFocus" min="0" max="10" step="1" value="0" onchange="updateFocusRangeValues(this.value, 's');">
-							<br>
-							<h5 class="subround-text">Focus:</h5><h5 class="subround-text" id="sellFocusRangeValue">0</h5>
-						</div>
-						<div class="w3-panel w3-gray">
-							<h4 class="subround-text">Act</h4>
-							<br>
-							<input type="range" id="actFocus" min="0" max="10" step="1" value="0" onchange="updateFocusRangeValues(this.value, 'a');">
-							<br>
-							<h5 class="subround-text">Focus:</h5><h5 class="subround-text" id="actFocusRangeValue">0</h5>
-						</div>
-						<div class="w3-panel w3-gray">
-							<h4 class="subround-text">Buy</h4>
-							<br>
-							<input type="range" id="buyFocus" min="0" max="10" step="1" value="0" onchange="updateFocusRangeValues(this.value, 'b');">
-							<br>
-							<h5 class="subround-text">Focus:</h5><h5 class="subround-text" id="buyFocusRangeValue">0</h5>
-						</div>
-						<div onclick="switchSubroundPanel();" class="custom-button w3-panel w3-gray">
-							<h4 class="subround-text">Submit</h4>
-						</div>
-						<br>
-					</div>
-					<div id="subroundPanel2" class="w3-hide">
-						<div class="w3-panel w3-gray">
-							<h4 class="subround-text">Sell</h4>
-							<table style="width:100%">
-	                            <tr>
-	                                <td class="align-right">
-	                                    <h5 id="player1Name" class="subround-text">Player1</h5><h4>|</h4>
-	                                </td>
-	                                <td class="align-left">
-	                                    <h5 id="player1SellFocus" class="subround-text">XXXXX</h5>
-	                                    <br>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <td class="align-right">
-	                                    <h5 id="player2Name" class="subround-text">Player2</h5><h4>|</h4>
-	                                </td>
-	                                <td class="align-left">
-	                                    <h5 id="player2SellFocus" class="subround-text">XXX</h5>
-	                                    <br>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <td class="align-right">
-	                                    <h5 id="player3Name" class="subround-text">Player3</h5><h4>|</h4>
-	                                </td>
-	                                <td class="align-left">
-	                                    <h5 id="player3SellFocus" class="subround-text">X</h5>
-	                                    <br>
-	                                </td>
-	                            </tr>
-	                        </table>
-						</div>
-						<div class="w3-panel w3-gray">
-							<h4 class="subround-text">Act</h4>
-							<table style="width:100%">
-	                            <tr>
-	                                <td class="align-right">
-	                                    <h5 id="player1Name" class="subround-text">Player1</h5><h4>|</h4>
-	                                </td>
-	                                <td class="align-left">
-	                                    <h5 id="player1ActFocus" class="subround-text">XXXXX</h5>
-	                                    <br>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <td class="align-right">
-	                                    <h5 id="player2Name" class="subround-text">Player2</h5><h4>|</h4>
-	                                </td>
-	                                <td class="align-left">
-	                                    <h5 id="player2ActFocus" class="subround-text">XXX</h5>
-	                                    <br>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <td class="align-right">
-	                                    <h5 id="player3Name" class="subround-text">Player3</h5><h4>|</h4>
-	                                </td>
-	                                <td class="align-left">
-	                                    <h5 id="player3ActFocus" class="subround-text">X</h5>
-	                                    <br>
-	                                </td>
-	                            </tr>
-	                        </table>
-						</div>
-						<div class="w3-panel w3-gray">
-							<h4 class="subround-text">Buy</h4>
-							<table style="width:100%">
-	                            <tr>
-	                                <td class="align-right">
-	                                    <h5 id="player1Name" class="subround-text">Player1</h5><h4>|</h4>
-	                                </td>
-	                                <td class="align-left">
-	                                    <h5 id="player1BuyFocus" class="subround-text">XXXXX</h5>
-	                                    <br>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <td class="align-right">
-	                                    <h5 id="player2Name" class="subround-text">Player2</h5><h4>|</h4>
-	                                </td>
-	                                <td class="align-left">
-	                                    <h5 id="player2BuyFocus" class="subround-text">XXX</h5>
-	                                    <br>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <td class="align-right">
-	                                    <h5 id="player3Name" class="subround-text">Player3</h5><h4>|</h4>
-	                                </td>
-	                                <td class="align-left">
-	                                    <h5 id="player3BuyFocus" class="subround-text">X</h5>
-	                                    <br>
-	                                </td>
-	                            </tr>
-	                        </table>
-						</div>
-						<br>
-					</div>
-				</div>
-			</div>
-			<div class="w3-rest w3-dark-gray w3-center">
-				<canvas></canvas>
-				<script src="scripts/canvas.js"></script>
-			</div>
-		</div>
-		<script src="scripts/index.js"></script>
-        <script src="scripts/indexGame.js"></script>
-	</body>
+                    <div class="w3-panel w3-green">
+                        <table style="width:100%">
+                            <tr>
+                                <td class="align-left"><h4><b>Agriculture: </b></h4></td>
+                                <td class="align-right"><h4 id="playerAgricultureValue">10</h4></td>
+                            </tr>
+                            <tr>
+                                <td class="align-left"><h5 class="w3-opacity">Incoming: </h5></td>
+                                <td class="align-right"><h5>+</h5><h5 id="playerAgricultureIncome">0</h5></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="w3-panel w3-brown">
+                        <table style="width:100%">
+                            <tr>
+                                <td class="align-left"><h4><b>Mining: </b></h4></td>
+                                <td class="align-right"><h4 id="playerMiningValue">10</h4></td>
+                            </tr>
+                            <tr>
+                                <td class="align-left"><h5 class="w3-opacity">Incoming: </h5></td>
+                                <td class="align-right"><h5>+</h5><h5 id="playerMiningIncome">0</h5></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="w3-panel w3-pink">
+                        <table style="width:100%">
+                            <tr>
+                                <td class="align-left"><h4><b>Synthetics: </b></h4></td>
+                                <td class="align-right"><h4 id="playerSyntheticsValue">10</h4></td>
+                            </tr>
+                            <tr>
+                                <td class="align-left"><h5 class="w3-opacity">Incoming: </h5></td>
+                                <td class="align-right"><h5>+</h5><h5 id="playerSyntheticsIncome">0</h5></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <hr>
+                <hr>
+                <hr>
+                <div class="w3-container w3-center">
+                    <h3 class="w3-center">Global Exchange</h3>
+                    <div class="custom-accordian w3-round w3-show" id="agricultureAccordian">
+                        <div class="w3-round custom-light-green layer-grid">
+                                <div id="globalExchangeAgricultureProgress" class="w3-container w3-round w3-green w3-center custom-spacing custom-progress-bar layer1" style="width:40%"></div>
+                                <h3 id="globalExchangeAgricultureValue" class="w3-opacity layer2 vertical-center">20</h3>
+                                <div id="a" class="w3-hide w3-animate-zoom">
+                                <div class="w3-row">
+                                        <input id="agricultureInput" class="w3-third custom-input" type="text" placeholder="Amount">
+                                        <div onclick="interactWithGlobalExchange('sell','agriculture',document.getElementById('agricultureInput').value,document.getElementById('globalExchangeAgricultureValue').textContent);" class="w3-third w3-button">Sell</div>
+                                        <div onclick="interactWithGlobalExchange('buy','agriculture',document.getElementById('agricultureInput').value,document.getElementById('globalExchangeAgricultureValue').textContent);" class="w3-third w3-button">Buy</div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="custom-accordian w3-round" id="miningAccordian">
+                        <div class="w3-round custom-light-brown layer-grid">
+                                <div id="globalExchangeMiningProgress" class="w3-container w3-round w3-brown w3-center custom-spacing custom-progress-bar layer1" style="width:40%"></div>
+                                <h3 id="globalExchangeMiningValue" class="w3-opacity layer2 vertical-center">20</h3>
+                                <div id="m" class="w3-hide w3-animate-zoom">
+                                <div class="w3-row">
+                                        <input id="miningInput" class="w3-third custom-input" type="text" placeholder="Amount">
+                                        <div onclick="interactWithGlobalExchange('sell','mining',document.getElementById('miningInput').value,document.getElementById('globalExchangeMiningValue').textContent);" class="w3-third w3-button">Sell</div>
+                                        <div onclick="interactWithGlobalExchange('buy','mining',document.getElementById('miningInput').value,document.getElementById('globalExchangeMiningValue').textContent);" class="w3-third w3-button">Buy</div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="custom-accordian w3-round" id="syntheticsAccordian">
+                        <div class="w3-round custom-light-pink layer-grid">
+                                <div id="globalExchangeSyntheticsProgress" class="w3-container w3-round w3-pink w3-center custom-spacing custom-progress-bar layer1" style="width:40%"></div>
+                                <h3 id="globalExchangeSyntheticsValue" class="w3-opacity layer2 vertical-center">20</h3>
+                                <div id="s" class="w3-hide w3-animate-zoom">
+                                    <div class="w3-row">
+                                        <input id="syntheticsInput" class="w3-third custom-input" type="text" placeholder="Amount">
+                                        <div onclick="interactWithGlobalExchange('sell','synthetics',document.getElementById('syntheticsInput').value,document.getElementById('globalExchangeSyntheticsValue').textContent);" class="w3-third w3-button">Sell</div>
+                                        <div onclick="interactWithGlobalExchange('buy','synthetics',document.getElementById('syntheticsInput').value,document.getElementById('globalExchangeSyntheticsValue').textContent);" class="w3-third w3-button">Buy</div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-col w3-black w3-right w3-margin-left" style="width:200px">
+                <div class="w3-container w3-center">
+                    <br>
+                    <h3>Round </h3>
+                    <h3 id="roundCount">1</h3>
+                </div>
+                <hr>
+                <hr>
+                <hr>
+                <div class="w3-container w3-center">
+                    <h3>Subrounds</h3>
+                    <div id="subroundPanel1" class="w3-show">
+                        <h5>Determine your<br>focuses and submit.</h5>
+                        <div class="w3-panel w3-gray">
+                            <h4 class="subround-text">Sell</h4>
+                            <br>
+                            <input type="range" id="sellFocus" min="0" max="10" step="1" value="0" onchange="updateFocusRangeValues(this.value, 's');">
+                            <br>
+                            <h5 class="subround-text">Focus:</h5><h5 class="subround-text" id="sellFocusRangeValue">0</h5>
+                        </div>
+                        <div class="w3-panel w3-gray">
+                            <h4 class="subround-text">Act</h4>
+                            <br>
+                            <input type="range" id="actFocus" min="0" max="10" step="1" value="0" onchange="updateFocusRangeValues(this.value, 'a');">
+                            <br>
+                            <h5 class="subround-text">Focus:</h5><h5 class="subround-text" id="actFocusRangeValue">0</h5>
+                        </div>
+                        <div class="w3-panel w3-gray">
+                            <h4 class="subround-text">Buy</h4>
+                            <br>
+                            <input type="range" id="buyFocus" min="0" max="10" step="1" value="0" onchange="updateFocusRangeValues(this.value, 'b');">
+                            <br>
+                            <h5 class="subround-text">Focus:</h5><h5 class="subround-text" id="buyFocusRangeValue">0</h5>
+                        </div>
+                        <div onclick="switchSubroundPanel();" class="custom-button w3-panel w3-gray">
+                            <h4 class="subround-text">Submit</h4>
+                        </div>
+                        <br>
+                    </div>
+                    <div id="subroundPanel2" class="w3-hide">
+                        <div class="w3-panel w3-gray">
+                            <h4 class="subround-text">Sell</h4>
+                            <table style="width:100%">
+                                <tr>
+                                    <td class="align-right">
+                                        <h5 id="player1Name" class="subround-text">Player1</h5><h4>|</h4>
+                                    </td>
+                                    <td class="align-left">
+                                        <h5 id="player1SellFocus" class="subround-text">XXXXX</h5>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-right">
+                                        <h5 id="player2Name" class="subround-text">Player2</h5><h4>|</h4>
+                                    </td>
+                                    <td class="align-left">
+                                        <h5 id="player2SellFocus" class="subround-text">XXX</h5>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-right">
+                                        <h5 id="player3Name" class="subround-text">Player3</h5><h4>|</h4>
+                                    </td>
+                                    <td class="align-left">
+                                        <h5 id="player3SellFocus" class="subround-text">X</h5>
+                                        <br>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="w3-panel w3-gray">
+                            <h4 class="subround-text">Act</h4>
+                            <table style="width:100%">
+                                <tr>
+                                    <td class="align-right">
+                                        <h5 id="player1Name" class="subround-text">Player1</h5><h4>|</h4>
+                                    </td>
+                                    <td class="align-left">
+                                        <h5 id="player1ActFocus" class="subround-text">XXXXX</h5>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-right">
+                                        <h5 id="player2Name" class="subround-text">Player2</h5><h4>|</h4>
+                                    </td>
+                                    <td class="align-left">
+                                        <h5 id="player2ActFocus" class="subround-text">XXX</h5>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-right">
+                                        <h5 id="player3Name" class="subround-text">Player3</h5><h4>|</h4>
+                                    </td>
+                                    <td class="align-left">
+                                        <h5 id="player3ActFocus" class="subround-text">X</h5>
+                                        <br>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="w3-panel w3-gray">
+                            <h4 class="subround-text">Buy</h4>
+                            <table style="width:100%">
+                                <tr>
+                                    <td class="align-right">
+                                        <h5 id="player1Name" class="subround-text">Player1</h5><h4>|</h4>
+                                    </td>
+                                    <td class="align-left">
+                                        <h5 id="player1BuyFocus" class="subround-text">XXXXX</h5>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-right">
+                                        <h5 id="player2Name" class="subround-text">Player2</h5><h4>|</h4>
+                                    </td>
+                                    <td class="align-left">
+                                        <h5 id="player2BuyFocus" class="subround-text">XXX</h5>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-right">
+                                        <h5 id="player3Name" class="subround-text">Player3</h5><h4>|</h4>
+                                    </td>
+                                    <td class="align-left">
+                                        <h5 id="player3BuyFocus" class="subround-text">X</h5>
+                                        <br>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-rest w3-dark-gray w3-center">
+                <canvas></canvas>
+                <script src="scripts/canvas.js"></script>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/index.js"></script>
+    <script src="scripts/gameApp.js"></script>
+</body>
 </html>
