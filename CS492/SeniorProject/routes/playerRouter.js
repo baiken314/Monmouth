@@ -472,7 +472,14 @@ router.route("/build").post(async (req, res) => {
             }
         }
     }
-    
+
+    // check if player has researched special units
+    for (researchUnit in player.research) {
+        if (units[researchUnit] && !player.research[researchUnit]) {
+            res.json({ message: "ERROR - player has not researched unit: " + researchUnit });
+            return;
+        }
+    }
 
     // check if player has enough balance and resources
     if (player.balance < cost) {
