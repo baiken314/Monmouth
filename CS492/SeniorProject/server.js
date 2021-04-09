@@ -63,8 +63,7 @@ app.get("/index", (req, res) => {
 app.get("/index/:id", async (req, res) => {
     console.log("GET /index/:id");
     req.session.currentGame = await Game.findOne({ _id: req.params.id });
-    if (req.session.currentGame != null)
-        req.session.currentGameId = req.params.id;
+    req.session.currentGameId = req.params.id;
     res.redirect("/index");
 });
 
