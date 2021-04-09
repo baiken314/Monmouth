@@ -33,30 +33,8 @@ module.exports = {
 
     rotatePlayerOrder: function (game) {
         console.log("gameController.rotatePlayerOrder " + game.playerOrder);
+        this.removeDeadPlayers(game);
         game.playerOrder.push(game.playerOrder.shift());
-    },
-
-    // focus -> sell
-    checkFocus: function (game) {
-        console.log("gameController.checkFocus");
-        let ready = true;
-        for (player of game.players) {
-            let sum = 0;
-            for (action in player._doc.focus) {
-                sum += player._doc.focus[action];
-                console.log(player._doc.focus[action]);
-            }
-            if (sum < 10) {
-                ready = false;
-                console.log("focus not ready");
-                break;
-            }
-        }
-        if (ready) {
-            console.log("game state -> sell");
-            game.state = "sell";
-            this.updatePlayerOrder(game);
-        }
     },
 
     updatePlayerOrder: function (game) {
@@ -75,7 +53,39 @@ module.exports = {
                 console.log(`player._id: ${player._id}`);
                 playerOrderIds.push(player._id);
             }
+            this.removeDeadPlayers(game);
             game.playerOrder = playerOrderIds;
+        }
+    },
+
+    removeDeadPlayers: function (game) {
+        for (let i = 0; i < game.playerOrder.length; i++) {
+            if (game.playerOrder[i].status == "dead")
+                game.playerOrder.pop(i);
+        }
+    },
+
+    // focus -> sell
+    checkFocus: function (game) {
+        console.log("gameController.checkFocus");
+        let ready = true;
+        for (player of game.players) {
+            if (player.status == "dead") continue;
+            let sum = 0;
+            for (action in player._doc.focus) {
+                sum += player._doc.focus[action];
+                console.log(player._doc.focus[action]);
+            }
+            if (sum < 10) {
+                ready = false;
+                console.log("focus not ready");
+                break;
+            }
+        }
+        if (ready) {
+            console.log("game state -> sell");
+            game.state = "sell";
+            this.updatePlayerOrder(game);
         }
     },
 
@@ -84,12 +94,19 @@ module.exports = {
             for (unit in player._doc.units) {
                 player._doc.units[unit] = 0;
             }
+
+            let regionCount = 0;
             for (region of game.regions) {
                 if (region.player == player._id) {
+                    regionCount += 1;
                     for (unit in region._doc.units) {
                         player._doc.units[unit] += region._doc.units[unit];
                     }
                 }
+            }
+
+            if (regionCount < 1) {
+                player.status = "dead";
             }
         }
     },
@@ -123,7 +140,11 @@ module.exports = {
     },
 
     checkWinCondition: function (game) {
-        
+        let alivePlayers = game.players.filter(player => player.status == "alive");
+        if (alivePlayers.length == 1) {
+            game.state = "complete";
+            game.playerOrder = [alivePlayers[0]];
+        }
     },
 
 };

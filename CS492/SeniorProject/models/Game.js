@@ -57,7 +57,7 @@ const gameSchema = new mongoose.Schema({
                 }
             },
             land: {
-                money: { type: Number, default: 5 },
+                price: { type: Number, default: 5 },
                 resources:  {
                     agriculture: { type: Number, default: 1 },
                     mining: { type: Number, default: 1 },
@@ -65,7 +65,7 @@ const gameSchema = new mongoose.Schema({
                 }
             },
             naval: {
-                money: { type: Number, default: 5 },
+                price: { type: Number, default: 5 },
                 resources: {
                     agriculture: { type: Number, default: 1 },
                     mining: { type: Number, default: 1 },
@@ -73,15 +73,39 @@ const gameSchema = new mongoose.Schema({
                 }
             },
             amphibious: {
-                currency: { type: Number, default: 5 },
+                price: { type: Number, default: 5 },
                 resources: {
                     agriculture: { type: Number, default: 2 },
                     mining: { type: Number, default: 2 },
                     synthetics: { type: Number, default: 2 }
                 }
             },
+            atomBombs: {
+                price: { type: Number, default: 25 },
+                resources: {
+                    agriculture: { type: Number, default: 0 },
+                    mining: { type: Number, default: 0 },
+                    synthetics: { type: Number, default: 5 }
+                }
+            },
+            bioweapons: {
+                price: { type: Number, default: 30 },
+                resources: {
+                    agriculture: { type: Number, default: 0 },
+                    mining: { type: Number, default: 0 },
+                    synthetics: { type: Number, default: 5 }
+                }
+            },
+            radars: {
+                price: { type: Number, default: 20 },
+                resources: {
+                    agriculture: { type: Number, default: 0 },
+                    mining: { type: Number, default: 0 },
+                    synthetics: { type: Number, default: 3 }
+                }
+            },
             special: {
-                currency: { type: Number, default: 25 },
+                price: { type: Number, default: 25 },
                 resources: {
                     agriculture: { type: Number, default: 0 },
                     mining: { type: Number, default: 0 },

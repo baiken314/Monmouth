@@ -3,6 +3,7 @@ const Map = require("../models/Map");
 const User = require("../models/User");
 
 const gameController = require("../controllers/gameController");
+const e = require("express");
 
 const router = require("express").Router();
 
@@ -15,7 +16,7 @@ router.route("/").get(async (req, res) => {
  * Assign Player focus and update Game.state if all Players have gone
  * req.body.game: game._id
  * req.body.player: player._id
- * req.body.focusValues: [Number], ordered as "buying", "acting", "selling"
+ * req.body.focusValues: [Number], ordered as "buy", "act", "sell"
  */
 router.route("/focus").post(async (req, res) => {
     let game = await Game.findOne({ _id: req.body.game });
@@ -124,57 +125,224 @@ router.route("/attack").post(async (req, res) => {
     
     let game = await Game.findOne({ _id: req.body.game });
 
-    let attackingRegion = game.regions.filter(region => region._id == req.body.attackingRegion);
-    let defendingRegion = game.regions.filter(region => region._id == req.body.defendingRegion);
+    if (game.state != "act.attack") {
+        res.json({ message: "ERROR - game.state is " + game.state });
+        return;
+    }
+
+    if (!game.playerOrder[0].equals(req.body.player)) {
+        res.json({ message: "ERROR - game.playerOrder is " + game.playerOrder });
+        return;
+    }
+
+    let attackingRegion = game.regions.filter(region => region._id == req.body.attackingRegion)[0];
+    let defendingRegion = game.regions.filter(region => region._id == req.body.defendingRegion)[0];
 
     let attacker = game.players.filter(player => player._id == req.body.player)[0];
-    let defender = game.players.filter(player => player._id == defendingRegion.player);
+    let defender = game.players.filter(player => player._id.equals(defendingRegion.player))[0];
 
     let units = req.body.units;
 
-    // check if regions are adjacent
-    if (!attackingRegion.adjacentRegionNames.includes(defendingRegion.name)) {
-        res.json({ message: "ERROR - regions are not adjacent" });
-    }
-
     // check if attacker owns the region
-    else if (attackingRegion.player != player._id) {
-        res.json({ message: "ERROR - attacker does not control the region" });
+    if (!attackingRegion.player.equals(attacker._id)) {
+        res.json({ message: "ERROR - attacker does not control the region " + attackingRegion.player + " " + attacker._id });
+        return;
     }
 
-    else {
-        // check if attacking region has enough troops
-        for (unit in units) {
-            if (player._doc.units[unit] < units[unit]) {
-                res.json({ message: "ERROR - attacker does not have enough " + [unit] });
-                return;
+    // check for atomBombs or bioweapons
+    if (units.atomBombs > 0 || units.bioweapons > 0) {
+        if (attackingRegion._doc.units.atomBombs < units.atomBombs) {
+            res.json({ message: "ERROR - not enough atomBombs in region" });
+            return;
+        }
+        if (attackingRegion._doc.units.bioweapons < units.bioweapons) {
+            res.json({ message: "ERROR - not enough bioweapons in region" });
+            return;
+        }
+
+        if (units.atomBombs > 0) {
+            for (let i = 0; i < units.atomBombs; i++) {
+                attackingRegion.units.atomBombs -= 1;  // consume atomBomb
+                let radarDefends = Math.random() < 0.75;
+                // radar defends
+                if (radarDefends && defendingRegion._doc.units.radars > 0) {
+                    console.log("radar defends against atomBomb");
+                    defendingRegion.units.radars -= 1;  // consume radar
+                    continue;
+                }
+                // attack region
+                else {
+                    console.log("atomBomb attacks");
+                    for (unit in defendingRegion.units) { 
+                        defendingRegion.units[unit] = 0;
+                    }
+                    defendingRegion.industrialization.agriculture = 0;
+                    defendingRegion.industrialization.mining = 0;
+                    defendingRegion.industrialization.synthetics = 0;
+
+                    game.save();
+                    break;
+                }
             }
         }
+        else if (units.bioweapons > 0) {
+            for (let i = 0; i < units.bioweapons; i++) {
+                attackingRegion.units.bioweapons -= 1;  // consume bioweapon
+                let radarDefends = Math.random() < 0.5;
+                if (radarDefends && defendingRegion._doc.units.radars > 0) {
+                    console.log("radar defends against bioweapons");
+                    defendingRegion.units.radars -= 1;  // consume radar
+                    continue;
+                }
+                else {
+                    console.log("bioweapons attack");
+                    for (unit in defendingRegion.units) { 
+                        defendingRegion.units[unit] = 0;
+                    }
+                    defendingRegion.industrialization.agriculture = 0;
+                    defendingRegion.industrialization.mining = 0;
+                    defendingRegion.industrialization.synthetics = 0;
+                    defendingRegion.traverseCountdown = 5;  // make region untraversable for 5 turns
 
-        // check if defending region has any troops
-        if (defendingRegion.units.land == 0 &&
-            defendingRegion.units.naval == 0 &&
-            defendingRegion.units.amphibious == 0) {
-            res.json({ message: "ERROR - defending region has no defending units" });
-            return;
+                    game.save();
+                    break;
+                }
+            }
         }
-
-        // check if attacker has resources to attack
-        if (attacker.resources.agriculture < game.market.costs.attacking.resources.agriculture ||
-            attacker.resources.mining < game.market.costs.attacking.resources.mining || 
-            attacker.resources.synthetics < game.market.costs.attacking.resources.synthetics) {
-            res.json({ message: "ERROR - player does not have enough resources to attack" });
-            return;
-        }
-
-        // check if defender has resources to defend
-        let attackerDice = 1;
-        let defenderDice = 1;
-        
-        // check which troops can attack
-
-        // roll dice to determine results   
     }
+
+    // attacker not using atomBombs or bioweapons
+    else {
+        // check if regions are adjacent
+        if (!attackingRegion.adjacentRegionNames.includes(defendingRegion.name)) {
+            res.json({ message: "ERROR - regions are not adjacent" });
+            return;
+        }
+
+        // regions are adjacent
+        else {
+            // check if attacking region's unit count is accurate
+            for (unit in units) {
+                if (attackingRegion._doc.units[unit] < units[unit]) {
+                    res.json({ message: "ERROR - attacker does not have enough unit: " + [unit] });
+                    return;
+                }
+            }
+
+            // check if defending region has any units
+            if (defendingRegion.units.land == 0 &&
+                defendingRegion.units.naval == 0 &&
+                defendingRegion.units.amphibious == 0) {
+                res.json({ message: "ERROR - defending region has no defending units" });
+                return;
+            }
+
+            // check if attacker has resources to attack
+            if (attacker.resources.agriculture < game.market.costs.attacking.resources.agriculture ||
+                attacker.resources.mining < game.market.costs.attacking.resources.mining || 
+                attacker.resources.synthetics < game.market.costs.attacking.resources.synthetics) {
+                res.json({ message: "ERROR - player does not have enough resources to attack" });
+                return;
+            }
+
+            // check if defender has resources to defend
+            let defenderHasResources = true;
+            console.log(defender);
+            console.log(game.market.costs.defending.resources);
+            for (resource in game._doc.market.costs.defending.resources) {
+                if (defender.resources[resource] < game.market.costs.defending.resources[resource]) {
+                    console.log("defender does not have enough resources to defend");
+                    defenderHasResources = false;
+                    break;
+                }
+            }
+
+            // attack can happen beyond this point ************************
+            // subtract resources from players
+            for (resource in game.market.costs.attacking.resources) {
+                attacker.resources[resource] -= game.market.costs.attacking.resources[resource];
+            }
+            if (defenderHasResources) {
+                for (resource in game.market.costs.defending.resources) {
+                    defender.resources[resource] -= game.market.costs.defending.resources[resource];
+                }
+            }
+
+            // give dice to players
+            let attackerDice = 1;
+            let defenderDice = 1;
+            if (defenderHasResources) defenderDice += 1;
+
+            // give extra die to player with more units
+            let attackingUnitCount = units.amphibious;
+            let defendingUnitCount = defendingRegion._doc.units.amphibious;
+
+            if (attackingRegion.type == "land" && defendingRegion.type == "land") {
+                attackingUnitCount += units.land;
+                defendingUnitCount += defendingRegion._doc.units.land;
+            }
+            else if (attackingRegion.type != "land" && defendingRegion.type != "land") {
+                attackingUnitCount += units.naval;
+                defendingUnitCount += defendingRegion._doc.units.naval;
+            }
+
+            if (attackingUnitCount > defendingUnitCount) {
+                attackerDice += 1;
+            }
+            else {
+                defenderDice += 1;
+            }
+
+            // roll dice to determine results
+            let attackerSum = 0;
+            let defenderSum = 0;
+            
+            for (let i = 0; i < attackerDice; i++) {
+                attackerSum += 1 + Math.floor(Math.random() * 4);
+            }
+            for (let i = 0; i < defenderDice; i++) {
+                defenderSum += 1 + Math.floor(Math.random() * 4);
+            }
+
+            // remove 1 land / marine / amphibious unit from loser
+            if (attackerSum > defenderSum) {
+                console.log("attacker wins");
+                if (defendingRegion.type == "land" && defendingRegion.units.land > 0) {
+                    defendingRegion.units.land -= 1;
+                }
+                else if (defendingRegion.type != "land" && defendingRegion.units.naval > 0) {
+                    defendingRegion.units.naval -= 1;
+                }
+                else {
+                    defendingRegion.units.amphibious -= 1;
+                }
+            }
+            // defender wins
+            else {
+                console.log("defender wins");
+                if (attackingRegion.type == "land" && attackingRegion.units.land > 0) {
+                    attackingRegion.units.land -= 1;
+                }
+                else if (attackingRegion.type != "land" && attackingRegion.units.naval > 0) {
+                    attackingRegion.units.naval -= 1;
+                }
+                else {
+                    attackingRegion.units.amphibious -= 1;
+                }
+            }
+
+            game.save();
+        }
+    }
+
+    console.log("attack completed");
+    res.json({
+        attacker: attacker,
+        defender: defender,
+        attackingRegion: attackingRegion,
+        defendingRegion: defendingRegion,
+        game: game
+    });
 });
 
 /**
@@ -189,27 +357,228 @@ router.route("/attack").post(async (req, res) => {
  * }
  */
 router.route("/move").post(async (req, res) => {
+    console.log("POST player/move");
 
+    let game = await Game.findOne({ _id: req.body.game });
+    
+    if (game.state != "act.move") {
+        res.json({ message: "game.state is " + game.state });
+        return;
+    }
+
+    if (game.playerOrder[0].equals(req.body.player)) {
+        res.json({ message: "game.playerOrder is " + game.playerOrder });
+        return;
+    }
+
+    let player = game.players.filter(player => player._id == req.body.player)[0];
+
+    let originRegion = game.regions.filter(region => region._id == req.body.originRegion)[0];
+    let targetRegion = game.regions.filter(region => region._id == req.body.targetRegion)[0];
+
+    let units = req.body.units;
+
+    // check if player owns originRegion
+    if (!originRegion.player.equals(player._id)) {
+        res.json({message: "ERROR - player does not own region" });
+        return;
+    }
+
+    // check if targetRegion is occupied
+    for (unit in targetRegion.units) {
+        if (targetRegion.units[unit] > 0) {
+            res.json({ message: "ERROR - targetRegion is occupied " + targetRegion.units });
+            return;
+        }
+    }
+
+    // check if originRegion has enough units
+    for (unit in originRegion.units) {
+        if (originRegion.units[unit] < units[unit]) {
+            res.json({ message: "ERROR - not enough unit " + unit });
+            return;
+        }
+    }
+
+    // check if unit types are correct
+    if ((region.type == "land" && units.naval > 0) || (region.type != "land" && units.land > 0)) {
+        res.json({ message: "ERROR - incorrect unit type" });
+        return;
+    }
+
+    // move units
+    for (unit in units) {
+        originRegion.units[unit] -= units[unit];
+        targetRegion.units[unit] += units[unit];
+    }
+
+    targetRegion.player = player._id;  // give targetRegion to player
+
+    console.log("move completed");
+
+    game.save();
+
+    res.json({
+        targetRegion: targetRegion,
+        originRegion: originRegion,
+        game: game
+    });
 });
 
 /**
  * req.body.game: game._id
  * req.body.player: player._id
- * req.body.unit: String  // "land", "naval", "amphibious", "radar", "atomBomb", "bioweapon"
+ * req.body.units: Object  // unit type with number
  * req.body.region: region._id  // where the unit will be built
  */
 router.route("/build").post(async (req, res) => {
+    console.log("POST player/research");
 
+    let game = await Game.findOne({ _id: req.body.game });
+
+    let player = game.players.filter(player => player._id == req.body.player)[0];
+    let region = game.regions.filter(region => region._id == req.body.region)[0];
+
+    let units = req.body.units;
+
+    if (game.state != "act.build") {
+        res.json({ message: "game.state is " + game.state });
+        return;
+    }
+
+    if (game.playerOrder[0].equals(req.body.player)) {
+        res.json({ message: "game.playerOrder is " + game.playerOrder });
+        return;
+    }
+
+    // check if player owns the region
+    if (!region.player.equals(player._id)) {
+        res.json({ message: "ERROR - player does not own the region" });
+        return;
+    }
+
+    // calculate costs
+    let cost = 0;
+    let resourcesCost = {
+        agriculture: 0,
+        mining: 0,
+        synthetics: 0
+    };
+    for (unit in units) {
+        for (let i = 0; i < units[unit]; i++) {
+            cost += game.market.costs[unit].price;
+            for (resource in game.market.costs[unit].resources) {
+                resourcesCost[resource] += game.market.costs[unit][resource];
+            }
+        }
+    }
+    
+
+    // check if player has enough balance and resources
+    if (player.balance < cost) {
+        res.json({ message: "ERROR - player does not have enough in balance: " + player.balance + ", cost: " + cost });
+        return;
+    }
+    for (resource in resourcesCost) {
+        if (player.resources[resource] < resourcesCost[resouce]) {
+            res.json({ message: "ERROR - player does not have enough resources" + player.resources + ", cost: " + resourcesCost });
+            return;
+        }
+    }
+
+    // subtract costs and build
+    player.balance -= cost;
+    for (resource in resourcesCost) {
+        player.resources[resource] -= resourcesCost[resource];
+    }
+
+    for (unit in units) {
+        region.units[unit] += units[unit];
+    }
+
+    console.log("build complete");
+
+    game.save();
+
+    res.json({
+        game: game
+    });
 });
 
 /**
  * req.body.game: game._id
  * req.body.player: player._id
- * req.body.action: String  // "agriculture", "mining", "synthetics", "radar", "atomBomb", "bioweapon"
+ * req.body.research: String  // "agriculture", "mining", "synthetics", "radars", "atomBombs", "bioweapons"
  * req.body.region: region._id  // where to insudtrialize
  */
 router.route("/research").post(async (req, res) => {
+    console.log("POST player/research");
 
+    let game = await Game.findOne({ _id: req.body.game });
+    let player = game.players.filter(player => player._id == req.body.player)[0];
+    let region = game.regions.filter(region => region._id == req.body.region)[0];
+
+    if (game.state != "act.build") {
+        res.json({ message: "game.state is " + game.state });
+        return;
+    }
+
+    if (game.playerOrder[0].equals(req.body.player)) {
+        res.json({ message: "game.playerOrder is " + game.playerOrder });
+        return;
+    }
+
+    // industrialize a region
+    if (["agriculture", "mining", "synthetics"].includes(req.body.research)) {
+        // check if player has enough balance
+        if (player.balance < game.market.costs.industrialization) {
+            res.json({ message: "ERROR - player does not have high enough balance: " + player.balance });
+            return;
+        }
+
+        // check if player owns the region
+        if (!region.player.equals(player._id)) {
+            res.json({ message: "ERROR - player does not own the region" });
+            return;
+        }
+
+        // subtract balance and give chance to industrialize
+        player.balance -= game.market.costs.industrialization;
+        region.industrialization.investment += 1;
+        if (Math.random() < 0.34) {
+            console.log("industrialization for " + req.body.research + " success");
+            region.industrialization[req.body.research] += 1;
+        }
+        else {
+            console.log("industrialization for " + req.body.research + " failed");
+        }
+    }
+
+    // research a special unit
+    else {
+        // check if player has enough balance
+        if (player.balance < game.market.costs.research) {
+            res.json({ message: "ERROR - player does not have high enough balance: " + player.balance });
+            return;
+        }
+
+        player.balance -= game.market.costs.research;
+        if (Math.random() < 0.34) {
+            console.log("research for " + req.body.research + " success");
+            player.research[req.body.research] = true;
+        }
+        else {
+            console.log("research for " + req.body.research + " failed");
+        }
+    }
+
+    console.log("research complete");
+
+    game.save();
+
+    res.json({
+        game: game
+    });
 });
 
 module.exports = router;
