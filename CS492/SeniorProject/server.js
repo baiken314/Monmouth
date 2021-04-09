@@ -45,14 +45,23 @@ app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
     console.log("GET /")
-    req.session.randomKey = req.session.randomKey || Math.random();
-    //res.send(`Server running on ${PORT}, your session key is ${req.session.randomKey}`);
-    res.sendFile(__dirname + "/views/index.html");
+    res.redirect("/userpage");
 });
 
+app.get("/index", (req, res) => {
+    console.log("GET /index");
+    res.sendFile(__dirname + "/views/index.html");
+})
+
 app.get("/login", (req, res) => {
-    console.log("GET /login")
-    res.sendFile(__dirname + "/views/login.html");
+    console.log("GET /login");
+    if (req.session.user == null) {
+        res.sendFile(__dirname + "/views/login.html");
+        return;
+    }
+    else {
+        res.sendFile(__dirname + "/views/userpage.html");
+    }
 });
 
 /**
@@ -73,7 +82,7 @@ app.post("/login", async (req, res) => {
         }
         else {
             req.session.user = user;
-            res.sendFile(__dirname + "/views/userpage.html");
+            res.redirect("/userpage");
         }
     }
     // create new account and login
@@ -85,7 +94,7 @@ app.post("/login", async (req, res) => {
                 password: req.body.password
             });
             req.session.user = newUser;
-            res.sendFile(__dirname + "/views/userpage.html");
+            res.redirect("/userpage");
         }
         catch (e) {
             res.json({ message: "ERROR"} );
@@ -96,11 +105,21 @@ app.post("/login", async (req, res) => {
 app.get("/logout", (req, res) => {
     console.log("GET /logout");
     req.session.user = null;
-    res.sendFile(__dirname + "/views/userpage.html");
+    res.redirect("/login");
 });
 
 app.get("/userpage", (req, res) => {
     console.log("GET /userpage");
+    if (req.session.user != null) {
+        res.sendFile(__dirname + "/views/userpage.html");
+        return;
+    }
+    res.redirect("/login");
+});
+
+app.get("/user-session", async (req, res) => {
+    req.session.user = await User.findOne({ _id: req.session.user._id });
+    res.json(req.session);
 });
 
 const listener = httpServer.listen(PORT, () => {

@@ -33,15 +33,20 @@ router.route("/find/:id").get(async (req, res) => {
 router.route("/create").post(async (req, res) => {
     console.log("POST game/create");
 
+    console.log(req.body.users);
+
     let game = new Game();
 
     // popualte game.players
     for (name of req.body.users) {
+        let user = await User.findOne({ name: name });
         let player = {
             game: game._id,
-            user: (await User.findOne({ name: name }))._id,
+            user: user._id,
         };
         game.players.push(player);
+        user.players.push(player);
+        user.save();
     }
 
     // populate game.map
@@ -96,7 +101,9 @@ router.route("/create").post(async (req, res) => {
 
     console.log("END POST game/create");
 
-    res.json(game);
+    res.json({
+        game: game
+    });
 });
 
 module.exports = router;

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const playerSchema = require("./Player").playerSchema;
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -12,10 +14,7 @@ const userSchema = new mongoose.Schema({
     password: String,
 
     // keep track of what Games the User is in
-    players: [{
-        type: mongoose.Schema.ObjectId,
-        ref: "Player"
-    }],
+    players: [playerSchema],
 
     friends: [{
         type: mongoose.Schema.ObjectId,
