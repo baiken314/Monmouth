@@ -8,12 +8,27 @@ async function getUserSession() {
     const userSessionRequest = await fetch(URL + "/user-session");
     const userSession = await userSessionRequest.json();
 
-    console.log("userSession: " + userSession);
+    console.log("userSession: " + JSON.stringify(userSession.user));
 
     document.getElementById("user-info").innerHTML = JSON.stringify(userSession);
+
+    // update Vue element
+    let players = userSession.user.players.filter(game => game.status != "completed");
+    let openGames = [];
+    for (player of players) {
+        openGames.push(player.game);
+    }
+    console.log(openGames);
+    openGamesListApp.games = openGames;
 }
 
-getUserSession();  // populate user information
+// open games list app
+let openGamesListApp = new Vue({
+    el: "#open-games-list-app",
+    data: {
+        games: []
+    }
+});
 
 // create game button
 let createGameButton = document.getElementById("create-game");
@@ -47,3 +62,5 @@ logoutButton.addEventListener("click", function() {
     console.log("logging out...");
     window.location.href = `${URL}/logout`;
 });
+
+getUserSession();  // populate user information

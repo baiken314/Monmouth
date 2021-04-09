@@ -33,7 +33,7 @@ router.route("/find/:id").get(async (req, res) => {
 router.route("/create").post(async (req, res) => {
     console.log("POST game/create");
 
-    console.log(req.body.users);
+    console.log(req.body);
 
     let game = new Game();
 
@@ -42,7 +42,7 @@ router.route("/create").post(async (req, res) => {
         let user = await User.findOne({ name: name });
         let player = {
             game: game._id,
-            user: user._id,
+            user: (await User.findOne({ name: name }))._id,
         };
         game.players.push(player);
         user.players.push(player);

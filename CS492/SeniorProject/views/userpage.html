@@ -2,10 +2,20 @@
 <html>
 <head>
     <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
     <h1>You are logged in.</h1>
     <p id="user-info">|user data here|</p>
+    <br>
+    <div id="open-games-list-app">
+        <p>Open Games:</p>
+        <ol>
+            <li v-for="game in games">
+                <a v-bind:href="`/index/${game}`">{{ game }}</a>
+            </li>
+        </ol>
+    </div>
     <br>
     <form id="create-game">
         <input name="map" type="text" placeholder="Map name">

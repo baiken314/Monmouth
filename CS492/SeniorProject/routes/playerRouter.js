@@ -3,7 +3,6 @@ const Map = require("../models/Map");
 const User = require("../models/User");
 
 const gameController = require("../controllers/gameController");
-const e = require("express");
 
 const router = require("express").Router();
 

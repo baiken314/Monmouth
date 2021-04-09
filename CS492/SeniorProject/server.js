@@ -14,6 +14,7 @@ const mapRouter = require("./routes/mapRouter");
 const playerRouter = require("./routes/playerRouter");
 const userRouter = require("./routes/userRouter");
 const User = require("./models/User");
+const Game = require("./models/Game");
 
 const MONGO_URI = "mongodb+srv://highlandcentralinc:joenamath2021@cluster0.nz8tm.mongodb.net/senior_project?retryWrites=true&w=majority";
 const PORT = 8000;
@@ -44,17 +45,32 @@ app.use("/player", playerRouter);
 app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
-    console.log("GET /")
+    console.log("GET /");
+    req.session.currentGameId = null;
     res.redirect("/userpage");
 });
 
 app.get("/index", (req, res) => {
     console.log("GET /index");
+    console.log(req.session.currentGameId);
+    if (req.session.currentGameId == null) {
+        res.redirect("/userpage");
+        return;
+    }
     res.sendFile(__dirname + "/views/index.html");
-})
+});
+
+app.get("/index/:id", async (req, res) => {
+    console.log("GET /index/:id");
+    req.session.currentGame = await Game.findOne({ _id: req.params.id });
+    if (req.session.currentGame != null)
+        req.session.currentGameId = req.params.id;
+    res.redirect("/index");
+});
 
 app.get("/login", (req, res) => {
     console.log("GET /login");
+    req.session.currentGameId = null;
     if (req.session.user == null) {
         res.sendFile(__dirname + "/views/login.html");
         return;
@@ -118,7 +134,26 @@ app.get("/userpage", (req, res) => {
 });
 
 app.get("/user-session", async (req, res) => {
-    req.session.user = await User.findOne({ _id: req.session.user._id });
+    let user = await User.findOne({ _id: req.session.user._id });
+
+    // remove players from deleted games
+    let players = [];
+    for (player of user.players) {
+        let game = await Game.findOne({ _id: player.game });
+        if (game != null) {
+            players.push(player);
+        }
+    }
+
+    user.players = players;
+    user.save();
+    
+    req.session.user = user;
+
+    // clear current game
+    req.session.currentGameId = null;
+    req.session.currentGame = null;
+
     res.json(req.session);
 });
 
