@@ -46,14 +46,14 @@ app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
     console.log("GET /");
-    req.session.currentGameId = null;
+    req.session.GameId = null;
     res.redirect("/userpage");
 });
 
-app.get("/index", (req, res) => {
+app.get("/index", async (req, res) => {
     console.log("GET /index");
-    console.log(req.session.currentGameId);
-    if (req.session.currentGameId == null) {
+    console.log("index GameId: " + req.session.GameId);
+    if (req.session.GameId == null) {
         res.redirect("/userpage");
         return;
     }
@@ -62,21 +62,26 @@ app.get("/index", (req, res) => {
 
 app.get("/index/:id", async (req, res) => {
     console.log("GET /index/:id");
-    req.session.currentGame = await Game.findOne({ _id: req.params.id });
-    req.session.currentGameId = req.params.id;
-    res.redirect("/index");
+    req.session.game = await Game.findOne({ _id: req.params.id });
+    req.session.GameId = req.session.game._id;
+    console.log("index/id GameId: " + req.session.GameId);
+    req.session.save(() => {
+        res.redirect("/index");
+    });
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", async (req, res) => {
     console.log("GET /login");
-    req.session.currentGameId = null;
-    if (req.session.user == null) {
-        res.sendFile(__dirname + "/views/login.html");
-        return;
-    }
-    else {
-        res.sendFile(__dirname + "/views/userpage.html");
-    }
+    req.session.GameId = null;
+    req.session.save(() => {
+        if (req.session.user == null) {
+            res.sendFile(__dirname + "/views/login.html");
+            return;
+        }
+        else {
+            res.sendFile(__dirname + "/views/userpage.html");
+        }
+    });
 });
 
 /**
@@ -97,7 +102,9 @@ app.post("/login", async (req, res) => {
         }
         else {
             req.session.user = user;
-            res.redirect("/userpage");
+            req.session.save(() => {
+                res.redirect("/userpage");
+            });
         }
     }
     // create new account and login
@@ -109,7 +116,9 @@ app.post("/login", async (req, res) => {
                 password: req.body.password
             });
             req.session.user = newUser;
-            res.redirect("/userpage");
+            req.session.save(() => {
+                res.redirect("/userpage");
+            });
         }
         catch (e) {
             res.json({ message: "ERROR"} );
@@ -117,13 +126,15 @@ app.post("/login", async (req, res) => {
     }
 });
 
-app.get("/logout", (req, res) => {
+app.get("/logout", async (req, res) => {
     console.log("GET /logout");
     req.session.user = null;
-    res.redirect("/login");
+    req.session.save(() => {
+        res.redirect("/login");
+    });
 });
 
-app.get("/userpage", (req, res) => {
+app.get("/userpage", async (req, res) => {
     console.log("GET /userpage");
     if (req.session.user != null) {
         res.sendFile(__dirname + "/views/userpage.html");
@@ -133,6 +144,8 @@ app.get("/userpage", (req, res) => {
 });
 
 app.get("/user-session", async (req, res) => {
+    console.log("GET /user-session");
+
     let user = await User.findOne({ _id: req.session.user._id });
 
     // remove players from deleted games
@@ -150,10 +163,28 @@ app.get("/user-session", async (req, res) => {
     req.session.user = user;
 
     // clear current game
-    req.session.currentGameId = null;
-    req.session.currentGame = null;
+    req.session.GameId = null;
+    req.session.game = null;
 
-    res.json(req.session);
+    req.session.save(() => {
+        res.json(req.session);
+    });
+});
+
+app.get("/player-session", async (req, res) => {
+    console.log("GET /player-session");
+
+    if (req.session.GameId == null) {
+        res.json({ message: "ERROR - user does not have a GameId" });
+        return;
+    }
+
+    req.session.game = await Game.findOne({ _id: req.session.GameId });
+    req.session.player = req.session.game.players.filter(player => player.user.equals(req.session.user._id));
+
+    req.session.save(() => {
+        res.json(req.session);
+    });
 });
 
 const listener = httpServer.listen(PORT, () => {
