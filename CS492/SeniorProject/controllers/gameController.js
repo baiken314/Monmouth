@@ -3,7 +3,7 @@ module.exports = {
     endPlayerTurn: function (game) {
         console.log("gameController.endPlayerTurn " + game.playerOrder);
         game.playerOrder.shift();
-        if (!game.playerOrder.length) {
+        if (game.playerOrder.length == 0) {
             if (game.state == "sell") {
                 console.log("sell -> act.attack");
                 game.state = "act.attack";
@@ -87,6 +87,10 @@ module.exports = {
             game.state = "sell";
             this.updatePlayerOrder(game);
         }
+    },
+
+    updateRegions: function (game) {
+
     },
 
     updateUnits: function (game) {

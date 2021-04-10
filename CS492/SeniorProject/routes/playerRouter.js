@@ -44,7 +44,7 @@ router.route("/focus").post(async (req, res) => {
  * req.body.game: game._id
  * req.body.player: player._id
  */
- router.route("/end-turn").post(async (req, res) => {
+router.route("/end-turn").post(async (req, res) => {
     console.log("POST player/end-turn");
     let game = await Game.findOne({ _id: req.body.game });
     let player = game.players.filter(player => player._id == req.body.player)[0];
@@ -74,6 +74,7 @@ router.route("/market-order").post(async (req, res) => {
 
     if (game.state == req.body.action && game.playerOrder[0] == player._id) {
         let price = req.body.amount * game._doc.market.prices[req.body.resource];
+        console.log("price: " + price);
         if (req.body.action == "sell") {
             if (player._doc.resources[req.body.resource] - req.body.amount < 0) {
                 res.send("ERROR - not enough resources");
@@ -100,7 +101,6 @@ router.route("/market-order").post(async (req, res) => {
         }
 
         game.save();
-        player.save();
 
         res.json({
             player: player
