@@ -2,7 +2,34 @@ module.exports = {
 
     endPlayerTurn: function (game) {
         console.log("gameController.endPlayerTurn " + game.playerOrder);
-        game.playerOrder.shift();
+
+        this.updatePlayerInfo(game);
+    
+        if (!game.state.includes("act")) {
+            console.log(game.playerOrder[0] + " removed from game.playerOrder");
+            game.playerOrder.shift();
+        }
+
+        // act subrounds
+        if (game.state.includes("act")) {
+            if (game.state == "act.attack") {
+                console.log("act.attack -> act.move");
+                game.state = "act.move";
+            }
+            else if (game.state == "act.move") {
+                console.log("act.move -> act.build");
+                game.state = "act.build";
+            }
+            // loop back to act.attack
+            else if (game.state == "act.build") {
+                console.log(game.playerOrder[0] + " removed from game.playerOrder");
+                game.playerOrder.shift();
+                console.log("act.build -> act.attack");
+                game.state = "act.attack";
+            }
+        }
+
+        // all players finished their turn
         if (game.playerOrder.length == 0) {
             if (game.state == "sell") {
                 console.log("sell -> act.attack");
@@ -10,23 +37,15 @@ module.exports = {
                 this.updatePlayerOrder(game);  // for act
             }
             else if (game.state.includes("act")) {
-                if (game.state == "act.attack") {
-                    console.log("act.attack -> act.move");
-                    game.state = "act.move";
-                }
-                else if (game.state == "act.move") {
-                    console.log("act.move -> act.build");
-                    game.state = "act.build";
-                }
-                else if (game.state == "act.build") {
-                    console.log("act.build -> buy");
-                    game.state = "buy";
-                    this.updatePlayerOrder(game);  // for buy
-                }
+                console.log("act.build -> buy");
+                game.state = "buy";
+                this.updatePlayerOrder(game);  // for buy
             }
             else if (game.state == "buy") {
                 console.log("buy -> industrialzation");
                 game.state = "industrialization";
+                this.prepareNextRound(game);
+                this.doIndustrializationPhase(game);
             }
         }
     },
@@ -40,7 +59,7 @@ module.exports = {
     updatePlayerOrder: function (game) {
         console.log("gameController.updatePlayerOrder " + game.state);
         let state = game.state;
-        if (state == "sell" || state.contains("act") || state == "buy") {
+        if (state == "sell" || state.includes("act") || state == "buy") {
             let playerOrder = game._doc.players.sort((a, b) => {
                 if (a.focus[state] > b.focus[state]) return -1;
                 if (a.focus[state] < b.focus[state]) return 1;
@@ -89,66 +108,125 @@ module.exports = {
         }
     },
 
-    updateRegions: function (game) {
+    updatePlayerIncome: function (game) {
+        console.log("gameController.updatePlayerIncome");
+        this.updateUnits(game);
+        for (player of game.players) {
+            player.unitFees = (player.units.land + player.units.naval + player.units.amphibious) * game._doc.market.costs.unitFee;
+            console.log("Player unit fees: " + player.unitFees);
+            for (resource in player._doc.resources) {
+                player.incomingResources[resource] = 
+                    game.regions.reduce((total, region) => 
+                        total += typeof region.player != "undefined" && region.player.equals(player._id) ? 
+                            region.industrialization[resource] : 0, 
+                    0);
+            }
+            console.log("Player incomingResources: " + player.incomingResources);
+        }
+    },
 
+    updateRegionTraverseCountDown: function (game) {
+        console.log("gameController.updateRegions");
+        // countdown for traverseCountdown
+        for (region of game.regions) {
+            if (region.traverseCountdown > 0) {
+                region.traverseCountdown -= 1;
+            }
+        }
     },
 
     updateUnits: function (game) {
+        console.log("gameController.updateUnits");
+        console.log(game);
+        // count units
         for (player of game.players) {
             for (unit in player._doc.units) {
-                player._doc.units[unit] = 0;
+                player.units[unit] = 0;
             }
 
             let regionCount = 0;
             for (region of game.regions) {
-                if (region.player == player._id) {
+                if (typeof region.player != "undefined" && region.player.equals(player._id)) {
                     regionCount += 1;
                     for (unit in region._doc.units) {
-                        player._doc.units[unit] += region._doc.units[unit];
+                        player.units[unit] += region.units[unit];
                     }
                 }
             }
 
+            // players that have no regions are dead
             if (regionCount < 1) {
+                console.log(player._id + " has " + regionCount + " regions.");
+                player.status = "dead";
+            }
+
+            // players that have no units are dead
+            let playerHasNoUnits = true;
+            for (unit in player._doc.units) {
+                if (player.units[unit] > 0) {
+                    playerHasNoUnits = false;
+                    break;
+                }
+            }
+
+            if (playerHasNoUnits) {
+                console.log(player._id + " has no units " + player.units);
                 player.status = "dead";
             }
         }
+
+        this.removeDeadPlayers(game);
     },
 
     //  industrialization -> focus
-    applyIndustrializationFees: function (game) {
-        console.log("gameController.applyIndustrializationFees");
+    doIndustrializationPhase: function (game) {
+        console.log("gameController.doIndustrializationPhase");
+
+        // add incoming resources to players
         if (game.state == "industrialization" || game.state == "initialization" || game.state == "maintenance") {
+            // apply fees and incoming resources          
             for (player of game.players) {
-                for (resource in player._doc.resources) {
-                    player._doc.resources[resource] +=
-                        game.regions.reduce((total, region) => total +=
-                            region.player == player._id ?
-                                region._doc.industrialization[resource] : 0,
-                            0);
+                console.log("Player balance: " + player.balance + " Player unitFees: " + player.unitFees);
+                player.balance -= player.unitFees;
+                for (resource in player.incomingResources) {
+                    player.resources[resource] += player.incomingResources[resource];
                 }
             }
+
+            // reset player focus
+            for (player of game.players) {
+                for (action in player._doc.focus) 
+                    player.focus[action] = 0;
+            }
+
             game.state = "focus";
             console.log("industrialization -> focus");
+
         }
         else { console.log("game.state is not industrialization or initialization, " + game.state); }
     },
 
-    applyMaintenanceFees: function (game) {
-        for (player of game.players) {
-            player.balance -=
-                player._doc.units.land + player._doc.units.naval +
-                player._doc.units.amphibious;
-            for (action in player._doc.focus) player._doc.focus[action] = 0;
-        }
-    },
-
     checkWinCondition: function (game) {
+        console.log("gameController.checkWinCondition");
         let alivePlayers = game.players.filter(player => player.status == "alive");
         if (alivePlayers.length == 1) {
             game.state = "complete";
-            game.playerOrder = [alivePlayers[0]];
+            game.playerOrder = [];
+            game.playerOrder.push(...alivePlayers);
         }
     },
+
+    updatePlayerInfo: function (game) {
+        this.updateUnits(game);
+        this.updatePlayerIncome(game);
+        this.checkWinCondition(game);
+    },
+
+    prepareNextRound: function (game) {
+        console.log("gameController.prepareNextRound");
+        this.updatePlayerInfo(game);
+        this.updateRegionTraverseCountDown(game);
+        game.turn += 1;
+    }
 
 };

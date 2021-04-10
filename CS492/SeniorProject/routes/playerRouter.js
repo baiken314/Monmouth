@@ -52,10 +52,10 @@ router.route("/end-turn").post(async (req, res) => {
     if (game.playerOrder[0] == player._id) {
         gameController.endPlayerTurn(game);
         game.save();
-        player.save();
+        res.json({ message: "Player " + player._id + " turn ended" });
     }
     else {
-        res.json("ERROR - incorrect action or player");
+        res.json({ message: "ERROR - incorrect action or player" });
     }
 });
 
@@ -360,12 +360,14 @@ router.route("/move").post(async (req, res) => {
 
     let game = await Game.findOne({ _id: req.body.game });
     
+    // check game.state
     if (game.state != "act.move") {
         res.json({ message: "game.state is " + game.state });
         return;
     }
 
-    if (game.playerOrder[0].equals(req.body.player)) {
+    // check if player's turn
+    if (game.playerOrder[0].equals == req.body.player) {
         res.json({ message: "game.playerOrder is " + game.playerOrder });
         return;
     }
@@ -384,11 +386,19 @@ router.route("/move").post(async (req, res) => {
     }
 
     // check if targetRegion is occupied
-    for (unit in targetRegion.units) {
-        if (targetRegion.units[unit] > 0) {
-            res.json({ message: "ERROR - targetRegion is occupied " + targetRegion.units });
+    if (typeof targetRegion.player == "undefined" || !targetRegion.player.equals(req.body.player)) {
+        if (targetRegion.units.land > 0 || 
+            targetRegion.units.naval > 0 || 
+            targetRegion.units.amphibious > 0) {
+            res.json({ message: "ERROR - targetRegion not owned by player " + targetRegion.player + " " + targetRegion.units });
             return;
         }
+    }
+
+    // check if targetRegion is traversable
+    if (region.traverseCountdown > 0) {
+        res.json({ message: "ERROR - region cannot be traversed for " + region.traverseCountdown + " turn(s)" });
+        return;
     }
 
     // check if originRegion has enough units
@@ -400,10 +410,27 @@ router.route("/move").post(async (req, res) => {
     }
 
     // check if unit types are correct
-    if ((region.type == "land" && units.naval > 0) || (region.type != "land" && units.land > 0)) {
+    if ((targetRegion.type == "land" && units.naval > 0) || 
+        (targetRegion.type != "land" && units.land > 0)) {
         res.json({ message: "ERROR - incorrect unit type" });
         return;
     }
+
+    // check if player has enough resources
+    let totalUnits = 0;
+    for (unit in units) { 
+        totalUnits += units[unit]; 
+    }
+    console.log("totalUnits: " + totalUnits);
+
+    if (player.resources.agriculture < totalUnits * game.market.costs.moving.resources.agriculture ||
+        player.resources.mining < totalUnits * game.market.costs.moving.resources.mining) {
+        res.json({ message: "ERROR - player does not have enoguh resources" });
+    };
+
+    // remove resources from player
+    player.resources.agriculture -= totalUnits * game.market.costs.moving.resources.agriculture;
+    player.resources.mining -= game.market.costs.moving.resources.mining;
 
     // move units
     for (unit in units) {
@@ -445,14 +472,59 @@ router.route("/build").post(async (req, res) => {
         return;
     }
 
-    if (game.playerOrder[0].equals(req.body.player)) {
+    if (game.playerOrder[0] != req.body.player) {
         res.json({ message: "game.playerOrder is " + game.playerOrder });
         return;
     }
 
     // check if player owns the region
-    if (!region.player.equals(player._id)) {
-        res.json({ message: "ERROR - player does not own the region" });
+    if (typeof region.player == "undefined" || !region.player.equals(player._id)) {
+        // if it's not land, check if it's owned by another player
+        if (region.type != "land") {
+            // check if nonland region is adjacent
+            let playerRegions = game._doc.regions.filter(
+                region => typeof region.player != "undefined" && region.player.equals(player._id));
+            let regionIsAdjacent = false;
+            for (playerRegion of playerRegions) {
+                for (adjacentRegionName of playerRegion.adjacentRegionNames) {
+                    if (region.name == adjacentRegionName) {
+                        regionIsAdjacent = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!regionIsAdjacent) {
+                res.json({ message: "ERROR - nonland region is not adjacent" });
+                return;
+            }
+
+            // check if another player has units in this region
+            for (unit in units) {
+                if (region.units.land > 0 || region.units.naval > 0 || region.units.amphibious > 0) {
+                    res.json({ 
+                        message: "ERROR - another player has units in this region",
+                        region: region
+                    });
+                    return;
+                }
+            }
+        }
+        // player cannot build on a land region
+        else {
+            res.json({ message: "ERROR - player does not own the region" });
+            return;
+        }
+    }
+
+    // check region type
+    if (region.type == "land" && units.naval > 0) {
+        res.json({ message: "ERROR - cannot build naval units on land " });
+        return;
+    }
+    else if (region.type != "land" && 
+        (units.land > 0 || units.atomBombs > 0 || units.bioweapons > 0)) {
+        res.json({ message: "ERROR - cannot build units in " + region.type });
         return;
     }
 
@@ -463,14 +535,17 @@ router.route("/build").post(async (req, res) => {
         mining: 0,
         synthetics: 0
     };
+    
     for (unit in units) {
         for (let i = 0; i < units[unit]; i++) {
             cost += game.market.costs[unit].price;
-            for (resource in game.market.costs[unit].resources) {
-                resourcesCost[resource] += game.market.costs[unit][resource];
+            for (resource in game._doc.market.costs[unit].resources) {
+                resourcesCost[resource] += game._doc.market.costs[unit].resources[resource];
             }
         }
     }
+
+    console.log(resourcesCost);
 
     // check if player has researched special units
     for (researchUnit in player.research) {
@@ -486,8 +561,12 @@ router.route("/build").post(async (req, res) => {
         return;
     }
     for (resource in resourcesCost) {
-        if (player.resources[resource] < resourcesCost[resouce]) {
-            res.json({ message: "ERROR - player does not have enough resources" + player.resources + ", cost: " + resourcesCost });
+        if (player.resources[resource] < resourcesCost[resource]) {
+            res.json({ 
+                message: "ERROR - player does not have enough resources",
+                resourcesCost: resourcesCost,
+                player: player 
+            });
             return;
         }
     }
@@ -501,6 +580,9 @@ router.route("/build").post(async (req, res) => {
     for (unit in units) {
         region.units[unit] += units[unit];
     }
+
+    // give region to player
+    region.player = player._id;
 
     console.log("build complete");
 
@@ -529,7 +611,7 @@ router.route("/research").post(async (req, res) => {
         return;
     }
 
-    if (game.playerOrder[0].equals(req.body.player)) {
+    if (game.playerOrder[0] != req.body.player) {
         res.json({ message: "game.playerOrder is " + game.playerOrder });
         return;
     }
@@ -543,8 +625,13 @@ router.route("/research").post(async (req, res) => {
         }
 
         // check if player owns the region
-        if (!region.player.equals(player._id)) {
+        if (typeof region.player == "undefined" || !region.player.equals(player._id)) {
             res.json({ message: "ERROR - player does not own the region" });
+            return;
+        }
+
+        if (region.type != "land") {
+            res.json({ message: "ERROR - cannot insturialze nonland region" });
             return;
         }
 

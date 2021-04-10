@@ -95,7 +95,7 @@ router.route("/create").post(async (req, res) => {
     }
 
     gameController.updateUnits(game);
-    gameController.applyIndustrializationFees(game);
+    gameController.doIndustrializationPhase(game);
 
     game.save();
 

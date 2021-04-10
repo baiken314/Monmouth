@@ -28,7 +28,7 @@ const playerSchema = new mongoose.Schema({
         synthetics: { type: Number, default: 5 }
     },
 
-    income: { type: Number, default: 0 },
+    unitFees: { type: Number, default: 0 },
     incomingResources: {
         agriculture: { type: Number, default: 0 },
         mining: { type: Number, default: 0 },
