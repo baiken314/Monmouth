@@ -192,6 +192,9 @@ module.exports = {
                 player.balance -= player.unitFees;
                 for (resource in player.incomingResources) {
                     player.resources[resource] += player.incomingResources[resource];
+                    if (player.resources[resource] > game.market.maxResources) {
+                        player.resources[resource] = game.market.maxResources;
+                    }
                 }
             }
 

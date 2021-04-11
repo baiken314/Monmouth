@@ -10,23 +10,26 @@ async function getUserSession() {
 
     console.log("userSession: " + JSON.stringify(userSession.user));
 
-    document.getElementById("user-info").innerHTML = JSON.stringify(userSession);
+    // update userpageApp data
+    userpageApp.user = userSession.user;
 
-    // update Vue element
+    // get open games
     let players = userSession.user.players.filter(game => game.status != "completed");
     let openGames = [];
     for (player of players) {
         openGames.push(player.game);
     }
     console.log(openGames);
-    openGamesListApp.games = openGames;
+
+    userpageApp.openGames = openGames;
 }
 
 // open games list app
-let openGamesListApp = new Vue({
-    el: "#open-games-list-app",
+let userpageApp = new Vue({
+    el: "#userpage-app",
     data: {
-        games: []
+        user: {},
+        openGames: []
     }
 });
 
