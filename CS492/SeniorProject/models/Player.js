@@ -12,6 +12,7 @@ const playerSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: "User"
     },
+    name: { type: String, default: "" },
 
     status: { type: String, default: "alive" },
     balance: { type: Number, default: 250 },

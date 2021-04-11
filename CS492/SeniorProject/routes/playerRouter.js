@@ -30,8 +30,8 @@ router.route("/focus").post(async (req, res) => {
 
         gameController.checkFocus(game);
 
+        gameController.updatePlayerInfo(game);
         game.save();
-        player.save();
 
         res.json({
             player: player
@@ -100,6 +100,7 @@ router.route("/market-order").post(async (req, res) => {
             gameController.rotatePlayerOrder(game);
         }
 
+        gameController.updatePlayerInfo(game);
         game.save();
 
         res.json({
@@ -179,6 +180,7 @@ router.route("/attack").post(async (req, res) => {
                     defendingRegion.industrialization.mining = 0;
                     defendingRegion.industrialization.synthetics = 0;
 
+                    gameController.updatePlayerInfo(game);
                     game.save();
                     break;
                 }
@@ -203,6 +205,7 @@ router.route("/attack").post(async (req, res) => {
                     defendingRegion.industrialization.synthetics = 0;
                     defendingRegion.traverseCountdown = 5;  // make region untraversable for 5 turns
 
+                    gameController.updatePlayerInfo(game);
                     game.save();
                     break;
                 }
@@ -330,6 +333,7 @@ router.route("/attack").post(async (req, res) => {
                 }
             }
 
+            gameController.updatePlayerInfo(game);
             game.save();
         }
     }
@@ -442,6 +446,7 @@ router.route("/move").post(async (req, res) => {
 
     console.log("move completed");
 
+    gameController.updatePlayerInfo(game);
     game.save();
 
     res.json({
@@ -586,6 +591,7 @@ router.route("/build").post(async (req, res) => {
 
     console.log("build complete");
 
+    gameController.updatePlayerInfo(game);
     game.save();
 
     res.json({
@@ -667,6 +673,7 @@ router.route("/research").post(async (req, res) => {
 
     console.log("research complete");
 
+    gameController.updatePlayerInfo(game);
     game.save();
 
     res.json({

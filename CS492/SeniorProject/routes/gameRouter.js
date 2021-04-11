@@ -43,6 +43,7 @@ router.route("/create").post(async (req, res) => {
         let player = {
             game: game._id,
             user: (await User.findOne({ name: name }))._id,
+            name: (await User.findOne({ name: name })).name
         };
         game.players.push(player);
         user.players.push(player);
@@ -94,7 +95,7 @@ router.route("/create").post(async (req, res) => {
         }
     }
 
-    gameController.updateUnits(game);
+    gameController.updatePlayerInfo(game);
     gameController.doIndustrializationPhase(game);
 
     game.save();

@@ -179,7 +179,9 @@ app.get("/player-session", async (req, res) => {
         return;
     }
 
-    req.session.game = await Game.findOne({ _id: req.session.gameId });
+    req.session.game = await Game.findOne({ _id: req.session.gameId }).populate({
+        path: "players.user.name"
+    });
     req.session.player = req.session.game.players.filter(player => player.user.equals(req.session.user._id))[0];
 
     req.session.save(() => {
