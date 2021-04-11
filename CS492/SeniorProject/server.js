@@ -7,12 +7,15 @@ const app = express();
 const httpServer = require("http").Server(app);
 const io = require("socket.io")(httpServer);
 
+module.exports.io = io;
+
 const MongoStore = require("connect-mongo")(session);
 
 const gameRouter = require("./routes/gameRouter");
 const mapRouter = require("./routes/mapRouter");
 const playerRouter = require("./routes/playerRouter");
 const userRouter = require("./routes/userRouter");
+
 const User = require("./models/User");
 const Game = require("./models/Game");
 

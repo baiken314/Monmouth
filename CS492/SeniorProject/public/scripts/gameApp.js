@@ -1,6 +1,9 @@
+const socket = io();
+
 const URL = "http://localhost:8000";
 
-async function update() {
+// grab game information from the player-session and load into gameApp
+async function updateGameApp() {
     console.log("updating...");
 
     const playerSessionRequest = await fetch(URL + "/player-session");
@@ -13,6 +16,9 @@ async function update() {
     console.log(JSON.stringify(playerSession.player));
 }
 
+socket.on("updateGameApp", updateGameApp);
+
+// captures all data from player-session
 let gameApp = new Vue({
     el: "#game-app",
     data: {
@@ -22,4 +28,5 @@ let gameApp = new Vue({
     }
 });
 
-update();
+// update the page onload
+updateGameApp();

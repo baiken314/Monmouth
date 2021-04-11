@@ -1,3 +1,5 @@
+const io = require("../server").io;
+
 module.exports = {
 
     endPlayerTurn: function (game) {
@@ -220,6 +222,8 @@ module.exports = {
         this.updateUnits(game);
         this.updatePlayerIncome(game);
         this.checkWinCondition(game);
+        console.log(io);
+        io.emit("updateGameApp");
     },
 
     prepareNextRound: function (game) {

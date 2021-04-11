@@ -97,7 +97,7 @@ const gameSchema = new mongoose.Schema({
                 }
             },
             radars: {
-                price: { type: Number, default: 20 },
+                price: { type: Number, default: 15 },
                 resources: {
                     agriculture: { type: Number, default: 0 },
                     mining: { type: Number, default: 0 },

@@ -77,7 +77,8 @@ router.route("/market-order").post(async (req, res) => {
         console.log("price: " + price);
         if (req.body.action == "sell") {
             if (player._doc.resources[req.body.resource] - req.body.amount < 0) {
-                res.send("ERROR - not enough resources");
+                res.json({ message: "ERROR - not enough resources" });
+                return;
             }
             player.balance += price;
             player.resources[req.body.resource] -= req.body.amount;
@@ -89,7 +90,8 @@ router.route("/market-order").post(async (req, res) => {
         }
         if (req.body.action == "buy") {
             if (player.balance - price < 0) {
-                res.send("ERROR - balance too low");
+                res.json({ message: "ERROR - balance too low" });
+                return;
             }
             player.balance -= price;
             player.resources[req.body.resource] += req.body.amount;
@@ -130,7 +132,7 @@ router.route("/attack").post(async (req, res) => {
         return;
     }
 
-    if (!game.playerOrder[0].equals(req.body.player)) {
+    if (game.playerOrder[0] != req.body.player) {
         res.json({ message: "ERROR - game.playerOrder is " + game.playerOrder });
         return;
     }
@@ -146,6 +148,19 @@ router.route("/attack").post(async (req, res) => {
     // check if attacker owns the region
     if (!attackingRegion.player.equals(attacker._id)) {
         res.json({ message: "ERROR - attacker does not control the region " + attackingRegion.player + " " + attacker._id });
+        return;
+    }
+
+    // cannot attack with radars
+    if (units.radars > 0) {
+        res.json({ message: "ERROR - cannot attack with radars" });
+        return;
+    }
+
+    // cannot attack with both ground units and air units
+    if ((units.land > 0 || units.naval > 0 || units.amphibious > 0) &&
+        (units.atomBombs > 0 || units.bioweapons > 0)) {
+        res.json({ message: "ERROR - cannot attack with land and air units" });
         return;
     }
 
