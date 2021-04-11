@@ -145,9 +145,15 @@ router.route("/attack").post(async (req, res) => {
 
     let units = req.body.units;
 
-    // check if attacker owns the region
+    // check if attacker owns the attackingRegion
     if (!attackingRegion.player.equals(attacker._id)) {
         res.json({ message: "ERROR - attacker does not control the region " + attackingRegion.player + " " + attacker._id });
+        return;
+    }
+
+    // attacker cannot own the defendingRegion
+    if (defendingRegion.player.equals(attacker._id)) {
+        res.json({ message: "ERROR - attacker cannot attack own region" });
         return;
     }
 
@@ -166,6 +172,11 @@ router.route("/attack").post(async (req, res) => {
 
     // check for atomBombs or bioweapons
     if (units.atomBombs > 0 || units.bioweapons > 0) {
+        if (units.atomBombs > 0 && units.bioweapons > 0) {
+            res.json({ message: "ERROR - cannot attack with both atomBombs and bioweapons" });
+            return;
+        }
+
         if (attackingRegion._doc.units.atomBombs < units.atomBombs) {
             res.json({ message: "ERROR - not enough atomBombs in region" });
             return;
@@ -175,57 +186,61 @@ router.route("/attack").post(async (req, res) => {
             return;
         }
 
-        if (units.atomBombs > 0) {
-            for (let i = 0; i < units.atomBombs; i++) {
-                attackingRegion.units.atomBombs -= 1;  // consume atomBomb
-                let radarDefends = Math.random() < 0.75;
-                // radar defends
-                if (radarDefends && defendingRegion._doc.units.radars > 0) {
-                    console.log("radar defends against atomBomb");
-                    defendingRegion.units.radars -= 1;  // consume radar
-                    continue;
-                }
-                // attack region
-                else {
-                    console.log("atomBomb attacks");
-                    for (unit in defendingRegion.units) { 
-                        defendingRegion.units[unit] = 0;
-                    }
-                    defendingRegion.industrialization.agriculture = 0;
-                    defendingRegion.industrialization.mining = 0;
-                    defendingRegion.industrialization.synthetics = 0;
+        // get amount of units attacking with
+        let attackCount = Math.max(units.atomBombs, units.bioweapons);
 
-                    gameController.updatePlayerInfo(game);
-                    game.save();
-                    break;
+        // count radars
+        let radarCount = defendingRegion.units.radars;
+        for (adjacentRegionName of defendingRegion.adjacentRegionNames) {
+            let adjacentDefendingRegion = game.regions.filter(region => region.name == adjacentRegionName)[0];
+            radarCount += adjacentDefendingRegion.units.radars;
+        }
+
+        console.log("radarCount: " + radarCount);
+
+        for (let i = 0; i < attackCount; i++) {
+            // consume weapon
+            console.log(units);
+            if (units.atomBombs > 0) attackingRegion.units.atomBombs -= 1;
+            if (units.bioweapons > 0) attackingRegion.units.bioweapons -= 1;
+
+            // check if radar defends
+            let radarChance = 1 / radarCount;
+            let radarRoll = Math.random();
+            let radarDefends = radarRoll > radarChance;
+
+            console.log("radarDefends: " + radarDefends + " radarChance: " + radarChance + " radarRoll " + radarRoll);
+
+            if (!radarDefends) {
+                for (unit in defendingRegion.units) { 
+                    defendingRegion.units[unit] = 0;
                 }
+                defendingRegion.industrialization.agriculture = 0;
+                defendingRegion.industrialization.mining = 0;
+                defendingRegion.industrialization.synthetics = 0;
+
+                // used bioweapons
+                if (units.bioweapons > 0) {
+                    defendingRegion.traverseCountdown = 5;
+                }
+
+                break;
             }
         }
-        else if (units.bioweapons > 0) {
-            for (let i = 0; i < units.bioweapons; i++) {
-                attackingRegion.units.bioweapons -= 1;  // consume bioweapon
-                let radarDefends = Math.random() < 0.5;
-                if (radarDefends && defendingRegion._doc.units.radars > 0) {
-                    console.log("radar defends against bioweapons");
-                    defendingRegion.units.radars -= 1;  // consume radar
-                    continue;
-                }
-                else {
-                    console.log("bioweapons attack");
-                    for (unit in defendingRegion.units) { 
-                        defendingRegion.units[unit] = 0;
-                    }
-                    defendingRegion.industrialization.agriculture = 0;
-                    defendingRegion.industrialization.mining = 0;
-                    defendingRegion.industrialization.synthetics = 0;
-                    defendingRegion.traverseCountdown = 5;  // make region untraversable for 5 turns
 
-                    gameController.updatePlayerInfo(game);
-                    game.save();
-                    break;
-                }
-            }
-        }
+        gameController.updatePlayerInfo(game);
+        game.save();
+
+        console.log("special attack completed");
+        res.json({
+            attacker: attacker,
+            defender: defender,
+            attackingRegion: attackingRegion,
+            defendingRegion: defendingRegion,
+            game: game
+        });
+        return;
+
     }
 
     // attacker not using atomBombs or bioweapons
@@ -415,8 +430,9 @@ router.route("/move").post(async (req, res) => {
     }
 
     // check if targetRegion is traversable
-    if (region.traverseCountdown > 0) {
-        res.json({ message: "ERROR - region cannot be traversed for " + region.traverseCountdown + " turn(s)" });
+    console.log("traverseCountdown: " + targetRegion.traverseCountdown);
+    if (targetRegion.traverseCountdown > 0) {
+        res.json({ message: "ERROR - region cannot be traversed for " + targetRegion.traverseCountdown + " turn(s)" });
         return;
     }
 
@@ -429,9 +445,21 @@ router.route("/move").post(async (req, res) => {
     }
 
     // check if unit types are correct
-    if ((targetRegion.type == "land" && units.naval > 0) || 
-        (targetRegion.type != "land" && units.land > 0)) {
-        res.json({ message: "ERROR - incorrect unit type" });
+    if (targetRegion.type == "land" && units.naval > 0) {
+        res.json({ message: "ERROR - naval units cannot be on land" });
+        return;
+    }
+
+    // move units
+    for (unit in units) {
+        originRegion.units[unit] -= units[unit];
+        targetRegion.units[unit] += units[unit];
+    }
+
+    // check if naval units can ferry land units
+    if ((targetRegion.type != "land" && targetRegion.units.land > 3 * targetRegion.units.naval) ||
+        (originRegion.type != "land" && originRegion.units.land > 3 * originRegion.units.naval)) {
+        res.json({ message: "ERROR - not enough naval units to carry land units, land " + targetRegion.units + " " + originRegion.units });
         return;
     }
 
@@ -440,22 +468,22 @@ router.route("/move").post(async (req, res) => {
     for (unit in units) { 
         totalUnits += units[unit]; 
     }
+    // subtract ferrying cost
+    if (targetRegion.type != "land" || originRegion.type != "land") {
+        console.log("naval units ferrying or were ferrying " + targetRegion.units.land + " unit(s)");
+        totalUnits -= units.land;
+    }
     console.log("totalUnits: " + totalUnits);
 
     if (player.resources.agriculture < totalUnits * game.market.costs.moving.resources.agriculture ||
         player.resources.mining < totalUnits * game.market.costs.moving.resources.mining) {
-        res.json({ message: "ERROR - player does not have enoguh resources" });
+        res.json({ message: "ERROR - player does not have enough resources" });
+        return;
     };
 
     // remove resources from player
     player.resources.agriculture -= totalUnits * game.market.costs.moving.resources.agriculture;
     player.resources.mining -= game.market.costs.moving.resources.mining;
-
-    // move units
-    for (unit in units) {
-        originRegion.units[unit] -= units[unit];
-        targetRegion.units[unit] += units[unit];
-    }
 
     targetRegion.player = player._id;  // give targetRegion to player
 
@@ -670,6 +698,12 @@ router.route("/research").post(async (req, res) => {
 
     // research a special unit
     else {
+        // check if player has already researched this unit
+        if (player.research[req.body.research]) {
+            res.json({ message: "ERROR - player has already researched " + req.body.research });
+            return;
+        }
+
         // check if player has enough balance
         if (player.balance < game.market.costs.research) {
             res.json({ message: "ERROR - player does not have high enough balance: " + player.balance });

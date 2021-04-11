@@ -156,6 +156,12 @@ module.exports = {
                 }
             }
 
+            // players that have no money are dead
+            if (player.balance <= 0) {
+                console.log(player._id + " has no balance.");
+                player.status = "dead";
+            }
+
             // players that have no regions are dead
             if (regionCount < 1) {
                 console.log(player._id + " has " + regionCount + " regions.");
