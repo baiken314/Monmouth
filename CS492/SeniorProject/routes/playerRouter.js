@@ -336,31 +336,20 @@ router.route("/attack").post(async (req, res) => {
                 defenderSum += 1 + Math.floor(Math.random() * 4);
             }
 
+            console.log("attackerSum: " + attackerSum + ", defenderSum: " + defenderSum);
+            let losingRegion = attackerSum <= defenderSum ? attackingRegion : defendingRegion;
+
             // remove 1 land / marine / amphibious unit from loser
-            if (attackerSum > defenderSum) {
-                console.log("attacker wins");
-                if (defendingRegion.type == "land" && defendingRegion.units.land > 0) {
-                    defendingRegion.units.land -= 1;
-                }
-                else if (defendingRegion.type != "land" && defendingRegion.units.naval > 0) {
-                    defendingRegion.units.naval -= 1;
-                }
-                else {
-                    defendingRegion.units.amphibious -= 1;
-                }
+            if (losingRegion.type == "land" && losingRegion.units.land > 0) {
+                losingRegion.units.land -= 1;
             }
-            // defender wins
+            else if (losingRegion.type != "land" && losingRegion.units.naval > 0) {
+                losingRegion.units.naval -= 1;
+                // kill ferried land units
+                losingRegion.units.land = Math.min(losingRegion.units.land, losingRegion.units.naval * 3);
+            }
             else {
-                console.log("defender wins");
-                if (attackingRegion.type == "land" && attackingRegion.units.land > 0) {
-                    attackingRegion.units.land -= 1;
-                }
-                else if (attackingRegion.type != "land" && attackingRegion.units.naval > 0) {
-                    attackingRegion.units.naval -= 1;
-                }
-                else {
-                    attackingRegion.units.amphibious -= 1;
-                }
+                losingRegion.units.amphibious -= 1;
             }
 
             gameController.updatePlayerInfo(game);
