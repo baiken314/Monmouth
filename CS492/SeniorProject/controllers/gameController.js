@@ -1,3 +1,6 @@
+const URL = "http://localhost:8000";
+
+const fetch = require("../server").fetch;
 const io = require("../server").io;
 
 module.exports = {

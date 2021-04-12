@@ -105,9 +105,7 @@ router.route("/market-order").post(async (req, res) => {
         gameController.updatePlayerInfo(game);
         game.save();
 
-        res.json({
-            player: player
-        });
+        res.json({ player: player });
     }
     else { 
         console.log("incorrect action " + req.body.action + " " + game.playerOrder); 
